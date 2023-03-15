@@ -37,22 +37,22 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+            <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
+                <a class="nav-link" href="<?= base_url('home')?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <a ng-class="{'nav-link' : root=='Master Data', 'nav-link collapsed' : root!='Master Data'}" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>Master Data</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" ng-class="{'collapse show' : root=='Master Data', 'collapse' : root!='Master Data'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
+                        <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan')?>">Jurusan</a>
+                        <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah')?>">Matakuliah</a>
+                    </div>  
                 </div>
             </li>
             <hr class="sidebar-divider d-none d-md-block">

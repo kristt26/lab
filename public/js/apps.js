@@ -48,6 +48,9 @@ function indexController($scope, helperServices, dashboardServices) {
         $scope.header = data;
         $scope.breadcrumb = data;
         $scope.title = data;
+        if(data=='Jurusan' || data=='Matakuliah'){
+            $scope.root = "Master Data"
+        }
         $.LoadingOverlay("hide");
     });
     $scope.$on("send", function (evt, data) {
