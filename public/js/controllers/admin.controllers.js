@@ -14,7 +14,7 @@ function dashboardController($scope, dashboardServices) {
     // })
 }
 
-function laboranController($scope, laboranServices) {
+function laboranController($scope, laboranServices, pesan) {
     $scope.$emit("SendUp", "Jenis Kamar");
     $scope.datas = {};
     $scope.model = {};
@@ -22,6 +22,7 @@ function laboranController($scope, laboranServices) {
     laboranServices.get().then((res) => {
         $scope.datas = res;
         console.log(res);
+        pesan.success(res.Testing);
     })
 
     $scope.setInisial = (item) => {

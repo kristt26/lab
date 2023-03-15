@@ -146,11 +146,11 @@ function laboranServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
-    function deleted(param) {
+    function deleted(id) {
         var def = $q.defer();
         $http({
             method: 'delete',
-            url: controller + "/delete/" + param.id,
+            url: controller + "/delete/" + id,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
