@@ -40,6 +40,24 @@ $routes->group('laboran', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Laboran::delete/$1');
 });
 
+$routes->group('jurusan', [] , static function ($routes) {
+    $routes->get('/', 'Admin\Jurusan::index');
+    $routes->get('store', 'Admin\Jurusan::store');
+    $routes->get('read/(:any)', 'Admin\Jurusan::read/$1');
+    $routes->post('post', 'Admin\Jurusan::post');
+    $routes->put('put', 'Admin\Jurusan::put');
+    $routes->delete('delete/(:any)', 'Admin\Jurusan::delete/$1');
+});
+
+$routes->group('matakuliah', static function ($routes) {
+    $routes->get('/', 'Admin\Matakuliah::index');
+    $routes->get('store', 'Admin\Matakuliah::store');
+    $routes->get('read/(:any)', 'Admin\Matakuliah::read/$1');
+    $routes->post('post', 'Admin\Matakuliah::post');
+    $routes->put('put', 'Admin\Matakuliah::put');
+    $routes->delete('delete/(:any)', 'Admin\Matakuliah::delete/$1');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

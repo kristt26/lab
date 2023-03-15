@@ -2,6 +2,8 @@ angular.module('adminctrl', [])
     // Admin
     .controller('dashboardController', dashboardController)
     .controller('laboranController', laboranController)
+    .controller('jurusanController', jurusanController)
+    .controller('matakuliahController', matakuliahController)
 
     ;
 
@@ -86,4 +88,54 @@ function laboranController($scope, laboranServices, pesan) {
             })
         });
     }
+}
+
+function jurusanController($scope, jurusanServices, pesan) {
+    $scope.$emit("SendUp", "Jurusan");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    jurusanServices.get().then(res=>{
+        $scope.datas = res;
+    })
+
+    $scope.pesan = (param)=>{
+        pesan.success(param);
+    }
+
+    $scope.edit = (param)=>{
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.save = ()=>{
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x=>{
+            if($scope.model.id){
+                jurusanServices.put($scope.model).then(res=>{
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            }else{
+                jurusanServices.post($scope.model).then(res=>{
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            }
+        })
+    }
+
+    $scope.delete = (param)=>{
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x=>{
+            jurusanServices.deleted(param).then(res=>{
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+function matakuliahController($scope, jurusanServices, pesan) {
+    $scope.$emit("SendUp", "Matakuliah");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    
 }
