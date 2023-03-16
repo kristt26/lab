@@ -4,29 +4,39 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
+use App\Models\MatkulModel;
 use App\Models\JurusanModel;
+use CodeIgniter\Database\Query;
 
 class Matakuliah extends BaseController
 {
     use ResponseTrait;
     protected $matakuliah;
+    protected $jurusan;
 
     public function __construct() {
-        $this->matakuliah = new JurusanModel();
+        $this->matakuliah = new MatkulModel();
+        $this->jurusan = new JurusanModel();
     }
     public function index()
     {
-        return view('admin/matakuliah');
-    }
+        $db = \Config\Database::connect();
+        $builder = $db->table('jurusan');
+        $builder->select('jurusan.jurusan, matakuliah.kode, matakuliah.nama_matakuliah');
+        $builder->join('matakuliah', 'jurusan.id = matakuliah.jurusan_id');
+        $query = $builder->get();
+        $data['jurusan'] = $query->getResult();
+        return view('admin/matakuliah', $data);
 
-    public function add()
-    {
-        return view('admin/jurusan/add', ['title'=>'Jurusan']);
     }
 
     public function store()
     {
-        return $this->respond($this->matakuliah->findAll());
+        $jurusans = $this->jurusan->asObject()->findAll();
+        foreach ($jurusans as $key => $jurusan) {
+            $jurusan->matakuliah = $this->matakuliah->where('jurusan_id', $jurusan->id)->findAll();
+        }
+        return $this->respond($jurusans);
     }
 
     public function read($id = null)

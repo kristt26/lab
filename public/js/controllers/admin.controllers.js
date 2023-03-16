@@ -132,10 +132,34 @@ function jurusanController($scope, jurusanServices, pesan) {
         })
     }
 }
-function matakuliahController($scope, jurusanServices, pesan) {
+
+function matakuliahController($scope, matakuliahServices, pesan) {
     $scope.$emit("SendUp", "Matakuliah");
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
-    
+    matakuliahServices.get().then(res => {
+        $scope.datas = res;
+    })
+
+
+    $scope.save = () => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            if ($scope.model.id) {
+                matakuliahServices.put($scope.model).then(res => {
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            } else {
+                matakuliahServices.post($scope.model).then(res => {
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            }
+        })
+    }
+
+    $scope.showMatakuliah = (param) => {
+        $scope.matakuliah = param.matakuliah;
+    }
 }

@@ -222,6 +222,7 @@
     <script src="<?= base_url() ?>libs/datatables/btn.js"></script>
     <script src="<?= base_url() ?>libs/datatables/print.js"></script>
     <script src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() ?>libs/loading/dist/loadingoverlay.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url() ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>
