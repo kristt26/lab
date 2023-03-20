@@ -27,9 +27,8 @@ class Matakuliah extends BaseController
         $builder->join('matakuliah', 'jurusan.id = matakuliah.jurusan_id');
         $query = $builder->get();
         $data['jurusan'] = $query->getResult();
-
-
         return view('admin/matakuliah', ['title' => 'Matakuliah'], $data);
+
     }
 
     public function store()
@@ -63,13 +62,12 @@ class Matakuliah extends BaseController
         $data = $this->request->getJSON();
         try {
             $this->matakuliah->update($data->id, $data);
-
             return $this->respondUpdated(true);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());
         }
     }
-
+    
     public function delete($id = null)
     {
         try {

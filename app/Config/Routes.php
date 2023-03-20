@@ -59,12 +59,12 @@ $routes->group('matakuliah', static function ($routes) {
 });
 
 $routes->group('modul', static function ($routes) {
-    $routes->get('/', 'Admin\modul::index');
-    $routes->get('store', 'Admin\modul::store');
-    $routes->get('read/(:any)', 'Admin\modul::read/$1');
-    $routes->post('post', 'Admin\modul::post');
-    $routes->put('put', 'Admin\modul::put');
-    $routes->delete('delete/(:any)', 'Admin\modul::delete/$1');
+    $routes->get('/', 'Admin\Modul::index');
+    $routes->get('store', 'Admin\Modul::store');
+    $routes->get('read/(:any)', 'Admin\Modul::read/$1');
+    $routes->post('post', 'Admin\Modul::post');
+    $routes->put('put', 'Admin\Modul::put');
+    $routes->delete('delete/(:any)', 'Admin\Modul::delete/$1');
 });
 
 /*

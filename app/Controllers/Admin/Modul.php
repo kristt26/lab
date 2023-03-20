@@ -27,11 +27,11 @@ class Modul extends BaseController
     {
         $matakuliahs = $this->matakuliah->asObject()->findAll();
         foreach ($matakuliahs as $key => $matakuliah) {
-            $matakuliah->matakuliah = $this->matakuliah->where('matakuliah_id', $matakuliah->id)->findAll();
+            $matakuliah->modul = $this->modul->where('matakuliah_id', $matakuliah->id)->findAll();
         }
         return $this->respond($matakuliahs);
 
-        return $this->respond($this->modul->findAll());
+        // return $this->respond($this->modul->findAll());
     }
 
     public function read($id = null)

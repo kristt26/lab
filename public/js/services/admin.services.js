@@ -406,8 +406,8 @@ function matakuliahServices($http, $q, helperServices, AuthService, pesan) {
 
 }
 
-function matakuliahServices($http, $q, helperServices, AuthService, pesan) {
-    var controller = helperServices.url + 'matakuliah/';
+function modulServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'modul/';
     var service = {};
     service.data = [];
     return {

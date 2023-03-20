@@ -9,8 +9,8 @@
         <div class="card-body">
             <div class="row">
                 <div class="form-group">
-                  <label for="">Pilih Matakuliah</label>
-                  <select class="form-control" ng-options="item.matakuliah for item in datas" ng-model="matakulaih" ng-change="showMatakuliah(matakuliah)"></select>
+                    <label for="">Pilih Matakuliah</label>
+                    <select class="form-control" ng-options="item.matakuliah for item in datas" ng-model="matakuliah" ng-change="showModul(matakuliah)"></select>
                 </div>
                 <div class="table-responsive">
                     <table class="table">
@@ -55,15 +55,15 @@
                             <input type="text" class="form-control" ng-model="model.judl" required aria-describedby="helpId" placeholder="Judul Modul">
                         </div>
                         <div class="form-group">
-                          <label>File Modul</label>
-                          <input type="file" class="form-control-file" ng-model="model.modul" placeholder="File Modul" aria-describedby="fileHelpId">
-                          <small id="fileHelpId" class="form-text text-muted">unggah file modul di sini</small>
+                            <label>File Modul</label>
+                            <input type="file" class="form-control-file" ng-model="model.modul" placeholder="File Modul" aria-describedby="fileHelpId">
+                            <small id="fileHelpId" class="form-text text-muted">unggah file modul di sini</small>
                         </div>
                         <div class="form-group">
-                          <label>Matakuliah</label>
-                          <select class="form-control" ng-model="model.matakuliah_id">
-                            <option ng-repeat="item in datas" value="{{item.id}}">{{ item.matakuliah }}</option>
-                          </select>
+                            <label>Matakuliah</label>
+                            <select class="form-control" ng-model="model.matakuliah_id">
+                                <option ng-repeat="item in datas" value="{{item.id}}">{{ item.matakuliah }}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">

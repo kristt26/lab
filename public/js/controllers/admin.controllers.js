@@ -205,8 +205,8 @@ function modulController($scope, modulServices, pesan) {
         })
     }
 
-    $scope.showMatakuliah = (param) => {
-        $scope.matakuliah = param.matakuliah;
+    $scope.showModul = (param) => {
+        $scope.modul = param.modul;
     }
 
     $scope.delete = (param) => {
