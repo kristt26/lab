@@ -60,7 +60,8 @@ class Matakuliah extends BaseController
     {
         $data = $this->request->getJSON();
         try {
-            $this->matakuliah->update($data);
+$this->matakuliah->update($data->id, $data);
+
             return $this->respondUpdated(true);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());

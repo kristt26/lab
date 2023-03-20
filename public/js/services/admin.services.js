@@ -364,9 +364,13 @@ function matakuliahServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.id);
+                var data = service.data.find(x => x.id == param.jurusan_id);
                 if (data) {
-                    data.jurusan = param.jurusan;
+                    var matkul = data.matakuliah.find(x => x.id == param.id);
+                    if (matkul) {
+                        matkul.kode = param.kode;
+                        matkul.nama_matakuliah = param.nama_matakuliah;
+                    }
                 }
                 def.resolve(res.data);
             },
@@ -385,8 +389,11 @@ function matakuliahServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var index = service.data.indexOf(param);
-                service.data.splice(index, 1);
+                var data = service.data.find(x => x.id = param.jurusan_id);
+                if (data) {
+                    var index = data.matakuliah.indexOf(param);
+                    data.matakuliah.splice(index, 1);
+                }
                 def.resolve(res.data);
             },
             (err) => {

@@ -170,4 +170,10 @@ function matakuliahController($scope, matakuliahServices, pesan) {
             })
         })
     }
+
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
 }
