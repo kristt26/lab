@@ -52,6 +52,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan')?>">Jurusan</a>
                         <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah')?>">Matakuliah</a>
+                        <a ng-class="{'collapse-item active': title=='Modul', 'collapse-item': title!='Modul'}" href="<?= base_url('modul')?>">Modul</a>
                     </div>  
                 </div>
             </li>
