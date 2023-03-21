@@ -21,13 +21,7 @@ class Matakuliah extends BaseController
     }
     public function index()
     {
-        $db = \Config\Database::connect();
-        $builder = $db->table('jurusan');
-        $builder->select('jurusan.jurusan, matakuliah.kode, matakuliah.nama_matakuliah');
-        $builder->join('matakuliah', 'jurusan.id = matakuliah.jurusan_id');
-        $query = $builder->get();
-        $data['jurusan'] = $query->getResult();
-        return view('admin/matakuliah', ['title' => 'Matakuliah'], $data);
+        return view('admin/matakuliah', ['title' => 'Matakuliah']);
 
     }
 

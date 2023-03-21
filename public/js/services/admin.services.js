@@ -491,8 +491,8 @@ function modulServices($http, $q, helperServices, AuthService, pesan) {
                 if (data) {
                     var moduls = data.modul.find(x => x.id == param.id);
                     if (moduls) {
-                        matkul.judul = param.judul;
-                        matkul.modul = param.modul;
+                        modul.judul = param.judul;
+                        modul.modul = param.modul;
                     }
                 }
                 def.resolve(res.data);

@@ -22,7 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in matakuliah">
+                            <tr ng-repeat="item in modul">
                                 <td>{{$index+1}}</td>
                                 <td>{{item.judul}}</td>
                                 <td>{{item.modul}}</td>
