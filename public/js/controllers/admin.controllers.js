@@ -162,7 +162,7 @@ function matakuliahController($scope, matakuliahServices, pesan) {
 
     $scope.showMatakuliah = (param) => {
         $scope.matakuliah = param.matakuliah;
-    }
+    };
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {

@@ -6,7 +6,6 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\MatkulModel;
 use App\Models\JurusanModel;
-use CodeIgniter\Database\Query;
 
 class Matakuliah extends BaseController
 {
