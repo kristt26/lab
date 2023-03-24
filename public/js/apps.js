@@ -48,7 +48,7 @@ function indexController($scope, helperServices, dashboardServices) {
         $scope.header = data;
         $scope.breadcrumb = data;
         $scope.title = data;
-        if (data == 'Jurusan' || data == 'Matakuliah' || data == 'Modul' || data == 'Login') {
+        if (data == 'Jurusan' || data == 'Matakuliah' || data == 'Modul') {
             $scope.root = "Master Data"
         }
         $.LoadingOverlay("hide");

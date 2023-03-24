@@ -39,25 +39,4 @@ class Login extends BaseController
             return $this->fail($th->getMessage());
         }
     }
-
-    public function put()
-    {
-        $data = $this->request->getJSON();
-        try {
-            $this->jurusan->update($data->id, $data);
-            return $this->respondUpdated(true);
-        } catch (\Throwable $th) {
-            return $this->fail($th->getMessage());
-        }
-    }
-
-    public function delete($id = null)
-    {
-        try {
-            $this->jurusan->delete($id);
-            return $this->respondDeleted(true);
-        } catch (\Throwable $th) {
-            return $this->fail($th->getMessage());
-        }
-    }
 }

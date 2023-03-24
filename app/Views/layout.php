@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app='apps'>
+<html lang="en" ng-app='login'>
 
 <head>
 
@@ -38,7 +38,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
-                <a class="nav-link" href="<?= base_url('home')?>">
+                <a class="nav-link" href="<?= base_url('home') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -50,10 +50,10 @@
                 </a>
                 <div id="collapseTwo" ng-class="{'collapse show' : root=='Master Data', 'collapse' : root!='Master Data'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan')?>">Jurusan</a>
-                        <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah')?>">Matakuliah</a>
-                        <a ng-class="{'collapse-item active': title=='Modul', 'collapse-item': title!='Modul'}" href="<?= base_url('modul')?>">Modul</a>
-                    </div>  
+                        <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan') ?>">Jurusan</a>
+                        <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah') ?>">Matakuliah</a>
+                        <a ng-class="{'collapse-item active': title=='Modul', 'collapse-item': title!='Modul'}" href="<?= base_url('modul') ?>">Modul</a>
+                    </div>
                 </div>
             </li>
             <hr class="sidebar-divider d-none d-md-block">

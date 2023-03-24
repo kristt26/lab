@@ -1,9 +1,10 @@
-angular.module('logins', ['auth.service', 'helper.service','message.service', 'swangular'])
+angular.module('loginsApp', ['auth.service', 'helper.service', 'message.service', 'swangular'])
     .controller('loginController', loginController);
 
 function loginController($scope, AuthService, helperServices) {
     $scope.role = [];
     $scope.model = {};
+    $scope.title = "Login";
     $scope.model.username = "Administrator";
     $scope.model.password = "Administrator#1";
     sessionStorage.clear();
