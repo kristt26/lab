@@ -1,23 +1,33 @@
 <?= $this->extend('template') ?>
 <?= $this->section('content') ?>
-<div ng-controller="loginController">
-    <form class="user" ng-submit="login()">
-        <div class="form-group">
-            <input type="text" class="form-control form-control-user" ng-model="model.username" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+<div ng-controller="registerController">
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="First Name">
+        </div>
+        <div class="col-sm-6">
+            <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Last Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email Address">
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-6 mb-3 mb-sm-0">
+            <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="NPM">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control form-control-user" ng-model="model.password" id="exampleInputPassword" placeholder="Password">
+            <select class="form-control" ng-options="item as item.jurusan for item in jurusan" ng-model="itemjurusan"></select>
         </div>
-        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
-    </form>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control form-control-user" id="exampleInputEmail" placeholder="Alamat">
+    </div>
 
-    <hr>
-    <div class="text-center">
-        <a class="small" href="forgot-password.html">Forgot Password?</a>
-    </div>
-    <div class="text-center">
-        <a class="small" href="<?= base_url('auth/register') ?>">Create an Account!</a>
-    </div>
+    <a href="login.html" class="btn btn-primary btn-user btn-block">
+        Register Account
+    </a>
+    </form>
 
     <!-- Modal -->
     <div class="modal fade" id="role" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">

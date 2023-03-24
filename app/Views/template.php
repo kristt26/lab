@@ -40,13 +40,7 @@
 
                                     <?= $this->renderSection('content') ?>
 
-                                    <!-- <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div> -->
+
                                 </div>
                             </div>
                         </div>
@@ -66,6 +60,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-animate/1.8.2/angular-animate.min.js" integrity="sha512-jZoujmRqSbKvkVDG+hf84/X11/j5TVxwBrcQSKp1W+A/fMxmYzOAVw+YaOf3tWzG/SjEAbam7KqHMORlsdF/eA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="<?= base_url() ?>js/services/helper.services.js"></script>
+    <script src="<?= base_url() ?>js/services/admin.services.js"></script>
     <script src="<?= base_url() ?>js/services/auth.services.js"></script>
     <script src="<?= base_url() ?>js/services/pesan.services.js"></script>
     <script src="<?= base_url() ?>libs/sweetalert2/dist/sweetalert2.all.min.js"></script>

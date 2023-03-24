@@ -69,10 +69,12 @@ $routes->group('modul', static function ($routes) {
 
 $routes->group('auth', static function ($routes) {
     $routes->get('/', 'Auth::index');
+    $routes->get('register', 'Auth::register');
     $routes->post('login', 'Auth::login');
     $routes->get('read/(:any)', 'Auth::read/$1');
     $routes->post('setrole', 'Auth::setrole');
     $routes->get('out', 'Auth::logout');
+    $routes->get('getdataregis', 'Auth::getdataregis');
 });
 
 /*

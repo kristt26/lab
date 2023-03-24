@@ -90,6 +90,19 @@ class auth extends BaseController
         return $this->respond(true);
     }
 
+    public function register()
+    {
+        return view('auth/regis');
+    }
+
+    public function getdataregis()
+    {
+        $jurusan = new \App\Models\JurusanModel();
+        $data = $jurusan->findAll();
+
+        return $this->respond($data);
+    }
+
     public function logout()
     {
         session()->destroy();
