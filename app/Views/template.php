@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Laboratorium | Authentication</title>
 
     <!-- Custom fonts for this template-->
     <link href="<?= base_url() ?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -40,13 +40,13 @@
 
                                     <?= $this->renderSection('content') ?>
 
-                                    <hr>
+                                    <!-- <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -79,6 +79,7 @@
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url() ?>assets/js/sb-admin-2.min.js"></script>
     <script src="<?= base_url() ?>js/logins.js"></script>
+    <script src="<?= base_url() ?>libs/loading/dist/loadingoverlay.min.js"></script>
 
 
 </body>

@@ -31,7 +31,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->group('laboran', static function ($routes) {
+$routes->group('laboran', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Laboran::index');
     $routes->get('store', 'Admin\Laboran::store');
     $routes->get('read/(:any)', 'Admin\Laboran::read/$1');
@@ -40,7 +40,7 @@ $routes->group('laboran', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Laboran::delete/$1');
 });
 
-$routes->group('jurusan', [] , static function ($routes) {
+$routes->group('jurusan', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Jurusan::index');
     $routes->get('store', 'Admin\Jurusan::store');
     $routes->get('read/(:any)', 'Admin\Jurusan::read/$1');
@@ -67,13 +67,12 @@ $routes->group('modul', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Modul::delete/$1');
 });
 
-$routes->group('login', static function ($routes) {
-    $routes->get('/', 'Auth\Login::index');
-    $routes->get('store', 'Auth\Login::store');
-    $routes->get('read/(:any)', 'Auth\Login::read/$1');
-    $routes->post('post', 'Auth\Login::post');
-    $routes->put('put', 'Auth\Login::put');
-    $routes->delete('delete/(:any)', 'Auth\Login::delete/$1');
+$routes->group('auth', static function ($routes) {
+    $routes->get('/', 'Auth::index');
+    $routes->post('login', 'Auth::login');
+    $routes->get('read/(:any)', 'Auth::read/$1');
+    $routes->post('setrole', 'Auth::setrole');
+    $routes->get('out', 'Auth::logout');
 });
 
 /*

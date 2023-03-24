@@ -1,9 +1,10 @@
 angular.module('loginsApp', ['auth.service', 'helper.service', 'message.service', 'swangular'])
     .controller('loginController', loginController);
 
-function loginController($scope, AuthService, helperServices) {
+function loginController($scope, AuthService, helperServices, pesan) {
     $scope.role = [];
     $scope.model = {};
+    $scope.roles = [];
     $scope.title = "Login";
     $scope.model.username = "Administrator";
     $scope.model.password = "Administrator#1";
@@ -14,6 +15,7 @@ function loginController($scope, AuthService, helperServices) {
             if(res.length==1){
                 document.location.href= helperServices.url;
             }else{
+                $scope.roles = res;
                 $.LoadingOverlay("hide");
                 $scope.role = res;
                 $(".modal").modal('show');

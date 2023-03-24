@@ -390,7 +390,7 @@ function matakuliahServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id = param.jurusan_id);
+                var data = service.data.find(x => x.id == param.jurusan_id);
                 if (data) {
                     var index = data.matakuliah.indexOf(param);
                     data.matakuliah.splice(index, 1);
@@ -513,7 +513,7 @@ function modulServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id = param.matakuliah_id);
+                var data = service.data.find(x => x.id == param.matakuliah_id);
                 if (data) {
                     var index = data.modul.indexOf(param);
                     data.modul.splice(index, 1);

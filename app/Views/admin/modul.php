@@ -52,7 +52,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Judul Modul</label>
-                            <input type="text" class="form-control" ng-model="model.judl" required aria-describedby="helpId" placeholder="Judul Modul">
+                            <input type="text" class="form-control" ng-model="model.judul" required aria-describedby="helpId" placeholder="Judul Modul">
                         </div>
                         <div class="form-group">
                             <label>File Modul</label>
@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label>Matakuliah</label>
                             <select class="form-control" ng-model="model.matakuliah_id">
-                                <option ng-repeat="item in datas" value="{{item.id}}">{{ item.matakuliah }}</option>
+                                <option ng-repeat="item in datas" value="{{item.id}}">{{ item.nama_matakuliah }}</option>
                             </select>
                         </div>
                     </div>
