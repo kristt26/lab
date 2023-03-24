@@ -67,6 +67,15 @@ $routes->group('modul', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Modul::delete/$1');
 });
 
+$routes->group('login', static function ($routes) {
+    $routes->get('/', 'Auth\Login::index');
+    $routes->get('store', 'Auth\Login::store');
+    $routes->get('read/(:any)', 'Auth\Login::read/$1');
+    $routes->post('post', 'Auth\Login::post');
+    $routes->put('put', 'Auth\Login::put');
+    $routes->delete('delete/(:any)', 'Auth\Login::delete/$1');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

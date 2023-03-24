@@ -4,6 +4,7 @@ angular.module('admin.service', [])
     .factory('laboranServices', laboranServices)
     .factory('jurusanServices', jurusanServices)
     .factory('modulServices', modulServices)
+    .factory('matakuliahServices', matakuliahServices)
     ;
 
 function dashboardServices($http, $q, helperServices, AuthService) {

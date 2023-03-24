@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="form-group">
                     <label for="">Pilih Matakuliah</label>
-                    <select class="form-control" ng-options="item.matakuliah for item in datas" ng-model="matakuliah" ng-change="showModul(matakuliah)"></select>
+                    <select class="form-control" ng-options="item.nama_matakuliah for item in datas" ng-model="matakuliah" ng-change="showModul(matakuliah)"></select>
                 </div>
                 <div class="table-responsive">
                     <table class="table">
