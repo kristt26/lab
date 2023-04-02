@@ -1,31 +1,31 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
-<div ng-controller="matakuliahController">
+<div ng-controller="modulController">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
-            <h5>Daftar Matakuliah</h5>
+            <h5>Daftar Jurusan</h5>
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
         </div>
         <div class="card-body">
             <div class="row">
                 <div class="form-group">
-                    <label for="">Pilih Jurusan</label>
-                    <select class="form-control" ng-options="item.jurusan for item in datas" ng-model="jurusan" ng-change="showMatakuliah(jurusan)"></select>
+                    <label for="">Pilih Matakuliah</label>
+                    <select class="form-control" ng-options="item.nama_matakuliah for item in datas" ng-model="matakuliah" ng-change="showModul(matakuliah)"></select>
                 </div>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Kode</th>
-                                <th>Nama Matakuliah</th>
+                                <th>Judul Modul</th>
+                                <th>File Modul</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in matakuliah">
+                            <tr ng-repeat="item in modul">
                                 <td>{{$index+1}}</td>
-                                <td>{{item.kode}}</td>
-                                <td>{{item.nama_matakuliah}}</td>
+                                <td>{{item.judul}}</td>
+                                <td>{{item.modul}}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
                                     <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
@@ -51,17 +51,18 @@
                 <form ng-submit="save()">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Kode matakuliah</label>
-                            <input type="text" class="form-control" ng-model="model.kode" required aria-describedby="helpId" placeholder="Kode Matakuliah">
+                            <label>Judul Modul</label>
+                            <input type="text" class="form-control" ng-model="model.judul" required aria-describedby="helpId" placeholder="Judul Modul">
                         </div>
                         <div class="form-group">
-                            <label>Nama matakuliah</label>
-                            <input type="text" class="form-control" ng-model="model.nama_matakuliah" required aria-describedby="helpId" placeholder="Nama Matakuliah">
+                            <label>File Modul</label>
+                            <input type="file" class="form-control-file" ng-model="model.modul" placeholder="File Modul" aria-describedby="fileHelpId">
+                            <small id="fileHelpId" class="form-text text-muted">unggah file modul di sini</small>
                         </div>
                         <div class="form-group">
-                            <label>Jurusan</label>
-                            <select class="form-control" ng-model="model.jurusan_id">
-                                <option ng-repeat="item in datas" value="{{item.id}}">{{ item.jurusan }}</option>
+                            <label>Matakuliah</label>
+                            <select class="form-control" ng-model="model.matakuliah_id">
+                                <option ng-repeat="item in datas" value="{{item.id}}">{{ item.nama_matakuliah }}</option>
                             </select>
                         </div>
                     </div>

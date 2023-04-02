@@ -3,49 +3,50 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\MatkulModel;
-use App\Models\JurusanModel;
+use App\Models\ModulModel;
+use CodeIgniter\API\ResponseTrait;
 
-class Matakuliah extends BaseController
+class Modul extends BaseController
 {
     use ResponseTrait;
+    protected $modul;
     protected $matakuliah;
-    protected $jurusan;
 
     public function __construct()
     {
+        $this->modul = new ModulModel();
         $this->matakuliah = new MatkulModel();
-        $this->jurusan = new JurusanModel();
     }
     public function index()
     {
-        return view('admin/matakuliah', ['title' => 'Matakuliah']);
-
+        return view('admin/modul', ['title' => 'Modul']);
     }
 
     public function store()
     {
-        $jurusans = $this->jurusan->asObject()->findAll();
-        foreach ($jurusans as $key => $jurusan) {
-            $jurusan->matakuliah = $this->matakuliah->where('jurusan_id', $jurusan->id)->findAll();
+        $matakuliahs = $this->matakuliah->asObject()->findAll();
+        foreach ($matakuliahs as $key => $matakuliah) {
+            $matakuliah->modul = $this->modul->where('matakuliah_id', $matakuliah->id)->findAll();
         }
-        return $this->respond($jurusans);
+        return $this->respond($matakuliahs);
+
+        // return $this->respond($this->modul->findAll());
     }
 
     public function read($id = null)
     {
-        return $this->respond($this->matakuliah->find($id));
+        return $this->respond($this->modul->find($id));
     }
 
     public function post()
     {
         $data = $this->request->getJSON();
         try {
-            $this->matakuliah->insert($data);
-            $data->id = $this->matakuliah->getInsertID();
+            $this->modul->insert($data);
+            $data->id = $this->modul->getInsertID();
             return $this->respondCreated($data);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return $this->fail($th->getMessage());
         }
     }
@@ -54,19 +55,19 @@ class Matakuliah extends BaseController
     {
         $data = $this->request->getJSON();
         try {
-            $this->matakuliah->update($data->id, $data);
+            $this->modul->update($data->id, $data);
             return $this->respondUpdated(true);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return $this->fail($th->getMessage());
         }
     }
-    
+
     public function delete($id = null)
     {
         try {
-            $this->matakuliah->delete($id);
+            $this->modul->delete($id);
             return $this->respondDeleted(true);
-        } catch (\Throwable $th) {
+        } catch (\Throwable$th) {
             return $this->fail($th->getMessage());
         }
     }

@@ -38,7 +38,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
-                <a class="nav-link" href="<?= base_url('home')?>">
+                <a class="nav-link" href="<?= base_url('home') ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -50,9 +50,10 @@
                 </a>
                 <div id="collapseTwo" ng-class="{'collapse show' : root=='Master Data', 'collapse' : root!='Master Data'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan')?>">Jurusan</a>
-                        <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah')?>">Matakuliah</a>
-                    </div>  
+                        <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan') ?>">Jurusan</a>
+                        <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah') ?>">Matakuliah</a>
+                        <a ng-class="{'collapse-item active': title=='Modul', 'collapse-item': title!='Modul'}" href="<?= base_url('modul') ?>">Modul</a>
+                    </div>
                 </div>
             </li>
             <hr class="sidebar-divider d-none d-md-block">
@@ -106,8 +107,8 @@
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= session()->get('nama') ?></span>
+                                <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -222,6 +223,7 @@
     <script src="<?= base_url() ?>libs/datatables/btn.js"></script>
     <script src="<?= base_url() ?>libs/datatables/print.js"></script>
     <script src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() ?>libs/loading/dist/loadingoverlay.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url() ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>

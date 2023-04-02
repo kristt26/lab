@@ -48,7 +48,7 @@ function indexController($scope, helperServices, dashboardServices) {
         $scope.header = data;
         $scope.breadcrumb = data;
         $scope.title = data;
-        if(data=='Jurusan' || data=='Matakuliah'){
+        if (data == 'Jurusan' || data == 'Matakuliah' || data == 'Modul') {
             $scope.root = "Master Data"
         }
         $.LoadingOverlay("hide");
@@ -56,10 +56,6 @@ function indexController($scope, helperServices, dashboardServices) {
     $scope.$on("send", function (evt, data) {
         $scope.warning = data;
     });
-    dashboardServices.getLayanan().then(res=>{
-        $scope.layanan = res;
-        $scope.menuLayanan = res.baptis+res.sidi+res.nikah;
-    })
     
 }
 

@@ -20,7 +20,7 @@ function AuthService($http, $q, helperServices, pesan) {
         var def = $q.defer();
         $http({
             method: 'POST',
-            url: helperServices.url + "/login/check",
+            url: helperServices.url + "/auth/login",
             data: user,
             headers: {
                 'Content-Type': 'application/json'
@@ -31,6 +31,7 @@ function AuthService($http, $q, helperServices, pesan) {
         }, err => {
             def.reject(err.data.messages.error);
             pesan.error(err.data.messages.error);
+            $.LoadingOverlay("hide");
         });
         return def.promise;
     }
@@ -39,7 +40,7 @@ function AuthService($http, $q, helperServices, pesan) {
         var def = $q.defer();
         $http({
             method: 'POST',
-            url: helperServices.url + "/login/set",
+            url: helperServices.url + "/auth/setrole",
             data: user,
             headers: {
                 'Content-Type': 'application/json'

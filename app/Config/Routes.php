@@ -32,7 +32,7 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->get('spk', 'Spk::index');
 
-$routes->group('laboran', static function ($routes) {
+$routes->group('laboran', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Laboran::index');
     $routes->get('store', 'Admin\Laboran::store');
     $routes->get('read/(:any)', 'Admin\Laboran::read/$1');
@@ -41,7 +41,7 @@ $routes->group('laboran', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Laboran::delete/$1');
 });
 
-$routes->group('jurusan', [] , static function ($routes) {
+$routes->group('jurusan', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Jurusan::index');
     $routes->get('store', 'Admin\Jurusan::store');
     $routes->get('read/(:any)', 'Admin\Jurusan::read/$1');
@@ -57,6 +57,25 @@ $routes->group('matakuliah', static function ($routes) {
     $routes->post('post', 'Admin\Matakuliah::post');
     $routes->put('put', 'Admin\Matakuliah::put');
     $routes->delete('delete/(:any)', 'Admin\Matakuliah::delete/$1');
+});
+
+$routes->group('modul', static function ($routes) {
+    $routes->get('/', 'Admin\Modul::index');
+    $routes->get('store', 'Admin\Modul::store');
+    $routes->get('read/(:any)', 'Admin\Modul::read/$1');
+    $routes->post('post', 'Admin\Modul::post');
+    $routes->put('put', 'Admin\Modul::put');
+    $routes->delete('delete/(:any)', 'Admin\Modul::delete/$1');
+});
+
+$routes->group('auth', static function ($routes) {
+    $routes->get('/', 'Auth::index');
+    $routes->get('register', 'Auth::register');
+    $routes->post('login', 'Auth::login');
+    $routes->get('read/(:any)', 'Auth::read/$1');
+    $routes->post('setrole', 'Auth::setrole');
+    $routes->get('out', 'Auth::logout');
+    $routes->get('getdataregis', 'Auth::getdataregis');
 });
 
 /*
