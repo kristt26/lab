@@ -10,18 +10,31 @@ class Jadwal extends BaseController
     use ResponseTrait;
     protected $jurusan;
     protected $matakuliah;
-    protected $matakuliah;
+    protected $ta;
+    protected $kelas;
 
     public function __construct() {
-        $this->jurusan = new JurusanModel();
+        $this->jurusan = new \App\Models\JurusanModel();
+        $this->matakuliah = new \App\Models\MatkulModel();
+        $this->ta = new \App\Models\TaModel();
+        $this->kelas = new \App\Models\KelasModel();
     }
     public function index()
     {
-        return view('admin/jurusan', ['title'=>'Jurusan']);
+        return view('admin/jadwal', ['title'=>'Jadwal']);
     }
 
     public function store()
     {
+        $jurusans = $this->jurusan->asObject()->findAll();
+        foreach ($jurusans as $key => $jurusan) {
+            $jurusan->matakuliah = $this->matakuliah->where('jurusan_id', $jurusan->id)->findAll();
+        }
+        $data = [
+            "jurusan" => $jurusans,
+            "kelas" => $this->kelas->findAll(),
+            "ta" => $this->ta->where('status', '1')->first()
+        ];
         return $this->respond($this->jurusan->findAll());
     }
 
