@@ -1,7 +1,7 @@
 <?= $this->extend('template') ?>
 <?= $this->section('content') ?>
 <div ng-controller="registerController">
-    <form ng-submit="">
+    <form ng-submit="save()">
         <div class="form-group row">
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="form-group">

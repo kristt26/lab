@@ -9,11 +9,13 @@ class auth extends BaseController
 {
     use ResponseTrait;
     protected $user;
+    protected $kelas;
     protected $db;
 
     public function __construct()
     {
         $this->user = new \App\Models\UserModel();
+        $this->kelas = new \App\Models\KelasModel();
         $this->db = \Config\Database::connect();
     }
     public function index()
@@ -98,8 +100,10 @@ class auth extends BaseController
     public function getdataregis()
     {
         $jurusan = new \App\Models\JurusanModel();
-        $data = $jurusan->findAll();
-
+        $data = [
+            "jurusan" => $jurusan->findAll(),
+            "kelas" => $this->kelas->findAll()
+        ];
         return $this->respond($data);
     }
 
