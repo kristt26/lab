@@ -229,13 +229,18 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
     $scope.$emit("SendUp", "Jadwal");
     $scope.datas = {};
     $scope.model = {};
+    $scope.jadwals = [];
     $scope.hari = helperServices.hari;
     $scope.dataKamar = {};
     jadwalServices.get().then(res => {
         $scope.datas = res;
+        $scope.jadwals = $scope.datas.jurusan[0];
         console.log(res);
     })
 
+    $scope.setNilai = (id) => {
+        $scope.jadwals = $scope.datas.jurusan.find(x => x.id == id);
+    }
 
     $scope.save = () => {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {

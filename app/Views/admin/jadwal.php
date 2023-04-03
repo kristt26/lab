@@ -7,37 +7,44 @@
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Tahun Ajaran</th>
-                                <th>Kelas</th>
-                                <th>Matakuliah</th>
-                                <th>Hari</th>
-                                <th>Jam Mulai</th>
-                                <th>Jam Selesai</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in datas.jadwal">
-                                <td>{{$index+1}}</td>
-                                <td>{{item.ta}}</td>
-                                <td>{{item.kelas}}</td>
-                                <td>{{item.matakuliah}}</td>
-                                <td>{{item.hari}}</td>
-                                <td>{{item.jam_mulai}}</td>
-                                <td>{{item.jam_selesai}}</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" ng-repeat="item in datas.jurusan" ng-click="setNilai(item.id)">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ item.jurusan }}</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tahun Ajaran</th>
+                                    <th>Kelas</th>
+                                    <th>Matakuliah</th>
+                                    <th>Hari</th>
+                                    <th>Jam Mulai</th>
+                                    <th>Jam Selesai</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in jadwals.jadwal">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.tahun_akademik}}</td>
+                                    <td>{{item.kelas}}</td>
+                                    <td>{{item.nama_matakuliah}}</td>
+                                    <td>{{item.hari}}</td>
+                                    <td>{{item.jam_mulai}}</td>
+                                    <td>{{item.jam_selesai}}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
