@@ -109,12 +109,16 @@ class auth extends BaseController
 
     public function daftar()
     {
+        $mahasiswa =  new \App\Models\MahasiswaModel();
         $data = $this->request->getJSON();
         $data->status = '0';
         try {
-            $mahasiswa =  new \App\Models\MahasiswaModel();
-            $mahasiswa->insert($data);
-            return $this->respondCreated(true);
+            if($mahasiswa->where('npm', $data->npm)->countAllResults()==0){
+                $mahasiswa->insert($data);
+                return $this->respondCreated(true);
+            }else{
+                return $this->fail("NPM yang anda masukkan sudah terdaftar");
+            }
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());
         }

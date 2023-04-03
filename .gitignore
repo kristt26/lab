@@ -98,7 +98,7 @@ _modules/*
 # Jetbrains editors (PHPStorm, etc)
 .idea/
 *.iml
-.env
+*.env
 # Netbeans
 nbproject/
 build/
@@ -121,7 +121,6 @@ nb-configuration.xml
 # Visual Studio Code
 .vscode/
 
-.env
 
 /results/
 /phpunit*.xml
