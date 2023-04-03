@@ -23,7 +23,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in datas">
+                            <tr ng-repeat="item in datas.jadwal">
                                 <td>{{$index+1}}</td>
                                 <td>{{item.ta}}</td>
                                 <td>{{item.kelas}}</td>
