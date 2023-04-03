@@ -12,12 +12,14 @@ class Jadwal extends BaseController
     protected $matakuliah;
     protected $ta;
     protected $kelas;
+    protected $jadwal;
 
     public function __construct() {
         $this->jurusan = new \App\Models\JurusanModel();
         $this->matakuliah = new \App\Models\MatkulModel();
         $this->ta = new \App\Models\TaModel();
         $this->kelas = new \App\Models\KelasModel();
+        $this->jadwal = new \App\Models\JadwalModel();
     }
     public function index()
     {
@@ -29,6 +31,11 @@ class Jadwal extends BaseController
         $jurusans = $this->jurusan->asObject()->findAll();
         foreach ($jurusans as $key => $jurusan) {
             $jurusan->matakuliah = $this->matakuliah->where('jurusan_id', $jurusan->id)->findAll();
+            $jurusan->jadwal = $this->jadwal->select("jadwal.*, ta.tahun_ajaran, kelas.kelas, matakuliah.nama_matakuliah")
+            ->join("ta","ta.id = jadwal.ta_id", "LEFT")
+            ->join('kelas', "kelas.id = jadwal.kelas_id", "left")
+            ->join('matakuliah', "matakuliah.id = jadwal.matakuliah_id")
+            ->where('ta.status', '1')->where('matakuliah.jurusan_id', $jurusan->id)->findAll();
         }
         $data = [
             "jurusan" => $jurusans,
