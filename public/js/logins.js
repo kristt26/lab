@@ -63,4 +63,5 @@ function registerController($scope, AuthService, helperServices, pesan, regisSer
             document.location.href = helperServices.url;
         })
     }
+
 }
