@@ -54,7 +54,7 @@ class Jadwal extends BaseController
     {
         $data = $this->request->getJSON();
         try {
-            $this->jurusan->insert($data);
+            $this->jadwal->insert($data);
             $data->id = $this->jurusan->getInsertID();
             return $this->respondCreated($data);
         } catch (\Throwable $th) {
