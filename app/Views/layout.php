@@ -37,28 +37,45 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
-                <a class="nav-link" href="<?= base_url('home') ?>">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a ng-class="{'nav-link' : root=='Master Data', 'nav-link collapsed' : root!='Master Data'}" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Master Data</span>
-                </a>
-                <div id="collapseTwo" ng-class="{'collapse show' : root=='Master Data', 'collapse' : root!='Master Data'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a ng-class="{'collapse-item active': title=='Tahun Akademik', 'collapse-item': title!='Tahun Akademik'}" href="<?= base_url('ta') ?>">Tahun Akademik</a>
-                        <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan') ?>">Jurusan</a>
-                        <a ng-class="{'collapse-item active': title=='Kelas', 'collapse-item': title!='Kelas'}" href="<?= base_url('kelas') ?>">Kelas</a>
-                        <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah') ?>">Matakuliah</a>
-                        <a ng-class="{'collapse-item active': title=='jadwal', 'collapse-item': title!='jadwal'}" href="<?= base_url('jadwal') ?>">Jadwal</a>
-                        <a ng-class="{'collapse-item active': title=='Modul', 'collapse-item': title!='Modul'}" href="<?= base_url('modul') ?>">Modul</a>
+            <?php if (session()->get("role") == "Admin") : ?>
+                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
+                    <a class="nav-link" href="<?= base_url('home') ?>">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+                <li class="nav-item">
+                    <a ng-class="{'nav-link' : root=='Master Data', 'nav-link collapsed' : root!='Master Data'}" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Master Data</span>
+                    </a>
+                    <div id="collapseTwo" ng-class="{'collapse show' : root=='Master Data', 'collapse' : root!='Master Data'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a ng-class="{'collapse-item active': title=='Tahun Akademik', 'collapse-item': title!='Tahun Akademik'}" href="<?= base_url('ta') ?>">Tahun Akademik</a>
+                            <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan') ?>">Jurusan</a>
+                            <a ng-class="{'collapse-item active': title=='Kelas', 'collapse-item': title!='Kelas'}" href="<?= base_url('kelas') ?>">Kelas</a>
+                            <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah') ?>">Matakuliah</a>
+                            <a ng-class="{'collapse-item active': title=='jadwal', 'collapse-item': title!='jadwal'}" href="<?= base_url('jadwal') ?>">Jadwal</a>
+                            <a ng-class="{'collapse-item active': title=='Modul', 'collapse-item': title!='Modul'}" href="<?= base_url('modul') ?>">Modul</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            <?php endif; ?>
+
+            <?php if (session()->get("role") == "Mahasiswa") : ?>
+                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
+                    <a class="nav-link" href="<?= base_url('home') ?>">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+            <?php endif; ?>
+
+            <?php if (session()->get("role") == "Laboran") : ?>
+                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
+                    <a class="nav-link" href="<?= base_url('home') ?>">
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span></a>
+                </li>
+            <?php endif; ?>
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->

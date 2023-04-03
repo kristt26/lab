@@ -68,6 +68,7 @@ class auth extends BaseController
                     } else {
                         $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user->id)->get()->getRow();
                         $sessi = [
+                            'uid'  => $user['id'],
                             'nama' => $mahasiswa->nama_mahasiswa,
                             'role' => $role[0]['role'],
                             'is_login' => true
