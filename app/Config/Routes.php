@@ -30,6 +30,7 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+$routes->get('spk', 'Spk::index');
 
 $routes->group('laboran', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Laboran::index');

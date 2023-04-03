@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d648ee3b65e8d352e12e15817702e7cd",
+    "content-hash": "804cd0ab2cd6e70fe514f0d99b45eb06",
     "packages": [
         {
             "name": "codeigniter4/framework",
@@ -141,6 +141,82 @@
                 }
             ],
             "time": "2022-10-10T10:11:09+00:00"
+        },
+        {
+            "name": "ocs/spklib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kristt26/spklib.git",
+                "reference": "d8059d9ef55d9682bc0612c2d45456388c5ea283"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kristt26/spklib/zipball/d8059d9ef55d9682bc0612c2d45456388c5ea283",
+                "reference": "d8059d9ef55d9682bc0612c2d45456388c5ea283",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ocs\\spklib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ajenkris Kungkung",
+                    "email": "kristt26@gmail.com"
+                }
+            ],
+            "description": "SPK Library Method",
+            "support": {
+                "issues": "https://github.com/kristt26/spklib/issues",
+                "source": "https://github.com/kristt26/spklib/tree/master"
+            },
+            "time": "2023-03-17T17:18:38+00:00"
+        },
+        {
+            "name": "ocs/wplib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kristt26/wplib.git",
+                "reference": "119a3efa72aeea7eb0f4fc2d96c590abb6573e9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kristt26/wplib/zipball/119a3efa72aeea7eb0f4fc2d96c590abb6573e9f",
+                "reference": "119a3efa72aeea7eb0f4fc2d96c590abb6573e9f",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ocs\\wplib\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ajenkris Yanto Kungkung",
+                    "email": "kristt26@gmail.com"
+                }
+            ],
+            "description": "Library SPK",
+            "support": {
+                "issues": "https://github.com/kristt26/wplib/issues",
+                "source": "https://github.com/kristt26/wplib/tree/master"
+            },
+            "time": "2021-07-26T08:30:57+00:00"
         },
         {
             "name": "psr/log",
@@ -2165,8 +2241,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "ocs/wplib": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
