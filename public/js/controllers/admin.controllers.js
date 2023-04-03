@@ -226,25 +226,26 @@ function matakuliahController($scope, matakuliahServices, pesan) {
 }
 
 function jadwalController($scope, jadwalServices, pesan, helperServices) {
-    $scope.$emit("SendUp", "Matakuliah");
+    $scope.$emit("SendUp", "Jadwal");
     $scope.datas = {};
     $scope.model = {};
     $scope.hari = helperServices.hari;
     $scope.dataKamar = {};
-    matakuliahServices.get().then(res => {
+    jadwalServices.get().then(res => {
         $scope.datas = res;
+        console.log(res);
     })
 
 
     $scope.save = () => {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
             if ($scope.model.id) {
-                matakuliahServices.put($scope.model).then(res => {
+                jadwalServices.put($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
                 })
             } else {
-                matakuliahServices.post($scope.model).then(res => {
+                jadwalServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
                 })
@@ -252,13 +253,13 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
         })
     }
 
-    $scope.showMatakuliah = (param) => {
-        $scope.matakuliah = param.matakuliah;
-    };
+    // $scope.showMatakuliah = (param) => {
+    //     $scope.matakuliah = param.matakuliah;
+    // };
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
-            matakuliahServices.deleted(param).then(res => {
+            jadwalServices.deleted(param).then(res => {
                 pesan.Success('Berhasil menghapus');
             })
         })
