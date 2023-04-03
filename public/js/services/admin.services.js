@@ -704,7 +704,7 @@ function regisServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                def.resolve(res.data);
+                    def.resolve(res.data);
             },
             (err) => {
                 pesan.error(err.data.messages.error);
