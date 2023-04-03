@@ -6,14 +6,14 @@
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="form-group">
                     <label for="">NPM</label>
-                    <input type="text" class="form-control" aria-describedby="helpId" ng-model="model.npm" placeholder="NPM Mahasiswa">
+                    <input type="text" class="form-control" aria-describedby="helpId" ng-model="model.npm" placeholder="NPM Mahasiswa" required>
                 </div>
                 <!-- <input type="text" class="form-control" > -->
             </div>
             <div class="col-sm-8">
                 <div class="form-group">
                     <label for="">Nama</label>
-                    <input type="text" class="form-control" aria-describedby="helpId" ng-model="model.npm" placeholder="Nama Mahasiswa">
+                    <input type="text" class="form-control" aria-describedby="helpId" ng-model="model.nama_mahasiswa" placeholder="Nama Mahasiswa" required>
                 </div>
             </div>
         </div>
@@ -21,13 +21,13 @@
             <div class="col-sm-8">
                 <div class="form-group">
                     <label for="">Jurusan</label>
-                    <select class="form-control" ng-model="jurusan" ng-options="item.kelas for item in datas.jurusan" ng-change="model.jurusan_id=jurusan.id"></select>
+                    <select class="form-control" ng-model="jurusan" ng-options="item.jurusan for item in datas.jurusan" ng-change="model.jurusan_id=jurusan.id" required></select>
                 </div>
             </div>
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="form-group">
                     <label for="">Kelas</label>
-                    <select class="form-control" ng-model="kelas" ng-options="item.kelas for item in datas.kelas" ng-change="model.kelas_id = kelas.id"></select>
+                    <select class="form-control" ng-model="kelas" ng-options="item.kelas for item in datas.kelas" ng-change="model.kelas_id = kelas.id" required></select>
                 </div>
             </div>
         </div>
@@ -37,21 +37,21 @@
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="form-group">
                     <label for="">Email</label>
-                    <input type="email" class="form-control" ng-model="model.email" placeholder="Email Address">
+                    <input type="email" class="form-control" ng-model="model.email" placeholder="Email Address" required>
                 </div>
             </div>
             <div class="col-sm-6 mb-3 mb-sm-0">
                 <div class="form-group">
                     <div class="form-group">
                         <label for="">Telp/Hp</label>
-                        <input type="text" class="form-control" ng-model="model.kontak" placeholder="Telpon/Hp">
+                        <input type="text" class="form-control" ng-model="model.kontak" placeholder="Telpon/Hp" required>
                     </div>
                 </div>
 
             </div>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" ng-model="model.alamat" placeholder="Alamat">
+            <input type="text" class="form-control" ng-model="model.alamat" placeholder="Alamat" required>
         </div>
 
         <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>

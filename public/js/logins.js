@@ -49,8 +49,6 @@ function registerController($scope, AuthService, helperServices, pesan, regisSer
     $scope.jurusan = [];
     $scope.title = "Register";
     $scope.$emit("SendUp", $scope.title);
-    $scope.model.username = "Administrator";
-    $scope.model.password = "Administrator#1";
     sessionStorage.clear();
 
     regisServices.get().then(res => {
@@ -58,17 +56,15 @@ function registerController($scope, AuthService, helperServices, pesan, regisSer
         console.log(res);
     })
 
-    $scope.login = () => {
-        $.LoadingOverlay("show");
-        AuthService.login($scope.model).then((res) => {
-            if (res.length == 1) {
-                document.location.href = helperServices.url;
-            } else {
-                $scope.roles = res;
+    $scope.save = () => {
+        pesan.dialog('Pastikan data sudah benar! \n Yakin ingin menyimpan', 'Ya', 'Tidak').then(x=>{
+            console.log($scope.model);
+            $.LoadingOverlay("show");
+            regisServices.post($scope.model).then(res=>{
+                $scope.model = {};
+                pesan.success("Proses berhasil \n silahkan hubungi laboratorium untuk mengaktifkan akun!")
                 $.LoadingOverlay("hide");
-                $scope.role = res;
-                $(".modal").modal('show');
-            }
+            })
         })
     }
     $scope.setRole = (item) => {

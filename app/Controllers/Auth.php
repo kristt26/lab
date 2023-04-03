@@ -109,12 +109,20 @@ class auth extends BaseController
 
     public function daftar()
     {
-        # code...
+        $data = $this->request->getJSON();
+        $data->status = '0';
+        try {
+            $mahasiswa =  new \App\Models\MahasiswaModel();
+            $mahasiswa->insert($data);
+            return $this->respondCreated(true);
+        } catch (\Throwable $th) {
+            return $this->fail($th->getMessage());
+        }
     }
 
     public function logout()
     {
         session()->destroy();
-        return redirect()->to(base_url('auth'));
+        return redirect()->to(base_url());
     }
 }
