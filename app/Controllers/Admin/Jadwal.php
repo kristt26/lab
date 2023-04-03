@@ -21,7 +21,7 @@ class Jadwal extends BaseController
     }
     public function index()
     {
-        return view('admin/jurusan', ['title'=>'Jurusan']);
+        return view('admin/jadwal', ['title'=>'Jadwal']);
     }
 
     public function store()
