@@ -35,7 +35,7 @@ class Jadwal extends BaseController
             "kelas" => $this->kelas->findAll(),
             "ta" => $this->ta->where('status', '1')->first()
         ];
-        return $this->respond($this->jurusan->findAll());
+        return $this->respond($data);
     }
 
     public function read($id = null)
