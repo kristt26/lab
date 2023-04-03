@@ -225,10 +225,11 @@ function matakuliahController($scope, matakuliahServices, pesan) {
 
 }
 
-function jadwalController($scope, jadwalServices, pesan) {
+function jadwalController($scope, jadwalServices, pesan, helperServices) {
     $scope.$emit("SendUp", "Matakuliah");
     $scope.datas = {};
     $scope.model = {};
+    $scope.hari = helperServices.hari;
     $scope.dataKamar = {};
     matakuliahServices.get().then(res => {
         $scope.datas = res;
