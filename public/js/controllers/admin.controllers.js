@@ -9,7 +9,7 @@ angular.module('adminctrl', [])
     .controller('taController', taController)
 
     ;
-
+sd
 function dashboardController($scope, dashboardServices) {
     $scope.$emit("SendUp", "Dashboard");
     $scope.datas = {};

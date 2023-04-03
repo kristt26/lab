@@ -97,6 +97,15 @@ $routes->group('ta', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Ta::delete/$1');
 });
 
+$routes->group('jadwal', static function ($routes) {
+    $routes->get('/', 'Admin\Jadwal::index');
+    $routes->get('store', 'Admin\Jadwal::store');
+    $routes->get('read/(:any)', 'Admin\Jadwal::read/$1');
+    $routes->post('post', 'Admin\Jadwal::post');
+    $routes->put('put', 'Admin\Jadwal::put');
+    $routes->delete('delete/(:any)', 'Admin\Jadwal::delete/$1');
+});
+
 
 
 /*
