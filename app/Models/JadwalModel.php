@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MatkulModel extends Model
+class JadwalModel extends Model
 {
     protected $DBGroup = 'default';
     protected $table = 'jadwal';
