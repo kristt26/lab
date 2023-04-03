@@ -32,6 +32,17 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 $routes->get('spk', 'Spk::index');
 
+$routes->group('auth', static function ($routes) {
+    $routes->get('/', 'Auth::index');
+    $routes->get('register', 'Auth::register');
+    $routes->post('login', 'Auth::login');
+    $routes->get('read/(:any)', 'Auth::read/$1');
+    $routes->post('setrole', 'Auth::setrole');
+    $routes->get('out', 'Auth::logout');
+    $routes->get('getdataregis', 'Auth::getdataregis');
+    $routes->post('daftar', 'Auth::daftar');
+});
+
 $routes->group('laboran', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Laboran::index');
     $routes->get('store', 'Admin\Laboran::store');
@@ -68,15 +79,16 @@ $routes->group('modul', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Modul::delete/$1');
 });
 
-$routes->group('auth', static function ($routes) {
-    $routes->get('/', 'Auth::index');
-    $routes->get('register', 'Auth::register');
-    $routes->post('login', 'Auth::login');
-    $routes->get('read/(:any)', 'Auth::read/$1');
-    $routes->post('setrole', 'Auth::setrole');
-    $routes->get('out', 'Auth::logout');
-    $routes->get('getdataregis', 'Auth::getdataregis');
+$routes->group('ta', static function ($routes) {
+    $routes->get('/', 'Admin\Ta::index');
+    $routes->get('store', 'Admin\Ta::store');
+    $routes->get('read/(:any)', 'Admin\Ta::read/$1');
+    $routes->post('post', 'Admin\Ta::post');
+    $routes->put('put', 'Admin\Ta::put');
+    $routes->delete('delete/(:any)', 'Admin\Ta::delete/$1');
 });
+
+
 
 /*
  * --------------------------------------------------------------------

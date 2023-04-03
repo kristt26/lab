@@ -103,6 +103,11 @@ class auth extends BaseController
         return $this->respond($data);
     }
 
+    public function daftar()
+    {
+        # code...
+    }
+
     public function logout()
     {
         session()->destroy();

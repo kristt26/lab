@@ -5,6 +5,7 @@ angular.module('adminctrl', [])
     .controller('jurusanController', jurusanController)
     .controller('matakuliahController', matakuliahController)
     .controller('modulController', modulController)
+    .controller('taController', taController)
 
     ;
 
@@ -222,4 +223,52 @@ function modulController($scope, modulServices, pesan) {
         $("#add").modal('show');
     }
 
+}
+
+function taController($scope, taServices, pesan) {
+    $scope.$emit("SendUp", "Tahun Akademik");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    taServices.get().then(res=>{
+        $scope.datas = res;
+    })
+
+    $scope.pesan = (param)=>{
+        pesan.success(param);
+    }
+
+    $scope.edit = (param)=>{
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.save = ()=>{
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x=>{
+            var item = $scope.datas.find(x=>x.tahun_akademik==$scope.model.tahun_akademik && x.semester==$scope.model.semester);
+            if(! item){
+                if($scope.model.id){
+                    taServices.put($scope.model).then(res=>{
+                        $scope.model = {};
+                        $("#add").modal('hide');
+                    })
+                }else{
+                    taServices.post($scope.model).then(res=>{
+                        $scope.model = {};
+                        $("#add").modal('hide');
+                    })
+                }
+            }else{
+                pesan.error('Tahun akademik yang diinput telah ada pada list')
+            }
+        })
+    }
+
+    $scope.delete = (param)=>{
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x=>{
+            taServices.deleted(param).then(res=>{
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
 }

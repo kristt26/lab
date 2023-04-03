@@ -1,12 +1,24 @@
 angular.module('loginsApp', ['auth.service', 'helper.service', 'message.service', 'swangular', 'admin.service'])
     .controller('loginController', loginController)
-    .controller('registerController', registerController);
+    .controller('registerController', registerController)
+    .controller('indexController', indexController);
+
+function indexController($scope, AuthService, helperServices, pesan) {
+    $scope.role = [];
+    $scope.model = {};
+    $scope.roles = [];
+    $scope.title = "Login";
+    $scope.$on("SendUp", function (evt, data) {
+        $scope.title = data;
+    });
+}
 
 function loginController($scope, AuthService, helperServices, pesan) {
     $scope.role = [];
     $scope.model = {};
     $scope.roles = [];
     $scope.title = "Login";
+    $scope.$emit("SendUp", $scope.title);
     $scope.model.username = "Administrator";
     $scope.model.password = "Administrator#1";
     sessionStorage.clear();
@@ -35,7 +47,8 @@ function registerController($scope, AuthService, helperServices, pesan, regisSer
     $scope.model = {};
     $scope.roles = [];
     $scope.jurusan = [];
-    $scope.title = "Login";
+    $scope.title = "Register";
+    $scope.$emit("SendUp", $scope.title);
     $scope.model.username = "Administrator";
     $scope.model.password = "Administrator#1";
     sessionStorage.clear();

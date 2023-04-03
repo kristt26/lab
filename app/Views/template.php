@@ -20,7 +20,7 @@
 
 </head>
 
-<body class="bg-gradient-primary" ng-controller="loginController">
+<body class="bg-gradient-primary" ng-controller="indexController">
 
     <div class="container">
 
