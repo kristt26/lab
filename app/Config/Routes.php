@@ -61,6 +61,15 @@ $routes->group('jurusan', ['filter' => 'admin_auth'], static function ($routes) 
     $routes->delete('delete/(:any)', 'Admin\Jurusan::delete/$1');
 });
 
+$routes->group('kelas', ['filter' => 'admin_auth'], static function ($routes) {
+    $routes->get('/', 'Admin\Kelas::index');
+    $routes->get('store', 'Admin\Kelas::store');
+    $routes->get('read/(:any)', 'Admin\Kelas::read/$1');
+    $routes->post('post', 'Admin\Kelas::post');
+    $routes->put('put', 'Admin\Kelas::put');
+    $routes->delete('delete/(:any)', 'Admin\Kelas::delete/$1');
+});
+
 $routes->group('matakuliah', static function ($routes) {
     $routes->get('/', 'Admin\Matakuliah::index');
     $routes->get('store', 'Admin\Matakuliah::store');

@@ -3,6 +3,7 @@ angular.module('adminctrl', [])
     .controller('dashboardController', dashboardController)
     .controller('laboranController', laboranController)
     .controller('jurusanController', jurusanController)
+    .controller('kelasController', kelasController)
     .controller('matakuliahController', matakuliahController)
     .controller('modulController', modulController)
     .controller('taController', taController)
@@ -129,6 +130,49 @@ function jurusanController($scope, jurusanServices, pesan) {
     $scope.delete = (param)=>{
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x=>{
             jurusanServices.deleted(param).then(res=>{
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function kelasController($scope, kelasServices, pesan) {
+    $scope.$emit("SendUp", "Kelas");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    kelasServices.get().then(res => {
+        $scope.datas = res;
+    })
+
+    $scope.pesan = (param) => {
+        pesan.success(param);
+    }
+
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.save = () => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            if ($scope.model.id) {
+                kelasServices.put($scope.model).then(res => {
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            } else {
+                kelasServices.post($scope.model).then(res => {
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            }
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            kelasServices.deleted(param).then(res => {
                 pesan.Success('Berhasil menghapus');
             })
         })

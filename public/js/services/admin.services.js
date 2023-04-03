@@ -288,7 +288,7 @@ function jurusanServices($http, $q, helperServices, AuthService, pesan) {
 }
 
 function kelasServices($http, $q, helperServices, AuthService, pesan) {
-    var controller = helperServices.url + 'jurusan/';
+    var controller = helperServices.url + 'kelas/';
     var service = {};
     service.data = [];
     return {
@@ -367,7 +367,7 @@ function kelasServices($http, $q, helperServices, AuthService, pesan) {
             (res) => {
                 var data = service.data.find(x => x.id == param.id);
                 if (data) {
-                    data.jurusan = param.jurusan;
+                    data.kelas = param.kelas;
                 }
                 def.resolve(res.data);
             },
