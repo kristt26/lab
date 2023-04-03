@@ -79,9 +79,9 @@
                             <label for="">Jam Praktikum</label>
                             <div class="form-inline d-flex justify-content-between">
                                 <!-- <div class="form-group"> -->
-                                <input type="time" ng-model="jam_mulai" class="form-control mr-4" placeholder="" aria-describedby="helpId">
+                                <input type="time" ng-model="model.jam_mulai" class="form-control mr-4" placeholder="" aria-describedby="helpId">
                                 <span>s/d</span>
-                                <input type="time" ng-model="jam_selesai" class="form-control ml-4" placeholder="" aria-describedby="helpId">
+                                <input type="time" ng-model="model.jam_selesai" class="form-control ml-4" placeholder="" aria-describedby="helpId">
                                 <!-- </div> -->
                             </div>
                         </div>

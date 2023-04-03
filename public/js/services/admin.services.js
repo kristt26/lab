@@ -582,9 +582,9 @@ function jadwalServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.jurusan_id);
+                var data = service.data.jurusan.find(x => x.id == param.jurusan_id);
                 if (data) {
-                    data.matakuliah.push(res.data);
+                    data.jadwal.push(res.data);
                 }
                 def.resolve(res.data);
             },

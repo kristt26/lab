@@ -246,6 +246,8 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
                 })
             } else {
                 $scope.model.ta_id = $scope.datas.ta.id;
+                $scope.model.jam_mulai = $scope.model.jam_mulai.getHours() + ":" + $scope.model.jam_mulai.getMinutes();
+                $scope.model.jam_selesai = $scope.model.jam_selesai.getHours() + ":" + $scope.model.jam_selesai.getMinutes();
                 jadwalServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
