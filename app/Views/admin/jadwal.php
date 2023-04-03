@@ -7,44 +7,44 @@
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
         </div>
         <div class="card-body">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" ng-repeat="item in datas.jurusan" ng-click="setNilai(item.id)">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ item.jurusan }}</a>
-                </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="row">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tahun Ajaran</th>
-                                    <th>Kelas</th>
-                                    <th>Matakuliah</th>
-                                    <th>Hari</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="item in jadwals.jadwal">
-                                    <td>{{$index+1}}</td>
-                                    <td>{{item.tahun_akademik}}</td>
-                                    <td>{{item.kelas}}</td>
-                                    <td>{{item.nama_matakuliah}}</td>
-                                    <td>{{item.hari}}</td>
-                                    <td>{{item.jam_mulai}}</td>
-                                    <td>{{item.jam_selesai}}</td>
-                                    <td>
-                                        <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
-                                        <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a ng-repeat="item in datas.jurusan" ng-class="{'nav-item nav-link active' : $index==0, 'nav-item nav-link':$index !=0}" ng-click="setNilai(item.id)" id="nav-home-{{$index+1}}" data-toggle="tab" href="#nav-home{{$index+1}}" role="tab" aria-controls="nav-home{{$index+1}}" aria-selected="true">{{item.jurusan}}</a>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="table-responsive" style="margin-top: 20px;">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tahun Ajaran</th>
+                                        <th>Kelas</th>
+                                        <th>Matakuliah</th>
+                                        <th>Hari</th>
+                                        <th>Jam Mulai</th>
+                                        <th>Jam Selesai</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in jadwals.jadwal">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.tahun_akademik}}</td>
+                                        <td>{{item.kelas}}</td>
+                                        <td>{{item.nama_matakuliah}}</td>
+                                        <td>{{item.hari}}</td>
+                                        <td>{{item.jam_mulai}}</td>
+                                        <td>{{item.jam_selesai}}</td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                 </div>
             </div>
 
@@ -72,11 +72,11 @@
                         </div>
                         <div class="form-group">
                             <label>Matakuliah</label>
-                            <select class="form-control" ng-options="item.nama_matakuliah for item in matakuliahs" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id"></select>
+                            <select class="form-control" ng-options="item.nama_matakuliah for item in matakuliahs" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
                         </div>
                         <div class="form-group">
                             <label>Kelas</label>
-                            <select class="form-control" ng-options="item.kelas for item in datas.kelas" ng-model="kelas" ng-change="model.kelas_id = kelas.id"></select>
+                            <select class="form-control" ng-options="item.kelas for item in datas.kelas" ng-model="kelas" ng-change="model.kelas_id = kelas.id; model.kelas = kelas.kelas"></select>
                         </div>
                         <div class="form-group">
                             <label>Hari</label>

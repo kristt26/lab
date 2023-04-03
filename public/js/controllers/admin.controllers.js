@@ -228,6 +228,7 @@ function matakuliahController($scope, matakuliahServices, pesan) {
 function jadwalController($scope, jadwalServices, pesan, helperServices) {
     $scope.$emit("SendUp", "Jadwal");
     $scope.datas = {};
+    $scope.jurusan = {};
     $scope.model = {};
     $scope.jadwals = [];
     $scope.hari = helperServices.hari;
@@ -251,9 +252,12 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
                 })
             } else {
                 $scope.model.ta_id = $scope.datas.ta.id;
+                $scope.model.tahun_akademik = $scope.datas.ta.tahun_akademik;
                 $scope.model.jam_mulai = $scope.model.jam_mulai.getHours() + ":" + $scope.model.jam_mulai.getMinutes();
                 $scope.model.jam_selesai = $scope.model.jam_selesai.getHours() + ":" + $scope.model.jam_selesai.getMinutes();
                 jadwalServices.post($scope.model).then(res => {
+                    var item = $scope.datas.jurusan.find(x=>x.id = $scope.jurusan.id)
+                    item.jadwal.push(res);
                     $scope.model = {};
                     $("#add").modal('hide');
                 })
