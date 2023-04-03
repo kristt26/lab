@@ -104,7 +104,6 @@ class auth extends BaseController
             "jurusan" => $jurusan->findAll(),
             "kelas" => $this->kelas->findAll()
         ];
-
         return $this->respond($data);
     }
 

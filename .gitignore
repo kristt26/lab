@@ -98,8 +98,7 @@ _modules/*
 # Jetbrains editors (PHPStorm, etc)
 .idea/
 *.iml
-.gitignore
-
+.env
 # Netbeans
 nbproject/
 build/

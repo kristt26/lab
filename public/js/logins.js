@@ -54,7 +54,7 @@ function registerController($scope, AuthService, helperServices, pesan, regisSer
     sessionStorage.clear();
 
     regisServices.get().then(res => {
-        $scope.jurusan = res;
+        $scope.datas = res;
         console.log(res);
     })
 
