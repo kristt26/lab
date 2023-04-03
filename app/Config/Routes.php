@@ -107,6 +107,16 @@ $routes->group('jadwal', static function ($routes) {
 });
 
 
+$routes->group('kontrak', static function ($routes) {
+    $routes->get('/', 'Mahasiswa\Kontrak::index');
+    $routes->get('store', 'Mahasiswa\Jadwal::store');
+    $routes->get('read/(:any)', 'Mahasiswa\Jadwal::read/$1');
+    $routes->post('post', 'Mahasiswa\Jadwal::post');
+    $routes->put('put', 'Mahasiswa\Jadwal::put');
+    $routes->delete('delete/(:any)', 'Mahasiswa\Jadwal::delete/$1');
+});
+
+
 
 /*
  * --------------------------------------------------------------------
