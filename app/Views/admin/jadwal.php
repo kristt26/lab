@@ -57,7 +57,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Tahun Ajaran</label>
-                            <input type="text" class="form-control" ng-model="model.kelas" required aria-describedby="helpId" placeholder="Nama Kelas">
+                            <input type="text" class="form-control" ng-model="datas.ta.tahun_akademik" required aria-describedby="helpId" placeholder="Tahun Akademik" readonly>
                         </div>
                         <div class="form-group">
                             <label>Jurusan</label>
@@ -76,8 +76,14 @@
                             <select class="form-control" ng-options="item for item in hari" ng-model="model.hari"></select>
                         </div>
                         <div class="form-group">
-                            <label>Jam Mulai</label>
-                            <input type="time">
+                            <label for="">Jam Praktikum</label>
+                            <div class="form-inline d-flex justify-content-between">
+                                <!-- <div class="form-group"> -->
+                                <input type="time" ng-model="jam_mulai" class="form-control mr-4" placeholder="" aria-describedby="helpId">
+                                <span>s/d</span>
+                                <input type="time" ng-model="jam_selesai" class="form-control ml-4" placeholder="" aria-describedby="helpId">
+                                <!-- </div> -->
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

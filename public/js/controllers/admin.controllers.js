@@ -245,6 +245,7 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
                     $("#add").modal('hide');
                 })
             } else {
+                $scope.model.ta_id = $scope.datas.ta.id;
                 jadwalServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
