@@ -14,37 +14,39 @@
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                        <div class="table-responsive" style="margin-top: 20px;">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Tahun Ajaran</th>
-                                        <th>Kelas</th>
-                                        <th>Matakuliah</th>
-                                        <th>Hari</th>
-                                        <th>Jam Mulai</th>
-                                        <th>Jam Selesai</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in jadwals.jadwal">
-                                        <td>{{$index+1}}</td>
-                                        <td>{{item.tahun_akademik}}</td>
-                                        <td>{{item.kelas}}</td>
-                                        <td>{{item.nama_matakuliah}}</td>
-                                        <td>{{item.hari}}</td>
-                                        <td>{{item.jam_mulai}}</td>
-                                        <td>{{item.jam_selesai}}</td>
-                                        <td>
-                                            <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="table-responsive" style="margin-top: 20px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tahun Ajaran</th>
+                                    <th>Kelas</th>
+                                    <th>Matakuliah</th>
+                                    <th>Hari</th>
+                                    <th>Ruangan</th>
+                                    <th>Jam Mulai</th>
+                                    <th>Jam Selesai</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in jadwals.jadwal">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.tahun_akademik}}</td>
+                                    <td>{{item.kelas}}</td>
+                                    <td>{{item.nama_matakuliah}}</td>
+                                    <td>{{item.hari}}</td>
+                                    <td>{{item.ruang}}</td>
+                                    <td>{{item.jam_mulai}}</td>
+                                    <td>{{item.jam_selesai}}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -81,6 +83,13 @@
                         <div class="form-group">
                             <label>Hari</label>
                             <select class="form-control" ng-options="item for item in hari" ng-model="model.hari"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ruangan</label>
+                            <select class="form-control" ng-model="model.ruang">
+                                <option value="Software I">Software I</option>
+                                <option value="Software II">Software II</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="">Jam Praktikum</label>
