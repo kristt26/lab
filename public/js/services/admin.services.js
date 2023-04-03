@@ -699,16 +699,16 @@ function regisServices($http, $q, helperServices, AuthService, pesan) {
         var def = $q.defer();
         $http({
             method: 'post',
-            url: controller + 'post',
+            url: controller + 'daftar',
             data: param,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                service.data.push(res.data);
                 def.resolve(res.data);
             },
             (err) => {
                 pesan.error(err.data.messages.error);
+                $.LoadingOverlay("hide");
                 def.reject(err);
             }
         );
