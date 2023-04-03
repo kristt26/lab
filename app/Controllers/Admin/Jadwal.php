@@ -31,7 +31,7 @@ class Jadwal extends BaseController
         $jurusans = $this->jurusan->asObject()->findAll();
         foreach ($jurusans as $key => $jurusan) {
             $jurusan->matakuliah = $this->matakuliah->where('jurusan_id', $jurusan->id)->findAll();
-            $jurusan->jadwal = $this->jadwal->select("jadwal.*, ta.tahun_ajaran, kelas.kelas, matakuliah.nama_matakuliah")
+            $jurusan->jadwal = $this->jadwal->select("jadwal.*, ta.tahun_akademik, kelas.kelas, matakuliah.nama_matakuliah")
             ->join("ta","ta.id = jadwal.ta_id", "LEFT")
             ->join('kelas', "kelas.id = jadwal.kelas_id", "left")
             ->join('matakuliah', "matakuliah.id = jadwal.matakuliah_id")
