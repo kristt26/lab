@@ -5,6 +5,7 @@ angular.module('adminctrl', [])
     .controller('jurusanController', jurusanController)
     .controller('kelasController', kelasController)
     .controller('matakuliahController', matakuliahController)
+    .controller('jadwalController', jadwalController)
     .controller('modulController', modulController)
     .controller('taController', taController)
 
@@ -180,6 +181,51 @@ function kelasController($scope, kelasServices, pesan) {
 }
 
 function matakuliahController($scope, matakuliahServices, pesan) {
+    $scope.$emit("SendUp", "Matakuliah");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    matakuliahServices.get().then(res => {
+        $scope.datas = res;
+    })
+
+
+    $scope.save = () => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            if ($scope.model.id) {
+                matakuliahServices.put($scope.model).then(res => {
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            } else {
+                matakuliahServices.post($scope.model).then(res => {
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            }
+        })
+    }
+
+    $scope.showMatakuliah = (param) => {
+        $scope.matakuliah = param.matakuliah;
+    };
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            matakuliahServices.deleted(param).then(res => {
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+}
+
+function jadwalController($scope, jadwalServices, pesan) {
     $scope.$emit("SendUp", "Matakuliah");
     $scope.datas = {};
     $scope.model = {};
