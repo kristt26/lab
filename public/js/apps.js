@@ -50,6 +50,8 @@ function indexController($scope, helperServices, dashboardServices) {
         $scope.title = data;
         if (data == 'Jurusan' || data == 'Matakuliah' || data == 'Modul' || data == 'Kelas' || data == 'Jadwal' || data == 'Tahun Akademik') {
             $scope.root = "Master Data"
+        }else if(data == 'Mahasiswa'){
+            $scope.root = "Pendataan"
         }
         $.LoadingOverlay("hide");
     });
