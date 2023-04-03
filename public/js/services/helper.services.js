@@ -232,6 +232,16 @@ function helperServices($location) {
         "WIRASWASTA",
         "LAINNYA"
     ];
+
+    service.hari = [
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jumat",
+        "Sabtu",
+    ];
+
     service.lastPath = document.location.href.substring(document.location.href.lastIndexOf('/') + 1);
     return service;
 }
