@@ -97,8 +97,8 @@ function jurusanController($scope, jurusanServices, pesan) {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
             $.LoadingOverlay('show');
             jurusanServices.deleted(param).then(res => {
-                pesan.Success('Berhasil menghapus');
                 $.LoadingOverlay('hide');
+                pesan.Success('Berhasil menghapus');
             })
         })
     }
@@ -109,8 +109,10 @@ function kelasController($scope, kelasServices, pesan) {
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
+    $.LoadingOverlay('show');
     kelasServices.get().then(res => {
         $scope.datas = res;
+        $.LoadingOverlay('hide');
     })
 
     $scope.pesan = (param) => {
@@ -124,15 +126,18 @@ function kelasController($scope, kelasServices, pesan) {
 
     $scope.save = () => {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             if ($scope.model.id) {
                 kelasServices.put($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             } else {
                 kelasServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             }
         })
@@ -140,7 +145,9 @@ function kelasController($scope, kelasServices, pesan) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             kelasServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -152,22 +159,27 @@ function matakuliahController($scope, matakuliahServices, pesan) {
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
+    $.LoadingOverlay('show');
     matakuliahServices.get().then(res => {
         $scope.datas = res;
+        $.LoadingOverlay('hide');
     })
 
 
     $scope.save = () => {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             if ($scope.model.id) {
                 matakuliahServices.put($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             } else {
                 matakuliahServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             }
         })
@@ -179,7 +191,9 @@ function matakuliahController($scope, matakuliahServices, pesan) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             matakuliahServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -200,10 +214,12 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
     $scope.jadwals = [];
     $scope.hari = helperServices.hari;
     $scope.dataKamar = {};
+    $.LoadingOverlay('show');
     jadwalServices.get().then(res => {
         $scope.datas = res;
         $scope.jadwals = $scope.datas.jurusan[0];
-        console.log(res);
+        // console.log(res);
+        $.LoadingOverlay('hide');
     })
 
     $scope.setNilai = (id) => {
@@ -212,10 +228,12 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
 
     $scope.save = () => {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             if ($scope.model.id) {
                 jadwalServices.put($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             } else {
                 $scope.model.ta_id = $scope.datas.ta.id;
@@ -227,6 +245,7 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
                     item.jadwal.push(res);
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             }
         })
@@ -238,7 +257,9 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             jadwalServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -256,22 +277,27 @@ function modulController($scope, modulServices, pesan) {
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
+    $.LoadingOverlay('show');
     modulServices.get().then(res => {
         $scope.datas = res;
+        $.LoadingOverlay('hide');
     })
 
 
     $scope.save = () => {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             if ($scope.model.id) {
                 modulServices.put($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             } else {
                 modulServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             }
         })
@@ -283,7 +309,9 @@ function modulController($scope, modulServices, pesan) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             modulServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -301,8 +329,10 @@ function taController($scope, taServices, pesan, helperServices) {
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
+    $.LoadingOverlay('show');
     taServices.get().then(res => {
         $scope.datas = res;
+        $.LoadingOverlay('hide');
     })
 
     $scope.pesan = (param) => {
@@ -323,16 +353,19 @@ function taController($scope, taServices, pesan, helperServices) {
             var data = angular.copy($scope.model);
             data.tgl_mulai = helperServices.dateToString(data.tgl_mulai);
             data.tgl_selesai = helperServices.dateToString(data.tgl_selesai);
+            $.LoadingOverlay('show');
             if ($scope.model.id) {
                 taServices.put(data).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             } else {
                 if (!item) {
                     taServices.post(data).then(res => {
                         $scope.model = {};
                         $("#add").modal('hide');
+                        $.LoadingOverlay('hide');
                     })
                 } else {
                     pesan.error('Tahun akademik yang diinput telah ada pada list')
@@ -345,8 +378,10 @@ function taController($scope, taServices, pesan, helperServices) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             taServices.deleted(param).then(res => {
                 pesan.Success('Berhasil menghapus');
+                $.LoadingOverlay('hide');
             })
         })
     }
@@ -359,6 +394,7 @@ function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder)
     $scope.dataKamar = {};
     $scope.jurusans = {};
     $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('scrollX', '100%');
+    $.LoadingOverlay('show');
     mahasiswaServices.get().then(res => {
         $scope.datas = res;
         $scope.datas.jurusan.forEach(element => {
@@ -367,6 +403,7 @@ function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder)
         });
         $scope.jurusans = $scope.datas.jurusan[0];
         console.log($scope.jurusans);
+        $.LoadingOverlay('hide');
     })
 
 
@@ -388,12 +425,14 @@ function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder)
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
             mahasiswaServices.put(param).then(res => {
                 var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
+                $.LoadingOverlay('show');
                 if (jurusan) {
                     var index = jurusan.dataPengajuan.indexOf(param);
                     jurusan.dataPengajuan.splice(index, 1);
                     param.user_id = res;
                     jurusan.dataMahasiswa.push(angular.copy(param));
                 }
+                $.LoadingOverlay('hide');
                 pesan.Success("Process Success");
             })
         })
@@ -401,7 +440,9 @@ function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder)
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             mahasiswaServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -473,12 +514,14 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder) {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
             kontrakServices.put(param).then(res => {
                 var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
+                $.LoadingOverlay('show');
                 if (jurusan) {
                     var index = jurusan.dataPengajuan.indexOf(param);
                     jurusan.dataPengajuan.splice(index, 1);
                     param.user_id = res;
                     jurusan.dataMahasiswa.push(angular.copy(param));
                 }
+                $.LoadingOverlay('hide');
                 pesan.Success("Process Success");
             })
         })
@@ -486,7 +529,9 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             kontrakServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -497,12 +542,15 @@ function daftarLaboranController($scope, daftarLaboranServices, pesan, DTOptions
     $scope.$emit("SendUp", "Pendaftaran Laboran");
     $scope.datas = {};
     $scope.model = {};
+    $.LoadingOverlay('show');
     daftarLaboranServices.get().then((res)=>{
         $scope.datas = res;
         console.log(res);
+        $.LoadingOverlay('hide');
     })
     $scope.save = () => {
         pesan.dialog('Yakin ingin mendaftar?', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             daftarLaboranServices.post($scope.model).then(res => {
                 
             })
@@ -511,7 +559,9 @@ function daftarLaboranController($scope, daftarLaboranServices, pesan, DTOptions
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             kontrakServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -584,12 +634,14 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
             mengawasServices.put(param).then(res => {
                 var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
+                $.LoadingOverlay("show");
                 if (jurusan) {
                     var index = jurusan.dataPengajuan.indexOf(param);
                     jurusan.dataPengajuan.splice(index, 1);
                     param.user_id = res;
                     jurusan.dataMahasiswa.push(angular.copy(param));
                 }
+                $.LoadingOverlay("hide");
                 pesan.Success("Process Success");
             })
         })
@@ -597,7 +649,9 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay("show");
             mengawasServices.deleted(param).then(res => {
+                $.LoadingOverlay("hide");
                 pesan.Success('Berhasil menghapus');
             })
         })
