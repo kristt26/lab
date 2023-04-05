@@ -70,7 +70,7 @@ $routes->group('kelas', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Kelas::delete/$1');
 });
 
-$routes->group('matakuliah', static function ($routes) {
+$routes->group('matakuliah', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Matakuliah::index');
     $routes->get('store', 'Admin\Matakuliah::store');
     $routes->get('read/(:any)', 'Admin\Matakuliah::read/$1');
@@ -79,7 +79,7 @@ $routes->group('matakuliah', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Matakuliah::delete/$1');
 });
 
-$routes->group('modul', static function ($routes) {
+$routes->group('modul', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Modul::index');
     $routes->get('store', 'Admin\Modul::store');
     $routes->get('read/(:any)', 'Admin\Modul::read/$1');
@@ -88,7 +88,7 @@ $routes->group('modul', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Modul::delete/$1');
 });
 
-$routes->group('ta', static function ($routes) {
+$routes->group('ta', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Ta::index');
     $routes->get('store', 'Admin\Ta::store');
     $routes->get('read/(:any)', 'Admin\Ta::read/$1');
@@ -97,7 +97,7 @@ $routes->group('ta', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Ta::delete/$1');
 });
 
-$routes->group('jadwal', static function ($routes) {
+$routes->group('jadwal', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Jadwal::index');
     $routes->get('store', 'Admin\Jadwal::store');
     $routes->get('read/(:any)', 'Admin\Jadwal::read/$1');
@@ -106,7 +106,7 @@ $routes->group('jadwal', static function ($routes) {
     $routes->delete('delete/(:any)', 'Admin\Jadwal::delete/$1');
 });
 
-$routes->group('mahasiswa', static function ($routes) {
+$routes->group('mahasiswa', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Mahasiswa::index');
     $routes->get('store', 'Admin\Mahasiswa::store');
     $routes->get('read/(:any)', 'Admin\Mahasiswa::read/$1');

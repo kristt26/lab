@@ -1,81 +1,57 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 <div class="row">
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Earnings (Monthly)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                    </div>
+    <div class="col-4">
+        <div class="d-flex flex-row mb-3">
+            <div class="card">
+                <div class="d-flex justify-content-around">
+                    <span>Pengenalan Java</span>
+                    <span>Software I</span>
+                    <span>09.00 - 11.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="card">
+                <div class="d-flex justify-content-around">
+                    <span>Managemen Basis Data</span>
+                    <span>Software II</span>
+                    <span>09.00 - 11.00</span>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="card">
+                <div class="d-flex justify-content-around">
+                    <span>Pemrograman Web I</span>
+                    <span>Software I</span>
+                    <span>12.00 - 14.00</span>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-success shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Earnings (Annual)</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+    <div class="col-8">
+        <div class="row">
+            <div class="col">
+                <div class="card mr-3">
+                    <h5>Pengenalan Java</h5>
+                    <span>Algoritma dan Pemrogram</span>
+                    <div class="text-right">
+                        <button class="btn btn-info"><i class="fas fa-arrow-down mr-3"></i></button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Earnings (Monthly) Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-info shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                        </div>
-                        <div class="row no-gutters align-items-center">
-                            <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress progress-sm mr-2">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                <div class="card mr-3">
+                    <h5>Pengenalan XAMPP</h5>
+                    <span>Managemen Basis Data</span>
+                    <div class="text-right">
+                        <button class="btn btn-info"><i class="fas fa-arrow-down mr-3"></i></button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pending Requests Card Example -->
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pending Requests</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                <div class="card mr-3">
+                    <h5>Pemrograman Web I</h5>
+                    <span>Pengenalan HTML</span>
+                    <div class="text-right">
+                        <button class="btn btn-info"><i class="fas fa-arrow-down mr-3"></i></button>
                     </div>
                 </div>
             </div>
