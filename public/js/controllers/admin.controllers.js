@@ -533,6 +533,7 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
             var index = $scope.jadwals.indexOf(item);
             $scope.jadwals.splice(index, 1);
         });
+        console.log(res);
         $.LoadingOverlay("hide");
     })
 

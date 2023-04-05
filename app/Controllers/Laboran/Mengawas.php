@@ -9,6 +9,7 @@ use App\Models\JadwalModel;
 use App\Models\MahasiswaModel;
 use App\Models\TaModel;
 use App\Models\MengawasModel;
+use App\Models\LaboranModel;
 
 class Mengawas extends BaseController
 {
@@ -18,6 +19,7 @@ class Mengawas extends BaseController
     protected $mahasiswa;
     protected $ta;
     protected $mengawas;
+    protected $laboran;
 
     public function __construct()
     {
@@ -26,6 +28,7 @@ class Mengawas extends BaseController
         $this->ta = new TaModel();
         $this->mahasiswa = new MahasiswaModel();
         $this->mengawas = new MengawasModel();
+        $this->laboran = new LaboranModel();
     }
     
     public function index()
@@ -36,9 +39,10 @@ class Mengawas extends BaseController
     public function store()
     {
         $ta = $this->ta->where('status', '1')->first();
-        $data['jadwal'] = $this->jadwal->select('jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
+        $data['jadwal'] = $this->jadwal->select('mengawas.id as mengawas_id, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->join('kelas', 'kelas.id=jadwal.kelas_id')
+            ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
             ->where('ta_id', $ta['id'])->findAll();
         $data['mengawas'] = $this->mengawas->select("mengawas.*")
             ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
@@ -59,10 +63,10 @@ class Mengawas extends BaseController
     public function post()
     {
         $data = $this->request->getJSON();
-        $mhs = $this->mahasiswa->where('user_id', session()->get('uid'))->first();
         try {
-            $data->mahasiswa_id = $mhs['id'];
-            $this->kontrak->insert($data);
+            $laboran = $this->laboran->select("laboran.*")->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id')->where('user_id', session()->get('uid'))->first();
+            $data->laboran_id = $laboran['id'];
+            $this->mengawas->insert($data);
             $data->id = $this->kontrak->getInsertID();
             return $this->respondCreated($data);
         } catch (\Throwable $th) {

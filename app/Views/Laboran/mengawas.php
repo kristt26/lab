@@ -18,7 +18,8 @@
                                     <!-- <p class="card-text">Pengawas</p> -->
                                 </div>
                                 <div class="card-footer text-right">
-                                    <button class="btn btn-success btn-sm btn-block" ng-click="pilih(item)">Pilih</button>
+                                    <button class="btn btn-success btn-sm btn-block" ng-if="!item.mengawas_id" ng-click="pilih(item)">Pilih</button>
+                                    <button class="btn btn-secondary btn-sm btn-block"  ng-if="item.mengawas_id" disabled>Sudah Diambil</button>
                                 </div>
                             </div>
                         </div>
