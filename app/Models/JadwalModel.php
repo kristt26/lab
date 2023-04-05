@@ -14,5 +14,5 @@ class JadwalModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['hari', 'jam_mulai', 'jam_selesai', 'ruang',  'matakuliah_id', 'ta_id', 'kelas_id'];
+    protected $allowedFields = ['hari', 'jam_mulai', 'jam_selesai', 'ruang',  'matakuliah_id', 'ta_id', 'kelas_id', 'shift'];
 }
