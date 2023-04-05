@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Mahasiswa;
+namespace App\Controllers\Laboran;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
@@ -8,14 +8,16 @@ use App\Models\KontrakModel;
 use App\Models\JadwalModel;
 use App\Models\MahasiswaModel;
 use App\Models\TaModel;
+use App\Models\MengawasModel;
 
-class Kontrak extends BaseController
+class Mengawas extends BaseController
 {
     use ResponseTrait;
     protected $kontrak;
     protected $jadwal;
     protected $mahasiswa;
     protected $ta;
+    protected $mengawas;
 
     public function __construct()
     {
@@ -23,10 +25,12 @@ class Kontrak extends BaseController
         $this->jadwal = new JadwalModel();
         $this->ta = new TaModel();
         $this->mahasiswa = new MahasiswaModel();
+        $this->mengawas = new MengawasModel();
     }
+    
     public function index()
     {
-        return view('mahasiswa/kontrak', ['title' => 'Kontrak']);
+        return view('laboran/mengawas', ['title' => 'Mengawas']);
     }
 
     public function store()
@@ -36,9 +40,10 @@ class Kontrak extends BaseController
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->join('kelas', 'kelas.id=jadwal.kelas_id')
             ->where('ta_id', $ta['id'])->findAll();
-        $data['rooms'] = $this->kontrak->select("rooms.*")
-            ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id', 'LEFT')
-            ->join('jadwal', 'jadwal.id=rooms.jadwal_id')
+        $data['mengawas'] = $this->mengawas->select("mengawas.*")
+            ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
+            ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
+            ->join('jadwal', 'jadwal.id=mengawas.jadwal_id')
             ->where('user_id', session()->get('uid'))
             ->where('ta_id', $ta['id'])
             ->findAll();

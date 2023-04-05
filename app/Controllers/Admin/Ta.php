@@ -48,6 +48,9 @@ class Ta extends BaseController
     {
         $data = $this->request->getJSON();
         try {
+            if($data->status =='1'){
+                $this->ta->where('status', '1')->set('status','0')->update();
+            }
             $this->ta->update($data->id, $data);
             return $this->respondUpdated(true);
         } catch (\Throwable $th) {

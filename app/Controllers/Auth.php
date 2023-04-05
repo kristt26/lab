@@ -48,34 +48,23 @@ class auth extends BaseController
                 $role = $this->db->table('userrole')->select('role.*')
                     ->join('role', 'role.id = userrole.role_id')
                     ->where('user_id', $user['id'])->get()->getResultArray();
-                if (count($role) > 1) {
-                    $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user->id)->get()->getRow();
+                $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user['id'])->get()->getRow();
+                if (count($role) <= 1) {
                     $sessi = [
-                        'nama' => 'Administrator',
+                        'uid' => $user['id'],
+                        'nama' => $role[0]['role'] == 'Admin'?'Administrator':$mahasiswa->nama_mahasiswa,
+                        'role' => $role[0]['role'],
                         'is_login' => true
                     ];
                     session()->set($sessi);
                     return $this->respond($role);
-                } else {
-                    if ($role[0]['role'] == 'Admin') {
-                        $sessi = [
-                            'nama' => 'Administrator',
-                            'role' => $role[0]['role'],
-                            'is_login' => true
-                        ];
-                        session()->set($sessi);
-                        return $this->respond($role);
-                    } else {
-                        $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user->id)->get()->getRow();
-                        $sessi = [
-                            'uid'  => $user['id'],
-                            'nama' => $mahasiswa->nama_mahasiswa,
-                            'role' => $role[0]['role'],
-                            'is_login' => true
-                        ];
-                        session()->set($sessi);
-                        return $this->respond($role);
-                    }
+                } else if(count($role)>1) {
+                    $sessi = [
+                        'uid' => $user['id'],
+                        'nama' => $mahasiswa->nama_mahasiswa,
+                    ];
+                    session()->set($sessi);
+                    return $this->respond($role);
                 }
             } else {
                 return $this->fail('Password tidak sesuai');
@@ -88,7 +77,7 @@ class auth extends BaseController
     public function setrole()
     {
         $data = $this->request->getJSON();
-        $role = ['role' => $data->role];
+        $role = ['role' => $data->role, 'is_login' => true];
         session()->set($role);
         return $this->respond(true);
     }
@@ -114,10 +103,10 @@ class auth extends BaseController
         $data = $this->request->getJSON();
         $data->status = '0';
         try {
-            if($mahasiswa->where('npm', $data->npm)->countAllResults()==0){
+            if ($mahasiswa->where('npm', $data->npm)->countAllResults() == 0) {
                 $mahasiswa->insert($data);
                 return $this->respondCreated(true);
-            }else{
+            } else {
                 return $this->fail("NPM yang anda masukkan sudah terdaftar");
             }
         } catch (\Throwable $th) {

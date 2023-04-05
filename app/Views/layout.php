@@ -17,6 +17,8 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url() ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url() ?>/libs/angular-datatables/dist/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?= base_url() ?>libs/angular-tooltips/dist/angular-tooltips.css" />
 
 </head>
 
@@ -44,11 +46,11 @@
                         <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
-                    <a ng-class="{'nav-link' : root=='Master Data', 'nav-link collapsed' : root!='Master Data'}" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <a ng-class="{'nav-link' : root=='Master Data', 'nav-link collapsed' : root!='Master Data'}" href="#" data-toggle="collapse" data-target="#master" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Master Data</span>
                     </a>
-                    <div id="collapseTwo" ng-class="{'collapse show' : root=='Master Data', 'collapse' : root!='Master Data'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="master" ng-class="{'collapse show' : root=='Master Data', 'collapse' : root!='Master Data'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a ng-class="{'collapse-item active': title=='Tahun Akademik', 'collapse-item': title!='Tahun Akademik'}" href="<?= base_url('ta') ?>">Tahun Akademik</a>
                             <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan') ?>">Jurusan</a>
@@ -60,13 +62,14 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a ng-class="{'nav-link' : root=='Master Data', 'nav-link collapsed' : root!='Master Data'}" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <a ng-class="{'nav-link' : root=='Pendataan', 'nav-link collapsed' : root!='Pendataan'}" href="#" data-toggle="collapse" data-target="#pendataan" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-database"></i>
                         <span>Pendataan</span>
                     </a>
-                    <div id="collapseTwo" ng-class="{'collapse show' : root=='Pendataan', 'collapse' : root!='Pendataan'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="pendataan" ng-class="{'collapse show' : root=='Pendataan', 'collapse' : root!='Pendataan'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a ng-class="{'collapse-item active': title=='Mahasiswa', 'collapse-item': title!='Mahasiswa'}" href="<?= base_url('ta') ?>">Tahun Akademik</a>
+                            <a ng-class="{'collapse-item active': title=='Mahasiswa', 'collapse-item': title!='Mahasiswa'}" href="<?= base_url('mahasiswa') ?>">Mahasiswa</a>
+                            <a ng-class="{'collapse-item active': title=='Laboran', 'collapse-item': title!='Laboran'}" href="<?= base_url('laboran') ?>">Laboran</a>
                         </div>
                     </div>
                 </li>
@@ -78,6 +81,21 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
+                <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
+                    <a class="nav-link" href="<?= base_url('registration') ?>">
+                    <i class="fas fa-shopping-cart"></i>
+                        <span>Registration</span></a>
+                </li>
+                <li ng-class="{'nav-item active': title=='Daftar Laboran', 'nav-item': title!='Daftar Laboran'}">
+                    <a class="nav-link" href="<?= base_url('daftar_laboran') ?>">
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                        <span>Daftar Laboran</span></a>
+                </li>
+                <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
+                    <a class="nav-link" href="<?= base_url('absen') ?>">
+                    <i class="fas fa-shopping-cart"></i>
+                        <span>Absen</span></a>
+                </li>
             <?php endif; ?>
 
             <?php if (session()->get("role") == "Laboran") : ?>
@@ -85,6 +103,11 @@
                     <a class="nav-link" href="<?= base_url('home') ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
+                </li>
+                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
+                    <a class="nav-link" href="<?= base_url('mengawas') ?>">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Daftar Mengawas</span></a>
                 </li>
             <?php endif; ?>
             <hr class="sidebar-divider d-none d-md-block">
@@ -264,6 +287,8 @@
 
     <!-- Page level plugins -->
     <script src="<?= base_url() ?>assets/vendor/chart.js/Chart.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="<?= base_url() ?>libs/angular-tooltips/dist/angular-tooltips.js"></script>
 
     <!-- Page level custom scripts -->
     <!-- <script src="<?= base_url() ?>assets/js/demo/chart-area-demo.js"></script>

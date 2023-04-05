@@ -116,13 +116,37 @@ $routes->group('mahasiswa', static function ($routes) {
 });
 
 
-$routes->group('kontrak', static function ($routes) {
+
+// Mahasiswa
+
+
+$routes->group('registration', static function ($routes) {
     $routes->get('/', 'Mahasiswa\Kontrak::index');
-    $routes->get('store', 'Mahasiswa\Jadwal::store');
-    $routes->get('read/(:any)', 'Mahasiswa\Jadwal::read/$1');
-    $routes->post('post', 'Mahasiswa\Jadwal::post');
-    $routes->put('put', 'Mahasiswa\Jadwal::put');
-    $routes->delete('delete/(:any)', 'Mahasiswa\Jadwal::delete/$1');
+    $routes->get('store', 'Mahasiswa\Kontrak::store');
+    $routes->get('read/(:any)', 'Mahasiswa\Kontrak::read/$1');
+    $routes->post('post', 'Mahasiswa\Kontrak::post');
+    $routes->put('put', 'Mahasiswa\Kontrak::put');
+    $routes->delete('delete/(:any)', 'Mahasiswa\Kontrak::delete/$1');
+});
+
+$routes->group('daftar_laboran', static function ($routes) {
+    $routes->get('/', 'Mahasiswa\DaftarLaboran::index');
+    $routes->get('store', 'Mahasiswa\DaftarLaboran::store');
+    $routes->get('read/(:any)', 'Mahasiswa\DaftarLaboran::read/$1');
+    $routes->post('post', 'Mahasiswa\DaftarLaboran::post');
+    $routes->put('put', 'Mahasiswa\DaftarLaboran::put');
+    $routes->delete('delete/(:any)', 'Mahasiswa\DaftarLaboran::delete/$1');
+});
+
+// Laboran
+
+$routes->group('mengawas', static function ($routes) {
+    $routes->get('/', 'Laboran\Mengawas::index');
+    $routes->get('store', 'Laboran\Mengawas::store');
+    $routes->get('read/(:any)', 'Laboran\Mengawas::read/$1');
+    $routes->post('post', 'Laboran\Mengawas::post');
+    $routes->put('put', 'Laboran\Mengawas::put');
+    $routes->delete('delete/(:any)', 'Laboran\Mengawas::delete/$1');
 });
 
 

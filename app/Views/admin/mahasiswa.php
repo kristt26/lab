@@ -1,51 +1,100 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
-<div ng-controller="jadwalController">
+<div ng-controller="mahasiswaController">
     <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <h4>Jadwal Praktikum</h4>
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add"><i class="fas fa-plus"></i></button>
-        </div>
         <div class="card-body">
-            <nav>
+            <nav class="mb-4">
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                    <a ng-repeat="item in datas.jurusan" ng-class="{'nav-item nav-link active' : $index==0, 'nav-item nav-link':$index !=0}" ng-click="setNilai(item.id)" id="nav-home-{{$index+1}}" data-toggle="tab" href="#nav-home{{$index+1}}" role="tab" aria-controls="nav-home{{$index+1}}" aria-selected="true">{{item.jurusan}}</a>
+                    <a class="nav-item nav-link active" id="nav-mahasiswa-tab" ng-click="clear()" data-toggle="tab" href="#nav-mahasiswa" role="tab" aria-controls="nav-mahasiswa" aria-selected="true">Daftar Mahasiswa</a>
+                    <a class="nav-item nav-link" id="nav-pengajuan-tab" ng-click="clear()" data-toggle="tab" href="#nav-ppengajuan" role="tab" aria-controls="nav-ppengajuan" aria-selected="false">Pengajuan User</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    <div class="table-responsive" style="margin-top: 20px;">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tahun Ajaran</th>
-                                    <th>Kelas</th>
-                                    <th>Matakuliah</th>
-                                    <th>Hari</th>
-                                    <th>Ruangan</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="item in jadwals.jadwal">
-                                    <td>{{$index+1}}</td>
-                                    <td>{{item.tahun_akademik}}</td>
-                                    <td>{{item.kelas}}</td>
-                                    <td>{{item.nama_matakuliah}}</td>
-                                    <td>{{item.hari}}</td>
-                                    <td>{{item.ruang}}</td>
-                                    <td>{{item.jam_mulai}}</td>
-                                    <td>{{item.jam_selesai}}</td>
-                                    <td>
-                                        <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
-                                        <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="tab-pane fade show active" id="nav-mahasiswa" role="tabpanel" aria-labelledby="nav-mahasiswa-tab">
+                    <div class="d-flex justify-content-between">
+                        <div class="form-group">
+                            <label for="">Program Studi</label>
+                            <select class="form-control" ng-model="jurusans" ng-options="item.jurusan for item in datas.jurusan">
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12" ng-show="jurusans">
+                        <div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-striped" style="width: 99%;">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NPM</th>
+                                        <th>Nama</th>
+                                        <th>Kelas</th>
+                                        <th>Email</th>
+                                        <th>Kontak</th>
+                                        <th>Status</th>
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in jurusans.dataMahasiswa">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.npm}}</td>
+                                        <td>{{item.nama_mahasiswa}}</td>
+                                        <td>{{item.kelas}}</td>
+                                        <td>{{item.email}}</td>
+                                        <td>{{item.kontak}}</td>
+                                        <td>{{item.status=='0' ? 'Tidak Aktif':'Aktif'}}</td>
+                                        <!-- <td>
+                                            <button class="btn btn-warning btn-sm" ng-click="edit(item)" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
+                                        </td> -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-ppengajuan" role="tabpanel" aria-labelledby="nav-pengajuan-tab">
+                    <div class="d-flex justify-content-between">
+                        <div class="form-group">
+                            <label for="">Program Studi</label>
+                            <select class="form-control" ng-model="jurusans" ng-options="item.jurusan for item in datas.jurusan">
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12" ng-show="jurusans">
+                        <div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-striped" style="width: 99%;">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NPM</th>
+                                        <th>Nama</th>
+                                        <th>Kelas</th>
+                                        <th>Email</th>
+                                        <th>Kontak</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in jurusans.dataPengajuan">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.npm}}</td>
+                                        <td>{{item.nama_mahasiswa}}</td>
+                                        <td>{{item.kelas}}</td>
+                                        <td>{{item.email}}</td>
+                                        <td>{{item.kontak}}</td>
+                                        <td>{{item.status=='0' ? 'Tidak Aktif':'Aktif'}}</td>
+                                        <td>
+                                            <button class="btn btn-primary btn-sm" ng-click="approve(item)"  title="Approve Pengajuan"><i class="fas fa-check"></i></button>
+                                            <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
+                                           
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

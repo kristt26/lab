@@ -19,6 +19,7 @@
                                 <th>#</th>
                                 <th>Kode</th>
                                 <th>Nama Matakuliah</th>
+                                <th>Semester</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,6 +27,7 @@
                                 <td>{{$index+1}}</td>
                                 <td>{{item.kode}}</td>
                                 <td>{{item.nama_matakuliah}}</td>
+                                <td>{{item.semester}}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
                                     <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
@@ -57,6 +59,10 @@
                         <div class="form-group">
                             <label>Nama matakuliah</label>
                             <input type="text" class="form-control" ng-model="model.nama_matakuliah" required aria-describedby="helpId" placeholder="Nama Matakuliah">
+                        </div>
+                        <div class="form-group">
+                            <label>Semester</label>
+                            <input type="text" class="form-control" ng-model="model.semester" required aria-describedby="helpId" placeholder="Semester">
                         </div>
                         <div class="form-group">
                             <label>Jurusan</label>

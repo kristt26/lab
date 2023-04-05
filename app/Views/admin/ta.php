@@ -21,6 +21,14 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Mulai Registration</label>
+                            <input type="date" class="form-control" ng-model="model.tgl_mulai" required aria-describedby="helpId" placeholder="Tanggal Mulai Registrasi">
+                        </div>
+                        <div class="form-group">
+                            <label>Selesai Registration</label>
+                            <input type="date" class="form-control" ng-model="model.tgl_selesai" required aria-describedby="helpId" placeholder="Tanggal Selesai Registrasi">
+                        </div>
+                        <div class="form-group">
                             <label>Status</label>
                             <select class="form-control" ng-model ="model.status">
                               <option value="0">Tidak Aktif</option>
@@ -50,6 +58,8 @@
                                         <th>#</th>
                                         <th>Tahun Akademik</th>
                                         <th>Semeter</th>
+                                        <th>Mulai Registrasi</th>
+                                        <th>Selesai Registrasi</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -59,6 +69,8 @@
                                         <td>{{$index+1}}</td>
                                         <td>{{item.tahun_akademik}}</td>
                                         <td>{{item.semester}}</td>
+                                        <td>{{item.tgl_mulai}}</td>
+                                        <td>{{item.tgl_selesai}}</td>
                                         <td>{{item.status=="0" ? "Tidak Aktif" : "Aktif"}}</td>
                                         <td>
                                             <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>

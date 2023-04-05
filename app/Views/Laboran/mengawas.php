@@ -1,11 +1,11 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
-<div ng-controller="kontrakController">
+<div ng-controller="mengawasController">
     <div class="row">
         <div class="col-md-7" ng-if="setView">
             <div class="card">
                 <div class="card-header">
-                    <h5>Daftar Matakuliah</h5>
+                    <h5>Jadwal Perkuliahan</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -30,7 +30,7 @@
         <div ng-class="{'col-md-5': setView, 'col-md-12': !setView}">
             <div class="card">
                 <div class="card-header">
-                    <h5>Matakuliah Anda</h5>
+                    <h5>Daftar Mengawas</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">

@@ -12,6 +12,7 @@ angular.module('apps', [
     'ngSanitize',
     'ui.router',
     'ui.select2',
+    'tooltips'
 
 ])
 
@@ -50,7 +51,7 @@ function indexController($scope, helperServices, dashboardServices) {
         $scope.title = data;
         if (data == 'Jurusan' || data == 'Matakuliah' || data == 'Modul' || data == 'Kelas' || data == 'Jadwal' || data == 'Tahun Akademik') {
             $scope.root = "Master Data"
-        }else if(data == 'Mahasiswa'){
+        }else if(data == 'Mahasiswa' || data=='Laboran'){
             $scope.root = "Pendataan"
         }
         $.LoadingOverlay("hide");

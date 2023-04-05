@@ -8,9 +8,16 @@ angular.module('adminctrl', [])
     .controller('jadwalController', jadwalController)
     .controller('modulController', modulController)
     .controller('taController', taController)
+    .controller('mahasiswaController', mahasiswaController)
 
+    // Mahasiswa
+    .controller('kontrakController', kontrakController)
+    .controller('daftarLaboranController', daftarLaboranController)
+    
+    // Laboran
+    .controller('mengawasController', mengawasController)
     ;
-sd
+
 function dashboardController($scope, dashboardServices) {
     $scope.$emit("SendUp", "Dashboard");
     $scope.datas = {};
@@ -21,77 +28,26 @@ function dashboardController($scope, dashboardServices) {
 }
 
 function laboranController($scope, laboranServices, pesan) {
-    $scope.$emit("SendUp", "Jenis Kamar");
+    $scope.$emit("SendUp", "Laboran");
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
     laboranServices.get().then((res) => {
         $scope.datas = res;
         console.log(res);
-        pesan.success(res.Testing);
     })
 
-    $scope.setInisial = (item) => {
-        $scope.model.inisial = item.substring(0, 3).toUpperCase();
-    }
-
-    $scope.save = () => {
-        pesan.dialog('Yakin ingin?', 'Yes', 'Tidak').then(res => {
-            if ($scope.model.id) {
-                laboranServices.put($scope.model).then(res => {
-                    $scope.model = {};
-                    pesan.Success("Berhasil mengubah data");
-                })
-            } else {
-                laboranServices.post($scope.model).then(res => {
-                    $scope.model = {};
-                    pesan.Success("Berhasil menambah data");
-                })
-            }
-        })
-    }
-
-    $scope.saveFasilitas = (item) => {
-        pesan.dialog('Yakin ingin?', 'Yes', 'Tidak').then(res => {
-            if (item.id) {
-                fasilitasServices.put(item).then(res => {
-                    $scope.dataKamar = {};
-                    pesan.Success("Berhasil mengubah data");
-                })
-            } else {
-                fasilitasServices.post(item).then(res => {
-                    $scope.dataKamar.fasilitas.push(res);
-                    var id = angular.copy($scope.modell.jenis_kamar_id);
-                    $scope.modell = {};
-                    $scope.modell.jenis_kamar_id = id;
-                    pesan.Success("Berhasil menambah data");
-                })
-            }
-        })
-    }
-
-    $scope.edit = (item) => {
-        $scope.model = angular.copy(item);
-    }
-
-    $scope.setDetail = (item) => {
-        $scope.dataKamar = item;
-        $scope.modell = {};
-        $scope.modell.jenis_kamar_id = item.id;
-        console.log($scope.modell);
-    }
-
-    $scope.itemFasilitas = (item) => {
-        $scope.modell = item;
-    }
-
-    $scope.delete = (param) => {
-        pesan.dialog('Yakin ingin?', 'Ya', 'Tidak').then(res => {
-            wijkServices.deleted(param).then(res => {
-                pesan.Success("Berhasil menghapus data");
+    $scope.approve = (param) => {
+        pesan.dialog('Yakin ingin menerima ?', 'Ya', 'Tidak').then(x => {
+            laboranServices.post(param).then(res => {
+                var index = $scope.datas.daftar.indexOf(param);
+                $scope.datas.daftar.splice(index, 1);
+                $scope.datas.laboran.push(angular.copy(param));
+                pesan.Success("Process Success");
             })
-        });
+        })
     }
+
 }
 
 function jurusanController($scope, jurusanServices, pesan) {
@@ -99,28 +55,28 @@ function jurusanController($scope, jurusanServices, pesan) {
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
-    jurusanServices.get().then(res=>{
+    jurusanServices.get().then(res => {
         $scope.datas = res;
     })
 
-    $scope.pesan = (param)=>{
+    $scope.pesan = (param) => {
         pesan.success(param);
     }
 
-    $scope.edit = (param)=>{
+    $scope.edit = (param) => {
         $scope.model = angular.copy(param)
         $("#add").modal('show');
     }
 
-    $scope.save = ()=>{
-        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x=>{
-            if($scope.model.id){
-                jurusanServices.put($scope.model).then(res=>{
+    $scope.save = () => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            if ($scope.model.id) {
+                jurusanServices.put($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
                 })
-            }else{
-                jurusanServices.post($scope.model).then(res=>{
+            } else {
+                jurusanServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
                 })
@@ -128,9 +84,9 @@ function jurusanController($scope, jurusanServices, pesan) {
         })
     }
 
-    $scope.delete = (param)=>{
-        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x=>{
-            jurusanServices.deleted(param).then(res=>{
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            jurusanServices.deleted(param).then(res => {
                 pesan.Success('Berhasil menghapus');
             })
         })
@@ -256,7 +212,7 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
                 $scope.model.jam_mulai = $scope.model.jam_mulai.getHours() + ":" + $scope.model.jam_mulai.getMinutes();
                 $scope.model.jam_selesai = $scope.model.jam_selesai.getHours() + ":" + $scope.model.jam_selesai.getMinutes();
                 jadwalServices.post($scope.model).then(res => {
-                    var item = $scope.datas.jurusan.find(x=>x.id = $scope.jurusan.id)
+                    var item = $scope.datas.jurusan.find(x => x.id = $scope.jurusan.id)
                     item.jadwal.push(res);
                     $scope.model = {};
                     $("#add").modal('hide');
@@ -329,48 +285,307 @@ function modulController($scope, modulServices, pesan) {
 
 }
 
-function taController($scope, taServices, pesan) {
+function taController($scope, taServices, pesan, helperServices) {
     $scope.$emit("SendUp", "Tahun Akademik");
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
-    taServices.get().then(res=>{
+    taServices.get().then(res => {
         $scope.datas = res;
     })
 
-    $scope.pesan = (param)=>{
+    $scope.pesan = (param) => {
         pesan.success(param);
     }
 
-    $scope.edit = (param)=>{
+    $scope.edit = (param) => {
+        var data = angular.copy(param);
+        data.tgl_mulai = new Date(data.tgl_mulai);
+        data.tgl_selesai = new Date(data.tgl_selesai);
+        $scope.model = angular.copy(data)
+        $("#add").modal('show');
+    }
+
+    $scope.save = () => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            var item = $scope.datas.find(x => x.tahun_akademik == $scope.model.tahun_akademik && x.semester == $scope.model.semester);
+            var data = angular.copy($scope.model);
+            data.tgl_mulai = helperServices.dateToString(data.tgl_mulai);
+            data.tgl_selesai = helperServices.dateToString(data.tgl_selesai);
+            if ($scope.model.id) {
+                taServices.put(data).then(res => {
+                    $scope.model = {};
+                    $("#add").modal('hide');
+                })
+            } else {
+                if (!item) {
+                    taServices.post(data).then(res => {
+                        $scope.model = {};
+                        $("#add").modal('hide');
+                    })
+                } else {
+                    pesan.error('Tahun akademik yang diinput telah ada pada list')
+                }
+            }
+
+            
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            taServices.deleted(param).then(res => {
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder) {
+    $scope.$emit("SendUp", "Mahasiswa");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    $scope.jurusans = {};
+    $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('scrollX', '100%');
+    mahasiswaServices.get().then(res => {
+        $scope.datas = res;
+        $scope.datas.jurusan.forEach(element => {
+            element.dataMahasiswa = element.mahasiswa.filter(x => x.status == '1')
+            element.dataPengajuan = element.mahasiswa.filter(x => x.status == '0')
+        });
+        $scope.jurusans = $scope.datas.jurusan[0];
+        console.log($scope.jurusans);
+    })
+
+
+    $scope.clear = () => {
+        $scope.jurusans = null;
+        console.log($scope.jurusans);
+    }
+
+    $scope.pesan = (param) => {
+        pesan.success(param);
+    }
+
+    $scope.edit = (param) => {
         $scope.model = angular.copy(param)
         $("#add").modal('show');
     }
 
-    $scope.save = ()=>{
-        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x=>{
-            var item = $scope.datas.find(x=>x.tahun_akademik==$scope.model.tahun_akademik && x.semester==$scope.model.semester);
-            if(! item){
-                if($scope.model.id){
-                    taServices.put($scope.model).then(res=>{
-                        $scope.model = {};
-                        $("#add").modal('hide');
-                    })
-                }else{
-                    taServices.post($scope.model).then(res=>{
-                        $scope.model = {};
-                        $("#add").modal('hide');
-                    })
+    $scope.approve = (param) => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            mahasiswaServices.put(param).then(res => {
+                var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
+                if (jurusan) {
+                    var index = jurusan.dataPengajuan.indexOf(param);
+                    jurusan.dataPengajuan.splice(index, 1);
+                    param.user_id = res;
+                    jurusan.dataMahasiswa.push(angular.copy(param));
                 }
-            }else{
-                pesan.error('Tahun akademik yang diinput telah ada pada list')
-            }
+                pesan.Success("Process Success");
+            })
         })
     }
 
-    $scope.delete = (param)=>{
-        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x=>{
-            taServices.deleted(param).then(res=>{
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            mahasiswaServices.deleted(param).then(res => {
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder) {
+    $scope.$emit("SendUp", "Mahasiswa");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    $scope.jurusans = {};
+    $scope.jadwals = [];
+    $scope.rooms = [];
+    $scope.kontrak = [];
+    $scope.ta = {};
+    $scope.setView = false;
+    $.LoadingOverlay("show");
+    kontrakServices.get().then(res => {
+        $scope.datas = res;
+        $scope.ta = $scope.datas.ta;
+        if((new Date($scope.ta.tgl_mulai)<= new Date()) && (new Date($scope.ta.tgl_selesai)>= new Date())) $scope.setView = true;
+        else $scope.setView = false;
+        console.log(new Date);
+        $scope.jadwals = angular.copy($scope.datas.jadwal);
+        $scope.rooms = $scope.datas.rooms;
+        $scope.rooms.forEach(element => {
+            var item = $scope.jadwals.find((x) => x.id == element.jadwal_id);
+            $scope.kontrak.push(angular.copy(item));
+            var index = $scope.jadwals.indexOf(item);
+            $scope.jadwals.splice(index, 1);
+        });
+        $.LoadingOverlay("hide");
+    })
+
+
+    $scope.pilih = (item) => {
+        $.LoadingOverlay("show");
+        kontrakServices.post({ jadwal_id: item.id }).then((res) => {
+            $scope.rooms.push(angular.copy(res));
+            var temp = $scope.jadwals.find((x) => x.id == item.id);
+            $scope.kontrak.push(angular.copy(temp));
+            var index = $scope.jadwals.indexOf(temp);
+            $scope.jadwals.splice(index, 1);
+            $.LoadingOverlay("hide");
+        })
+    }
+    $scope.hapus = (item) => {
+        $.LoadingOverlay("show");
+        var rooms_id = $scope.rooms.find((x) => x.jadwal_id == item.id);
+        kontrakServices.deleted(rooms_id).then((res) => {
+            $scope.jadwals.push(angular.copy(item));
+            var index = $scope.kontrak.indexOf(item);
+            $scope.kontrak.splice(index, 1);
+            $.LoadingOverlay("hide");
+        })
+    }
+
+    $scope.pesan = (param) => {
+        pesan.success(param);
+    }
+
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.approve = (param) => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            kontrakServices.put(param).then(res => {
+                var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
+                if (jurusan) {
+                    var index = jurusan.dataPengajuan.indexOf(param);
+                    jurusan.dataPengajuan.splice(index, 1);
+                    param.user_id = res;
+                    jurusan.dataMahasiswa.push(angular.copy(param));
+                }
+                pesan.Success("Process Success");
+            })
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            kontrakServices.deleted(param).then(res => {
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function daftarLaboranController($scope, daftarLaboranServices, pesan, DTOptionsBuilder) {
+    $scope.$emit("SendUp", "Pendaftaran Laboran");
+    $scope.datas = {};
+    $scope.model = {};
+    daftarLaboranServices.get().then((res)=>{
+        $scope.datas = res;
+        console.log(res);
+    })
+    $scope.save = () => {
+        pesan.dialog('Yakin ingin mendaftar?', 'YA', 'Tidak').then(x => {
+            daftarLaboranServices.post($scope.model).then(res => {
+                
+            })
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            kontrakServices.deleted(param).then(res => {
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
+    $scope.$emit("SendUp", "Mengawas");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    $scope.jurusans = {};
+    $scope.jadwals = [];
+    $scope.mengawas = [];
+    $scope.kontrak = [];
+    $scope.ta = {};
+    $scope.setView = false;
+    $.LoadingOverlay("show");
+    mengawasServices.get().then(res => {
+        $scope.datas = res;
+        $scope.ta = $scope.datas.ta;
+        if((new Date($scope.ta.tgl_mulai)<= new Date()) && (new Date($scope.ta.tgl_selesai)>= new Date())) $scope.setView = true;
+        else $scope.setView = false;
+        console.log(new Date);
+        $scope.jadwals = angular.copy($scope.datas.jadwal);
+        $scope.mengawas = $scope.datas.mengawas;
+        $scope.mengawas.forEach(element => {
+            var item = $scope.jadwals.find((x) => x.id == element.jadwal_id);
+            $scope.kontrak.push(angular.copy(item));
+            var index = $scope.jadwals.indexOf(item);
+            $scope.jadwals.splice(index, 1);
+        });
+        $.LoadingOverlay("hide");
+    })
+
+
+    $scope.pilih = (item) => {
+        $.LoadingOverlay("show");
+        mengawasServices.post({ jadwal_id: item.id }).then((res) => {
+            $scope.mengawas.push(angular.copy(res));
+            var temp = $scope.jadwals.find((x) => x.id == item.id);
+            $scope.kontrak.push(angular.copy(temp));
+            var index = $scope.jadwals.indexOf(temp);
+            $scope.jadwals.splice(index, 1);
+            $.LoadingOverlay("hide");
+        })
+    }
+    $scope.hapus = (item) => {
+        $.LoadingOverlay("show");
+        var mengawas_id = $scope.mengawas.find((x) => x.jadwal_id == item.id);
+        mengawasServices.deleted(mengawas_id).then((res) => {
+            $scope.jadwals.push(angular.copy(item));
+            var index = $scope.kontrak.indexOf(item);
+            $scope.kontrak.splice(index, 1);
+            $.LoadingOverlay("hide");
+        })
+    }
+
+    $scope.pesan = (param) => {
+        pesan.success(param);
+    }
+
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.approve = (param) => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            mengawasServices.put(param).then(res => {
+                var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
+                if (jurusan) {
+                    var index = jurusan.dataPengajuan.indexOf(param);
+                    jurusan.dataPengajuan.splice(index, 1);
+                    param.user_id = res;
+                    jurusan.dataMahasiswa.push(angular.copy(param));
+                }
+                pesan.Success("Process Success");
+            })
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            mengawasServices.deleted(param).then(res => {
                 pesan.Success('Berhasil menghapus');
             })
         })

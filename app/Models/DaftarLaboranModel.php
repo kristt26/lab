@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class TaModel extends Model
+class DaftarLaboranModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'ta';
+    protected $table            = 'pendaftaran_laboran';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $insertID         = 0;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['tahun_akademik', 'semester', 'tgl_mulai', 'tgl_selesai',  'status'];
+    protected $allowedFields    = ['mahasiswa_id', 'alasan', 'status'];
 }
