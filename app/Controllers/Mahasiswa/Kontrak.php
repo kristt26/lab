@@ -32,9 +32,11 @@ class Kontrak extends BaseController
     public function store()
     {
         $ta = $this->ta->where('status', '1')->first();
+        $mhs = $this->mahasiswa->where('user_id', session()->get('uid'))->first();
         $data['jadwal'] = $this->jadwal->select('jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->join('kelas', 'kelas.id=jadwal.kelas_id')
+            ->where('matakuliah.jurusan_id', $mhs['jurusan_id'])
             ->where('ta_id', $ta['id'])->findAll();
         $data['rooms'] = $this->kontrak->select("rooms.*")
             ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id', 'LEFT')
