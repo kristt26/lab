@@ -11,7 +11,7 @@ use App\Models\TaModel;
 use App\Models\MengawasModel;
 use App\Models\LaboranModel;
 
-class Mengawas extends BaseController
+class Jadwal extends BaseController
 {
     use ResponseTrait;
     protected $kontrak;
@@ -33,7 +33,7 @@ class Mengawas extends BaseController
     
     public function index()
     {
-        return view('laboran/mengawas', ['title' => 'Mengawas']);
+        return view('laboran/jadwal', ['title' => 'Jadwal Mengawas']);
     }
 
     public function store()

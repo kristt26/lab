@@ -604,6 +604,7 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
         mengawasServices.post({ jadwal_id: item.id }).then((res) => {
             $scope.mengawas.push(angular.copy(res));
             var temp = $scope.jadwals.find((x) => x.id == item.id);
+            temp.mengawas_id = res.id;
             $scope.kontrak.push(angular.copy(temp));
             var index = $scope.jadwals.indexOf(temp);
             $scope.jadwals.splice(index, 1);
@@ -614,6 +615,7 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
         $.LoadingOverlay("show");
         var mengawas_id = $scope.mengawas.find((x) => x.jadwal_id == item.id);
         mengawasServices.deleted(mengawas_id).then((res) => {
+            item.mengawas_id = "";
             $scope.jadwals.push(angular.copy(item));
             var index = $scope.kontrak.indexOf(item);
             $scope.kontrak.splice(index, 1);

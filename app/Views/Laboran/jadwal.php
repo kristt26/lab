@@ -12,7 +12,6 @@
                         <div class="col-4 mb-3" ng-repeat="item in jadwals">
                             <div class="card text-left">
                                 <div class="card-body">
-                                    <h6 style="font-size: 15px;" class="card-title"><strong>{{item.jurusan}}</strong></h6>
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah}}</strong></h6>
                                     <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}}</h6>
                                     <h6 style="font-size: 12px;"><i class="far fa-clock"></i>{{item.jam_mulai}} - {{item.jam_selesai}}</h6>

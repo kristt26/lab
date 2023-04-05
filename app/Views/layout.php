@@ -104,10 +104,15 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
-                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
+                <li ng-class="{'nav-item active': title=='Mengawas', 'nav-item': title!='Mengawas'}">
                     <a class="nav-link" href="<?= base_url('mengawas') ?>">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Daftar Mengawas</span></a>
+                </li>
+                <li ng-class="{'nav-item active': title=='Jadwal Mengawas', 'nav-item': title!='Jadwal Mengawas'}">
+                    <a class="nav-link" href="<?= base_url('jadwal_mengawas') ?>">
+                        <i class="fas fa-calendar"></i>
+                        <span>Jadwal Mengawas</span></a>
                 </li>
             <?php endif; ?>
             <hr class="sidebar-divider d-none d-md-block">

@@ -148,6 +148,14 @@ $routes->group('mengawas', static function ($routes) {
     $routes->put('put', 'Laboran\Mengawas::put');
     $routes->delete('delete/(:any)', 'Laboran\Mengawas::delete/$1');
 });
+$routes->group('jadwal_mengawas', static function ($routes) {
+    $routes->get('/', 'Laboran\Jadwal::index');
+    $routes->get('store', 'Laboran\Jadwal::store');
+    $routes->get('read/(:any)', 'Laboran\Jadwal::read/$1');
+    $routes->post('post', 'Laboran\Jadwal::post');
+    $routes->put('put', 'Laboran\Jadwal::put');
+    $routes->delete('delete/(:any)', 'Laboran\Jadwal::delete/$1');
+});
 
 
 
