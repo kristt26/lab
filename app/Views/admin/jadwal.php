@@ -92,6 +92,13 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>Shift</label>
+                            <select class="form-control" ng-model="model.ruang">
+                                <option value="Shift I">Shift I</option>
+                                <option value="Shift II">Shift II</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="">Jam Praktikum</label>
                             <div class="form-inline d-flex justify-content-between">
                                 <!-- <div class="form-group"> -->

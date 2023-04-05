@@ -56,6 +56,10 @@
 
         <button type="submit" class="btn btn-primary btn-user btn-block">Register Account</button>
     </form>
+    <hr>
+    <div class="text-center">
+        <a class="small" href="<?= base_url('auth') ?>">already have an account? <b>Login Here!</b></a>
+    </div>
 </div>
 
 <!-- Modal -->
