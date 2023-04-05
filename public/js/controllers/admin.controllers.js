@@ -32,18 +32,22 @@ function laboranController($scope, laboranServices, pesan) {
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
+    $.LoadingOverlay('show');
     laboranServices.get().then((res) => {
         $scope.datas = res;
         console.log(res);
+        $.LoadingOverlay('hide');
     })
 
     $scope.approve = (param) => {
+        $.LoadingOverlay('show');
         pesan.dialog('Yakin ingin menerima ?', 'Ya', 'Tidak').then(x => {
             laboranServices.post(param).then(res => {
                 var index = $scope.datas.daftar.indexOf(param);
                 $scope.datas.daftar.splice(index, 1);
                 $scope.datas.laboran.push(angular.copy(param));
                 pesan.Success("Process Success");
+                $.LoadingOverlay('hide');
             })
         })
     }
@@ -55,8 +59,10 @@ function jurusanController($scope, jurusanServices, pesan) {
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};
+    $.LoadingOverlay('show');
     jurusanServices.get().then(res => {
         $scope.datas = res;
+        $.LoadingOverlay('hide');
     })
 
     $scope.pesan = (param) => {
@@ -70,15 +76,18 @@ function jurusanController($scope, jurusanServices, pesan) {
 
     $scope.save = () => {
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             if ($scope.model.id) {
                 jurusanServices.put($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             } else {
                 jurusanServices.post($scope.model).then(res => {
                     $scope.model = {};
                     $("#add").modal('hide');
+                    $.LoadingOverlay('hide');
                 })
             }
         })
@@ -86,8 +95,10 @@ function jurusanController($scope, jurusanServices, pesan) {
 
     $scope.delete = (param) => {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
             jurusanServices.deleted(param).then(res => {
                 pesan.Success('Berhasil menghapus');
+                $.LoadingOverlay('hide');
             })
         })
     }
