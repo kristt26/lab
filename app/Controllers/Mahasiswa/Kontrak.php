@@ -33,9 +33,10 @@ class Kontrak extends BaseController
     {
         $ta = $this->ta->where('status', '1')->first();
         $mhs = $this->mahasiswa->where('user_id', session()->get('uid'))->first();
-        $data['jadwal'] = $this->jadwal->select('jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
+        $data['jadwal'] = $this->jadwal->select('jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, jurusan.jurusan, jurusan.initial, matakuliah.semester, kelas.kelas')
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->join('kelas', 'kelas.id=jadwal.kelas_id')
+            ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id')
             ->where('matakuliah.jurusan_id', $mhs['jurusan_id'])
             ->where('ta_id', $ta['id'])->findAll();
         $data['rooms'] = $this->kontrak->select("rooms.*")

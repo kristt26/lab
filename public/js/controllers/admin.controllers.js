@@ -16,6 +16,7 @@ angular.module('adminctrl', [])
     
     // Laboran
     .controller('mengawasController', mengawasController)
+    .controller('jadwalMengawasController', jadwalMengawasController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -570,6 +571,98 @@ function daftarLaboranController($scope, daftarLaboranServices, pesan, DTOptions
 
 function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
     $scope.$emit("SendUp", "Mengawas");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    $scope.jurusans = {};
+    $scope.jadwals = [];
+    $scope.mengawas = [];
+    $scope.kontrak = [];
+    $scope.ta = {};
+    $scope.setView = false;
+    $.LoadingOverlay("show");
+    mengawasServices.get().then(res => {
+        $scope.datas = res;
+        $scope.ta = $scope.datas.ta;
+        if((new Date($scope.ta.tgl_mulai)<= new Date()) && (new Date($scope.ta.tgl_selesai)>= new Date())) $scope.setView = true;
+        else $scope.setView = false;
+        console.log(new Date);
+        $scope.jadwals = angular.copy($scope.datas.jadwal);
+        $scope.mengawas = $scope.datas.mengawas;
+        $scope.mengawas.forEach(element => {
+            var item = $scope.jadwals.find((x) => x.id == element.jadwal_id);
+            $scope.kontrak.push(angular.copy(item));
+            var index = $scope.jadwals.indexOf(item);
+            $scope.jadwals.splice(index, 1);
+        });
+        console.log(res);
+        $.LoadingOverlay("hide");
+    })
+
+
+    $scope.pilih = (item) => {
+        $.LoadingOverlay("show");
+        mengawasServices.post({ jadwal_id: item.id }).then((res) => {
+            $scope.mengawas.push(angular.copy(res));
+            var temp = $scope.jadwals.find((x) => x.id == item.id);
+            temp.mengawas_id = res.id;
+            $scope.kontrak.push(angular.copy(temp));
+            var index = $scope.jadwals.indexOf(temp);
+            $scope.jadwals.splice(index, 1);
+            $.LoadingOverlay("hide");
+        })
+    }
+    $scope.hapus = (item) => {
+        $.LoadingOverlay("show");
+        var mengawas_id = $scope.mengawas.find((x) => x.jadwal_id == item.id);
+        mengawasServices.deleted(mengawas_id).then((res) => {
+            item.mengawas_id = "";
+            $scope.jadwals.push(angular.copy(item));
+            var index = $scope.kontrak.indexOf(item);
+            $scope.kontrak.splice(index, 1);
+            $.LoadingOverlay("hide");
+        })
+    }
+
+    $scope.pesan = (param) => {
+        pesan.success(param);
+    }
+
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.approve = (param) => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
+            mengawasServices.put(param).then(res => {
+                var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
+                $.LoadingOverlay("show");
+                if (jurusan) {
+                    var index = jurusan.dataPengajuan.indexOf(param);
+                    jurusan.dataPengajuan.splice(index, 1);
+                    param.user_id = res;
+                    jurusan.dataMahasiswa.push(angular.copy(param));
+                }
+                $.LoadingOverlay("hide");
+                pesan.Success("Process Success");
+            })
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay("show");
+            mengawasServices.deleted(param).then(res => {
+                $.LoadingOverlay("hide");
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
+    $scope.$emit("SendUp", "Jadwal Mengawas");
     $scope.datas = {};
     $scope.model = {};
     $scope.dataKamar = {};

@@ -48,7 +48,8 @@ class Jadwal extends BaseController
         $data['mengawas'] = $this->mengawas->select("mengawas.*")
             ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
             ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
-            ->join('jadwal', 'jadwal.id=mengawas.jadwal_id')
+            ->join('jadwal', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
+            ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->where('user_id', session()->get('uid'))
             ->where('ta_id', $ta['id'])
             ->findAll();

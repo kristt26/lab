@@ -1,6 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
-<div ng-controller="mengawasController">
+<div ng-controller="jadwalMengawasController">
     <div class="row">
         <div class="col-md-7" ng-if="setView">
             <div class="card">

@@ -39,7 +39,7 @@ class Mengawas extends BaseController
     public function store()
     {
         $ta = $this->ta->where('status', '1')->first();
-        $data['jadwal'] = $this->jadwal->select('mengawas.id as mengawas_id, jurusan.jurusan, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
+        $data['jadwal'] = $this->jadwal->select('mengawas.id as mengawas_id, jurusan.jurusan, jurusan.initial, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->join('kelas', 'kelas.id=jadwal.kelas_id')
             ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
