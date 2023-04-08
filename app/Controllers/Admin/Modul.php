@@ -3,8 +3,6 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use App\Models\MatkulModel;
-use App\Models\ModulModel;
 use CodeIgniter\API\ResponseTrait;
 
 class Modul extends BaseController
@@ -12,11 +10,13 @@ class Modul extends BaseController
     use ResponseTrait;
     protected $modul;
     protected $matakuliah;
+    protected $jurusan;
 
     public function __construct()
     {
-        $this->modul = new ModulModel();
-        $this->matakuliah = new MatkulModel();
+        $this->modul = new \App\Models\ModulModel();
+        $this->matakuliah = new \App\Models\MatkulModel();
+        $this->jurusan = new \App\Models\JurusanModel();
     }
     public function index()
     {
@@ -25,11 +25,15 @@ class Modul extends BaseController
 
     public function store()
     {
-        $matakuliahs = $this->matakuliah->asObject()->findAll();
-        foreach ($matakuliahs as $key => $matakuliah) {
-            $matakuliah->modul = $this->modul->where('matakuliah_id', $matakuliah->id)->findAll();
-        }
-        return $this->respond($matakuliahs);
+        $jurusans = $this->jurusan->asObject()->findAll();
+        // foreach ($jurusans as $key => $jurusan) {
+        //     $jurusan->matakuliah = 
+        // }
+        // $matakuliahs = $this->matakuliah->asObject()->findAll();
+        // foreach ($matakuliahs as $key => $matakuliah) {
+        //     $matakuliah->modul = $this->modul->where('matakuliah_id', $matakuliah->id)->findAll();
+        // }
+        return $this->respond($jurusans);
 
         // return $this->respond($this->modul->findAll());
     }
@@ -38,6 +42,12 @@ class Modul extends BaseController
     {
         return $this->respond($this->modul->find($id));
     }
+
+    public function by_matakuliah($id = null)
+    {
+        return $this->respond($this->modul->where('matakuliah_id', $id)->findAll());
+    }
+
 
     public function post()
     {

@@ -38,6 +38,11 @@ class Matakuliah extends BaseController
         return $this->respond($this->matakuliah->find($id));
     }
 
+    public function by_jurusan($id = null)
+    {
+        return $this->respond($this->matakuliah->where('jurusan_id', $id)->findAll());
+    }
+
     public function post()
     {
         $data = $this->request->getJSON();
