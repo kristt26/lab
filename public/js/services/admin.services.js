@@ -415,6 +415,7 @@ function matakuliahServices($http, $q, helperServices, AuthService, pesan) {
     return {
         get: get,
         byId: byId,
+        byJurusanId: byJurusanId,
         post: post,
         put: put,
         deleted: deleted
@@ -444,6 +445,23 @@ function matakuliahServices($http, $q, helperServices, AuthService, pesan) {
         $http({
             method: 'get',
             url: controller + 'read/' + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+    function byJurusanId(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'by_jurusan/' + id,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
@@ -658,6 +676,7 @@ function modulServices($http, $q, helperServices, AuthService, pesan) {
     return {
         get: get,
         byId: byId,
+        byMatakuliahId: byMatakuliahId,
         post: post,
         put: put,
         deleted: deleted
@@ -672,6 +691,24 @@ function modulServices($http, $q, helperServices, AuthService, pesan) {
         }).then(
             (res) => {
                 service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function byMatakuliahId(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'by_matakuliah/' + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
                 def.resolve(res.data);
             },
             (err) => {

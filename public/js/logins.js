@@ -19,8 +19,6 @@ function loginController($scope, AuthService, helperServices, pesan) {
     $scope.roles = [];
     $scope.title = "Login";
     $scope.$emit("SendUp", $scope.title);
-    $scope.model.username = "Administrator";
-    $scope.model.password = "Administrator#1";
     sessionStorage.clear();
     $scope.login = ()=>{
         $.LoadingOverlay("show");

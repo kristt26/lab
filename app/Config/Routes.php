@@ -74,6 +74,7 @@ $routes->group('matakuliah', ['filter' => 'admin_auth'], static function ($route
     $routes->get('/', 'Admin\Matakuliah::index');
     $routes->get('store', 'Admin\Matakuliah::store');
     $routes->get('read/(:any)', 'Admin\Matakuliah::read/$1');
+    $routes->get('by_jurusan/(:any)', 'Admin\Matakuliah::by_jurusan/$1');
     $routes->post('post', 'Admin\Matakuliah::post');
     $routes->put('put', 'Admin\Matakuliah::put');
     $routes->delete('delete/(:any)', 'Admin\Matakuliah::delete/$1');
@@ -83,6 +84,7 @@ $routes->group('modul', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Modul::index');
     $routes->get('store', 'Admin\Modul::store');
     $routes->get('read/(:any)', 'Admin\Modul::read/$1');
+    $routes->get('by_matakuliah/(:any)', 'Admin\Modul::by_matakuliah/$1');
     $routes->post('post', 'Admin\Modul::post');
     $routes->put('put', 'Admin\Modul::put');
     $routes->delete('delete/(:any)', 'Admin\Modul::delete/$1');
