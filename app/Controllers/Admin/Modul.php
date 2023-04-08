@@ -52,6 +52,8 @@ class Modul extends BaseController
     public function post()
     {
         $data = $this->request->getJSON();
+        $decode = new \App\Libraries\Decode();
+        $data->modul = $decode->decodebase64($data->berkas->base64);
         try {
             $this->modul->insert($data);
             $data->id = $this->modul->getInsertID();
@@ -63,8 +65,15 @@ class Modul extends BaseController
 
     public function put()
     {
+        helper('filesystem');
         $data = $this->request->getJSON();
+        $decode = new \App\Libraries\Decode();
         try {
+            if(isset($data->berkas)){
+                if(unlink('assets/berkas/'.$data->modul)){
+                    $data->modul = $decode->decodebase64($data->berkas->base64);
+                }
+            }
             $this->modul->update($data->id, $data);
             return $this->respondUpdated(true);
         } catch (\Throwable$th) {

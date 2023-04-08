@@ -730,6 +730,7 @@ function modulServices($http, $q, helperServices, AuthService, pesan) {
                 def.resolve(res.data);
             },
             (err) => {
+                $.LoadingOverlay('hide');
                 pesan.error(err.data.message);
                 def.reject(err);
             }
@@ -746,13 +747,10 @@ function modulServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.matakuliah_id);
-                if (data) {
-                    data.modul.push(res.data);
-                }
                 def.resolve(res.data);
             },
             (err) => {
+                $.LoadingOverlay('hide');
                 pesan.error(err.data.messages.error);
                 def.reject(err);
             }

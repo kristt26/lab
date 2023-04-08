@@ -39,16 +39,18 @@ class Mengawas extends BaseController
     public function store()
     {
         $ta = $this->ta->where('status', '1')->first();
-        $data['jadwal'] = $this->jadwal->select('mengawas.id as mengawas_id, jurusan.jurusan, jurusan.initial, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
+        $data['jadwal'] = $this->jadwal->select('mengawas.id as mengawas_id, jurusan.jurusan, jurusan.initial, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas, rooms.id as rooms_id')
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->join('kelas', 'kelas.id=jadwal.kelas_id')
             ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
             ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id', 'LEFT')
+            ->join('rooms', 'rooms.jadwal_id=jadwal.id', 'LEFT')
             ->where('ta_id', $ta['id'])->findAll();
-        $data['mengawas'] = $this->mengawas->select("mengawas.*")
+        $data['mengawas'] = $this->mengawas->select("mengawas.*, rooms.id as rooms_id")
             ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
             ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
-            ->join('jadwal', 'jadwal.id=mengawas.jadwal_id')
+            ->join('jadwal', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
+            ->join('rooms', 'rooms.jadwal_id=jadwal.id', 'LEFT')
             ->where('user_id', session()->get('uid'))
             ->where('ta_id', $ta['id'])
             ->findAll();

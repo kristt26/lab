@@ -281,6 +281,7 @@
     <script src="<?= base_url() ?>libs/datatables/dataTables.responsive.min.js"></script>
     <script src="<?= base_url() ?>libs/datatables/btn.js"></script>
     <script src="<?= base_url() ?>libs/datatables/print.js"></script>
+    <script src="<?= base_url() ?>libs/qrcode/qrcode.min.js"></script>
     <script src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() ?>libs/loading/dist/loadingoverlay.min.js"></script>
 

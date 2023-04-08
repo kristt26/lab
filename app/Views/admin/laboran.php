@@ -65,7 +65,7 @@
                                         <td>{{item.email}}</td>
                                         <td>{{item.kontak}}</td>
                                         <td>
-                                            <button class="btn btn-primary btn-sm" ng-click="approve(item)"  title="Approve Pengajuan"><i class="fas fa-check"></i></button>
+                                            <button class="btn btn-primary btn-sm" ng-click="approve(item)" title="Approve Pengajuan"><i class="fas fa-check"></i></button>
                                             <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
                                            
                                         </td>

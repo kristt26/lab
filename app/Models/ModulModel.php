@@ -14,6 +14,6 @@ class ModulModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['judul', 'modul', 'matakuliah_id'];
+    protected $allowedFields = ['judul', 'modul', 'matakuliah_id', 'status'];
 
 }

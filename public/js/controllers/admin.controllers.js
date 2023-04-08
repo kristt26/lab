@@ -296,9 +296,11 @@ function modulController($scope, modulServices, pesan, jurusanServices, matakuli
             $.LoadingOverlay('hide');
         })
     }
-    
+
     $scope.showModul = (param) => {
         $.LoadingOverlay('show');
+        console.log(param);
+        $scope.model.matakuliah_id = param.id;
         modulServices.byMatakuliahId(param.id).then((res) => {
             $scope.moduls = res
             console.log(res);
@@ -306,46 +308,43 @@ function modulController($scope, modulServices, pesan, jurusanServices, matakuli
         })
     }
 
-    $scope.setTambah = ()=>{
+    $scope.setTambah = () => {
         $scope.tambah = true;
     }
 
 
     $scope.save = () => {
-        $scope.moduls.push($scope.model);
-        $scope.tambah = false;
-        // pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
-        //     $.LoadingOverlay('show');
-        //     if ($scope.model.id) {
-        //         modulServices.put($scope.model).then(res => {
-        //             $scope.model = {};
-        //             $("#add").modal('hide');
-        //             $.LoadingOverlay('hide');
-        //         })
-        //     } else {
-        //         modulServices.post($scope.model).then(res => {
-        //             $scope.model = {};
-        //             $.LoadingOverlay('hide');
-        //         })
-        //     }
-        // })
-    }
-
-    $scope.delete = (param) => {
-        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
             $.LoadingOverlay('show');
-            modulServices.deleted(param).then(res => {
-                $.LoadingOverlay('hide');
-                pesan.Success('Berhasil menghapus');
-            })
+            if ($scope.model.id) {
+                modulServices.put($scope.model).then(res => {
+                    $("#tambah").modal('hide');
+                    var item = $scope.moduls.find(x => x.id == $scope.model.id);
+                    item.judul = $scope.model.judul;
+                    item.modul = $scope.model.modul;
+                    item.status = $scope.model.status;
+                    $scope.model = {};
+                    $.LoadingOverlay('hide');
+                })
+            } else {
+                modulServices.post($scope.model).then(res => {
+                    $scope.model = {};
+                    $scope.moduls.push(res);
+                    $.LoadingOverlay('hide');
+                })
+            }
         })
     }
 
-    $scope.edit = (param) => {
-        $scope.model = angular.copy(param)
-        $("#add").modal('show');
+    $scope.clear = () => {
+        $scope.model = {};
+        $scope.model.matakuliah_id = $scope.matakuliah.id;
     }
 
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param);
+        $("#tambah").modal('show')
+    }
 }
 
 function taController($scope, taServices, pesan, helperServices) {
@@ -700,9 +699,6 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
     mengawasServices.get().then(res => {
         $scope.datas = res;
         $scope.ta = $scope.datas.ta;
-        if ((new Date($scope.ta.tgl_mulai) <= new Date()) && (new Date($scope.ta.tgl_selesai) >= new Date())) $scope.setView = true;
-        else $scope.setView = false;
-        console.log(new Date);
         $scope.jadwals = angular.copy($scope.datas.jadwal);
         $scope.mengawas = $scope.datas.mengawas;
         $scope.mengawas.forEach(element => {
@@ -715,64 +711,28 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
         $.LoadingOverlay("hide");
     })
 
-
-    $scope.pilih = (item) => {
-        $.LoadingOverlay("show");
-        mengawasServices.post({ jadwal_id: item.id }).then((res) => {
-            $scope.mengawas.push(angular.copy(res));
-            var temp = $scope.jadwals.find((x) => x.id == item.id);
-            temp.mengawas_id = res.id;
-            $scope.kontrak.push(angular.copy(temp));
-            var index = $scope.jadwals.indexOf(temp);
-            $scope.jadwals.splice(index, 1);
-            $.LoadingOverlay("hide");
-        })
+    $scope.qrcode = (param) => {
+        console.log(param);
+        var qrcode = new QRCode("qrcode", {
+            text: JSON.stringify(param),
+            width: 300,
+            height: 300,
+            align: 'center',
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+        $("#showQrcode").modal('show');
     }
-    $scope.hapus = (item) => {
-        $.LoadingOverlay("show");
-        var mengawas_id = $scope.mengawas.find((x) => x.jadwal_id == item.id);
-        mengawasServices.deleted(mengawas_id).then((res) => {
-            item.mengawas_id = "";
-            $scope.jadwals.push(angular.copy(item));
-            var index = $scope.kontrak.indexOf(item);
-            $scope.kontrak.splice(index, 1);
-            $.LoadingOverlay("hide");
-        })
-    }
+    function makeCode() {
+        var elText = document.getElementById("text");
 
-    $scope.pesan = (param) => {
-        pesan.success(param);
-    }
+        if (!elText.value) {
+            alert("Input a text");
+            elText.focus();
+            return;
+        }
 
-    $scope.edit = (param) => {
-        $scope.model = angular.copy(param)
-        $("#add").modal('show');
-    }
-
-    $scope.approve = (param) => {
-        pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
-            mengawasServices.put(param).then(res => {
-                var jurusan = $scope.datas.jurusan.find(x => x.id == param.jurusan_id);
-                $.LoadingOverlay("show");
-                if (jurusan) {
-                    var index = jurusan.dataPengajuan.indexOf(param);
-                    jurusan.dataPengajuan.splice(index, 1);
-                    param.user_id = res;
-                    jurusan.dataMahasiswa.push(angular.copy(param));
-                }
-                $.LoadingOverlay("hide");
-                pesan.Success("Process Success");
-            })
-        })
-    }
-
-    $scope.delete = (param) => {
-        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
-            $.LoadingOverlay("show");
-            mengawasServices.deleted(param).then(res => {
-                $.LoadingOverlay("hide");
-                pesan.Success('Berhasil menghapus');
-            })
-        })
+        qrcode.makeCode(elText.value);
     }
 }
