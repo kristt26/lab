@@ -38,6 +38,7 @@ class Kontrak extends BaseController
         $tgl = $myTime->toDateString();
         $data['jadwal'] = $this->jadwal->select("jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, 
             jurusan.jurusan, jurusan.initial, matakuliah.semester, kelas.kelas,
+            (SELECT modul.modul FROM modul where matakuliah.id=modul.matakuliah_id and status='1') AS modul,
             (SELECT COUNT(pertemuan.id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan,
             (SELECT pertemuan.id FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan_id,
             (SELECT pertemuan.tgl FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS tanggal_pertemuan")

@@ -518,6 +518,7 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, get
         getMacServices.get().then((res) => {
             $scope.showQrcode = true;
         })
+        console.log(res);
         $.LoadingOverlay("hide");
     })
 
@@ -725,7 +726,7 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
     }
 }
 
-function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
+function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuilder, helperServices) {
     $scope.$emit("SendUp", "Jadwal Mengawas");
     $scope.datas = {};
     $scope.model = {};
@@ -761,6 +762,7 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
     $scope.openPertemuan = (param) => {
         param.jumlahPertemuan = parseInt(param.jumlahPertemuan);
         pesan.dialog('Anda ingin membuka pertemuan?', 'Ya', 'Tidak').then((x) => {
+            param.tgl = helperServices.dateTimeToString(new Date());
             mengawasServices.open(param).then((res) => {
                 param.jumlahPertemuan += 1;
                 pesan.Success("Proses Berhasil");
@@ -790,7 +792,7 @@ function absenRoomsController($scope, absenRoomsServices, pesan, DTOptionsBuilde
     })
     $scope.showMahasiswa = (param) => {
         $.LoadingOverlay("show");
-        absenRoomsServices.getByPertemuan(param.id).then((res) => {
+        absenRoomsServices.getByPertemuan(param).then((res) => {
             param.mahasiswas = res;
             $.LoadingOverlay("hide");
         })
@@ -800,7 +802,6 @@ function absenRoomsController($scope, absenRoomsServices, pesan, DTOptionsBuilde
         absenRoomsServices.absen(param).then((res)=>{
             param.absen_id = res.absen_id;
             param.by = res.by;
-            console.log(param);
             pesan.Success("NPM: "+param.npm + (param.status=='H' ? ' Hadir':param.status=='I' ? " Izin" : param.status=='S' ? " Sakit" : " Tidak Hadir"));
         })
     }

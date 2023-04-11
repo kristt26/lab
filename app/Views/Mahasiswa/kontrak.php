@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="card-footer text-right">
                                     <button ng-if="setView" class="btn btn-danger btn-sm" ng-click="hapus(item)"><i class="fas fa-trash fa-fw"></i></button>
-                                    <button class="btn btn-info btn-sm" ng-click="edit(item)" title="Modul Praktikum"><i class="fas fa-book"></i></button>
+                                    <a ng-if="item.modul" href="<?= base_url() ?>assets/berkas/{{item.modul}}" target="_blank" class="btn btn-info btn-sm" title="Download Modul"><i class="fas fa-book"></i></a>
                                     <button ng-if="showQrcode" class="btn btn-primary btn-sm" ng-click="qrcode(item)" title="QrCode untuk absen"><i class="fas fa-qrcode"></i></button>
                                 </div>
                             </div>

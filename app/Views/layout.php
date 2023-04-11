@@ -12,6 +12,7 @@
     <title>Laboratorium</title>
 
     <!-- Custom fonts for this template-->
+    <link rel="icon" type="image/x-icon" href="assets/img/logo/favicon.ico">
     <link href="<?= base_url() ?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -29,22 +30,22 @@
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <img src="assets/img/logo/android-icon-36x36.png" alt="">
                 <div class="sidebar-brand-text mx-3">LS2J</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <?php if (session()->get("role") == "Admin") : ?>
-                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
-                    <a class="nav-link" href="<?= base_url('home') ?>">
+            <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
+                    <a class="nav-link" href="<?= base_url() ?>">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
+            <!-- Nav Item - Dashboard -->
+            <?php if (session()->get("role") == "Admin") : ?>
                 <li class="nav-item">
                     <a ng-class="{'nav-link' : root=='Master Data', 'nav-link collapsed' : root!='Master Data'}" href="#" data-toggle="collapse" data-target="#master" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
@@ -76,11 +77,6 @@
             <?php endif; ?>
 
             <?php if (session()->get("role") == "Mahasiswa") : ?>
-                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
-                    <a class="nav-link" href="<?= base_url('home') ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
                 <!-- <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
                     <a class="nav-link" href="<?= base_url('registration') ?>">
                         <i class="fas fa-shopping-cart"></i>
@@ -91,19 +87,15 @@
                         <i class="fa fa-filter" aria-hidden="true"></i>
                         <span>Daftar Laboran</span></a>
                 </li>
-                <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
+                <!-- <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
                     <a class="nav-link" href="<?= base_url('absen') ?>">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Absen</span></a>
-                </li>
+                </li> -->
             <?php endif; ?>
 
             <?php if (session()->get("role") == "Laboran") : ?>
-                <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
-                    <a class="nav-link" href="<?= base_url('home') ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
+                
                 <!-- <li ng-class="{'nav-item active': title=='Mengawas', 'nav-item': title!='Mengawas'}">
                     <a class="nav-link" href="<?= base_url('mengawas') ?>">
                         <i class="fas fa-shopping-cart"></i>
@@ -212,7 +204,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; LS2J 2023</span>
+                        <span>Copyright &copy; LS2J 2023 Version Beta</span>
                     </div>
                 </div>
             </footer>

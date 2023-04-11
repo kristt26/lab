@@ -1,7 +1,7 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 <div class="row">
-    <div class="col-4">
+    <!-- <div class="col-4">
         <div class="d-flex flex-row mb-3">
             <div class="card">
                 <div class="d-flex justify-content-around">
@@ -56,6 +56,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <?= $this->endSection() ?>

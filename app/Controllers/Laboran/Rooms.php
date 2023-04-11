@@ -25,25 +25,34 @@ class Rooms extends BaseController
 
     public function store($id = null)
     {
-        $data = $this->pertemuan->select("pertemuan.*")
+        $data = $this->pertemuan->select("pertemuan.*, mengawas.jadwal_id")
             ->join('mengawas', 'mengawas.id=pertemuan.mengawas_id', 'LEFT')
             ->where('jadwal_id', $id)
             ->findAll();
         return $this->respond($data);
     }
 
-    public function by_pertemuan($id = null)
+    public function by_pertemuan($pertemuan_id = null, $jadwal_id=null)
     {
-        $data = $this->rooms
-            ->select("rooms.*, mahasiswa.nama_mahasiswa, mahasiswa.npm, absen.status, absen.by, pertemuan.id as pertemuan_id, absen.id as absen_id, matakuliah.nama_matakuliah")
-            ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id', 'LEFT')
-            ->join('jadwal', 'jadwal.id=rooms.jadwal_id', 'LEFT')
-            ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id', 'LEFT')
-            ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
-            ->join('pertemuan', 'pertemuan.mengawas_id=mengawas.id', 'LEFT')
-            ->join('absen', 'absen.rooms_id=rooms.id', 'LEFT')
-            ->where('pertemuan.id', $id)
-            ->findAll();
+        $conn = \Config\Database::connect();
+        $data = $conn->query("SELECT
+            `mahasiswa`.`nama_mahasiswa`,
+            `mahasiswa`.`npm`,
+            '$pertemuan_id' as pertemuan_id,
+            rooms.id as id_rooms,
+            `rooms`.*, (SELECT absen.status from absen where pertemuan_id='$pertemuan_id' and rooms_id=id_rooms) as status,(SELECT absen.by from absen where pertemuan_id='$pertemuan_id' and rooms_id=id_rooms) as 'by',(SELECT absen.id from absen where pertemuan_id='$pertemuan_id' and rooms_id=id_rooms) as absen_id
+        FROM
+            `rooms`
+            LEFT JOIN `mahasiswa` ON `rooms`.`mahasiswa_id` = `mahasiswa`.`id`
+        WHERE jadwal_id = '$jadwal_id'")->getResult();
+        // $data = $this->rooms
+        //     ->select("rooms.*, rooms.id as id_rooms, mahasiswa.nama_mahasiswa, mahasiswa.npm, pertemuan.id as pertemuan_id, matakuliah.nama_matakuliah,
+        //     (SELECT absen.status from absen where pertemuan_id='$pertemuan_id' and rooms_id=id_rooms) as status,
+        //     (SELECT absen.by from absen where pertemuan_id='$pertemuan_id' and rooms_id=id_rooms) as 'by',
+        //     (SELECT absen.id from absen where pertemuan_id='$pertemuan_id' and rooms_id=id")
+        //     ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id', 'LEFT')
+        //     ->where('jadwal_id', $jadwal_id)
+        //     ->findAll();
         return $this->respond($data);
     }
 

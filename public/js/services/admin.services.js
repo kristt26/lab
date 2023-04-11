@@ -1524,11 +1524,11 @@ function absenRoomsServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
-    function getByPertemuan(id) {
+    function getByPertemuan(param) {
         var def = $q.defer();
         $http({
             method: 'get',
-            url: controller + 'by_pertemuan/' + id,
+            url: controller + 'by_pertemuan/' + param.id + "/" + param.jadwal_id,
             headers: AuthService.getHeader()
         }).then(
             (res) => {

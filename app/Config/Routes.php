@@ -173,7 +173,7 @@ $routes->group('absen', static function ($routes) {
 $routes->group('absen_rooms', static function ($routes) {
     $routes->get('(:num)', 'Laboran\Rooms::index/$1');
     $routes->get('store/(:num)', 'Laboran\Rooms::store/$1');
-    $routes->get('by_pertemuan/(:num)', 'Laboran\Rooms::by_pertemuan/$1');
+    $routes->get('by_pertemuan/(:num)/(:num)', 'Laboran\Rooms::by_pertemuan/$1/$2');
     $routes->post('post', 'Laboran\Rooms::post');
 });
 
