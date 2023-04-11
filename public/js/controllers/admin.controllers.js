@@ -17,6 +17,7 @@ angular.module('adminctrl', [])
     // Laboran
     .controller('mengawasController', mengawasController)
     .controller('jadwalMengawasController', jadwalMengawasController)
+    .controller('absenRoomsController', absenRoomsController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -47,6 +48,18 @@ function laboranController($scope, laboranServices, pesan) {
                 var index = $scope.datas.daftar.indexOf(param);
                 $scope.datas.daftar.splice(index, 1);
                 $scope.datas.laboran.push(angular.copy(param));
+                pesan.Success("Process Success");
+                $.LoadingOverlay('hide');
+            })
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin membatalkan ?', 'Ya', 'Tidak').then((x) => {
+            $.LoadingOverlay('show');
+            laboranServices.deleted(param.pendaftaran_laboran_id).then(res => {
+                var index = $scope.datas.daftar.indexOf(param);
+                $scope.datas.daftar.splice(index, 1);
                 pesan.Success("Process Success");
                 $.LoadingOverlay('hide');
             })
@@ -473,7 +486,7 @@ function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder)
     }
 }
 
-function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder) {
+function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, getMacServices) {
     $scope.$emit("SendUp", "Mahasiswa");
     $scope.datas = {};
     $scope.model = {};
@@ -484,6 +497,8 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder) {
     $scope.kontrak = [];
     $scope.ta = {};
     $scope.setView = false;
+    $scope.showQrcode = false;
+    var qrcode = new QRCode("qrcode");
     $.LoadingOverlay("show");
     kontrakServices.get().then(res => {
         $scope.datas = res;
@@ -495,13 +510,35 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder) {
         $scope.rooms = $scope.datas.rooms;
         $scope.rooms.forEach(element => {
             var item = $scope.jadwals.find((x) => x.id == element.jadwal_id);
+            item.rooms_id = element.id;
             $scope.kontrak.push(angular.copy(item));
             var index = $scope.jadwals.indexOf(item);
             $scope.jadwals.splice(index, 1);
         });
+        getMacServices.get().then((res) => {
+            $scope.showQrcode = true;
+        })
         $.LoadingOverlay("hide");
     })
 
+    $scope.qrcode = (param) => {
+        if (param.pertemuan_id) {
+            console.log(param);
+            var item = angular.copy(param);
+            delete item.jurusan_id;
+            delete item.kelas_id;
+            delete item.matakuliah_id;
+            delete item.ta_id;
+            delete item.initial;
+            delete item.$$hashKey;
+            $scope.matakuliah = param;
+            qrcode.clear();
+            qrcode.makeCode(JSON.stringify(item))
+            $("#showQrcode").modal('show');
+        } else {
+            pesan.error("Tidak ada pertemuan hari ini atau kelas belum dibuka");
+        }
+    }
 
     $scope.pilih = (item) => {
         $.LoadingOverlay("show");
@@ -560,11 +597,13 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder) {
             })
         })
     }
+
+
 }
 
 function daftarLaboranController($scope, daftarLaboranServices, pesan, DTOptionsBuilder) {
     $scope.$emit("SendUp", "Pendaftaran Laboran");
-    $scope.datas = {};
+    $scope.datas = [];
     $scope.model = {};
     $.LoadingOverlay('show');
     daftarLaboranServices.get().then((res) => {
@@ -576,7 +615,9 @@ function daftarLaboranController($scope, daftarLaboranServices, pesan, DTOptions
         pesan.dialog('Yakin ingin mendaftar?', 'YA', 'Tidak').then(x => {
             $.LoadingOverlay('show');
             daftarLaboranServices.post($scope.model).then(res => {
-
+                $scope.datas = [];
+                $scope.datas.push(angular.copy($scope.model));
+                $.LoadingOverlay('hide');
             })
         })
     }
@@ -703,6 +744,7 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
         $scope.mengawas = $scope.datas.mengawas;
         $scope.mengawas.forEach(element => {
             var item = $scope.jadwals.find((x) => x.id == element.jadwal_id);
+            item.jmlmahasiswa = parseInt(item.jmlmahasiswa);
             $scope.kontrak.push(angular.copy(item));
             var index = $scope.jadwals.indexOf(item);
             $scope.jadwals.splice(index, 1);
@@ -711,28 +753,55 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
         $.LoadingOverlay("hide");
     })
 
-    $scope.qrcode = (param) => {
+    $scope.showModul = (param) => {
+        $("modul").modal('show');
         console.log(param);
-        var qrcode = new QRCode("qrcode", {
-            text: JSON.stringify(param),
-            width: 300,
-            height: 300,
-            align: 'center',
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H
-        });
-        $("#showQrcode").modal('show');
     }
-    function makeCode() {
-        var elText = document.getElementById("text");
 
-        if (!elText.value) {
-            alert("Input a text");
-            elText.focus();
-            return;
-        }
+    $scope.openPertemuan = (param) => {
+        param.jumlahPertemuan = parseInt(param.jumlahPertemuan);
+        pesan.dialog('Anda ingin membuka pertemuan?', 'Ya', 'Tidak').then((x) => {
+            mengawasServices.open(param).then((res) => {
+                param.jumlahPertemuan += 1;
+                pesan.Success("Proses Berhasil");
+            }, (err) => {
+                pesan.dialog('Anda sudah membuka kelas hari ini yakin akan membuka kelas lagi?', 'Ya', 'Tidak', 'error').then(xx => {
+                    param.again = true;
+                    mengawasServices.open(param).then((again) => {
+                        param.jumlahPertemuan += 1;
+                        pesan.Success("Proses Berhasil");
+                    })
+                })
+            })
+        })
+    }
+}
 
-        qrcode.makeCode(elText.value);
+function absenRoomsController($scope, absenRoomsServices, pesan, DTOptionsBuilder, helperServices) {
+    $scope.$emit("SendUp", "Absen Mahasiswa");
+    $scope.model = {};
+    $scope.ta = {};
+    $scope.setView = false;
+    $.LoadingOverlay("show");
+    absenRoomsServices.get(helperServices.lastPath).then(res => {
+        $scope.pertemuans = res;
+        console.log(res);
+        $.LoadingOverlay("hide");
+    })
+    $scope.showMahasiswa = (param) => {
+        $.LoadingOverlay("show");
+        absenRoomsServices.getByPertemuan(param.id).then((res) => {
+            param.mahasiswas = res;
+            $.LoadingOverlay("hide");
+        })
+    }
+
+    $scope.absenMahasiswa = (param) => {
+        absenRoomsServices.absen(param).then((res)=>{
+            param.absen_id = res.absen_id;
+            param.by = res.by;
+            console.log(param);
+            pesan.Success("NPM: "+param.npm + (param.status=='H' ? ' Hadir':param.status=='I' ? " Izin" : param.status=='S' ? " Sakit" : " Tidak Hadir"));
+        })
     }
 }

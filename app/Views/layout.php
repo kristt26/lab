@@ -81,19 +81,19 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
-                <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
+                <!-- <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
                     <a class="nav-link" href="<?= base_url('registration') ?>">
-                    <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-shopping-cart"></i>
                         <span>Registration</span></a>
-                </li>
+                </li> -->
                 <li ng-class="{'nav-item active': title=='Daftar Laboran', 'nav-item': title!='Daftar Laboran'}">
                     <a class="nav-link" href="<?= base_url('daftar_laboran') ?>">
-                    <i class="fa fa-filter" aria-hidden="true"></i>
+                        <i class="fa fa-filter" aria-hidden="true"></i>
                         <span>Daftar Laboran</span></a>
                 </li>
                 <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
                     <a class="nav-link" href="<?= base_url('absen') ?>">
-                    <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-shopping-cart"></i>
                         <span>Absen</span></a>
                 </li>
             <?php endif; ?>
@@ -104,12 +104,12 @@
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a>
                 </li>
-                <li ng-class="{'nav-item active': title=='Mengawas', 'nav-item': title!='Mengawas'}">
+                <!-- <li ng-class="{'nav-item active': title=='Mengawas', 'nav-item': title!='Mengawas'}">
                     <a class="nav-link" href="<?= base_url('mengawas') ?>">
                         <i class="fas fa-shopping-cart"></i>
                         <span>Daftar Mengawas</span></a>
-                </li>
-                <li ng-class="{'nav-item active': title=='Jadwal Mengawas', 'nav-item': title!='Jadwal Mengawas'}">
+                </li> -->
+                <li ng-class="{'nav-item active': title=='Jadwal Mengawas' || title=='Absen Mahasiswa', 'nav-item': title!='Jadwal Mengawas'|| title !='Absen Mahasiswa'}">
                     <a class="nav-link" href="<?= base_url('jadwal_mengawas') ?>">
                         <i class="fas fa-calendar"></i>
                         <span>Jadwal Mengawas</span></a>
@@ -140,26 +140,21 @@
                     </button>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        <?php if (session()->get('role') == 'Laboran') : ?>
+                            <li class="nav-item no-arrow mx-1">
+                                <a class="nav-link btn btn-info btn-sm" href="<?= base_url('mengawas') ?>">
+                                    <!-- <i class="fas fa-shopping-cart"></i> -->
+                                    <span style="color:#343536"> Daftar Mengawas</span></a>
+                            </li>
+                        <?php endif; ?>
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
+                        <?php if (session()->get('role') == 'Mahasiswa') : ?>
+                            <li class="nav-item no-arrow mx-1">
+                                <a class="nav-link btn btn-info btn-sm" href="<?= base_url('registration') ?>">
+                                    <!-- <i class="fas fa-shopping-cart"></i> -->
+                                    <span style="color:#343536"> Registration</span></a>
+                            </li>
+                        <?php endif; ?>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -167,7 +162,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= session()->get('nama') ?></span>
-                                <img class="img-profile rounded-circle" src="assets/img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="<?= base_url() ?>assets/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -217,7 +212,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; LS2J 2023</span>
                     </div>
                 </div>
             </footer>
@@ -295,6 +290,7 @@
     <script src="<?= base_url() ?>assets/vendor/chart.js/Chart.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script src="<?= base_url() ?>libs/angular-tooltips/dist/angular-tooltips.js"></script>
+
 
     <!-- Page level custom scripts -->
     <!-- <script src="<?= base_url() ?>assets/js/demo/chart-area-demo.js"></script>

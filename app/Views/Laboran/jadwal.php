@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive" style="margin-top: 20px;">
-                        <table class="table table-bordered">
+                        <table class="table table-sm table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -17,8 +17,9 @@
                                     <th>Kelas</th>
                                     <th>Hari</th>
                                     <th>Ruangan</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
+                                    <th>Jam</th>
+                                    <th>Total Mahasiswa</th>
+                                    <th>Jumlah Pertemuan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -29,11 +30,15 @@
                                     <td>{{item.kelas}}</td>
                                     <td>{{item.hari}}</td>
                                     <td>{{item.ruang}}</td>
-                                    <td>{{item.jam_mulai}}</td>
-                                    <td>{{item.jam_selesai}}</td>
-                                    <td>
-                                        <button class="btn btn-info btn-sm" ng-click="edit(item)" title="Modul Praktikum"><i class="fas fa-book"></i></button>
-                                        <button class="btn btn-primary btn-sm" ng-click="qrcode(item)" title="QrCode untuk absen"><i class="fas fa-qrcode"></i></button>
+                                    <td>{{item.jam_mulai}} s/d {{item.jam_selesai}}</td>
+                                    <td>{{item.jmlmahasiswa}}</td>
+                                    <td>{{item.jumlahPertemuan}}</td>
+                                    <td width="7%">
+                                        <div class="d-flex justify-content-between">
+                                            <a href="<?= base_url() ?>assets/berkas/{{item.modul}}" target="_blank" class="btn btn-info btn-sm mr-2" title="Download Modul"><i class="fas fa-book"></i></a>
+                                            <a href="<?= base_url() ?>absen_rooms/{{item.id}}" class="btn btn-primary btn-sm mr-2" title="Absen Mahasiswa"><i class="fas fa-user-alt"></i></a>
+                                            <button class="btn btn-warning btn-sm" title="Absen Laboran" ng-click="openPertemuan(item)"><i class="fas fa-sign-in-alt"></i></button>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -44,19 +49,19 @@
 
         </div>
     </div>
-   
-    <div class="modal fade" id="showQrcode" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+
+    <div class="modal fade" id="modul" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Absen Praktikum</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-body">
-                    <div id="qrcode"></div>
-                </div>
+                <!-- <div class="modal-body">
+                    <iframe src="https://docs.google.com/gview?url=http://remote.url.tld/path/to/document.doc&embedded=true"></iframe>
+                </div> -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save</button>

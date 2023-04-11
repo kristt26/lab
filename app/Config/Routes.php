@@ -31,7 +31,12 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('spk', 'Spk::index');
+$routes->get('getmac', 'Pc::index');
 
+$routes->group('getmac', static function ($routes) {
+    $routes->get('/', 'Pc::index');
+    $routes->post('post', 'Pc::post');
+});
 $routes->group('auth', static function ($routes) {
     $routes->get('/', 'Auth::index');
     $routes->get('register', 'Auth::register');
@@ -123,7 +128,7 @@ $routes->group('mahasiswa', ['filter' => 'admin_auth'], static function ($routes
 // Mahasiswa
 
 
-$routes->group('registration', static function ($routes) {
+$routes->group('registration', ['filter'=> 'mahasiswa_auth'], static function ($routes) {
     $routes->get('/', 'Mahasiswa\Kontrak::index');
     $routes->get('store', 'Mahasiswa\Kontrak::store');
     $routes->get('read/(:any)', 'Mahasiswa\Kontrak::read/$1');
@@ -147,6 +152,7 @@ $routes->group('mengawas', static function ($routes) {
     $routes->get('/', 'Laboran\Mengawas::index');
     $routes->get('store', 'Laboran\Mengawas::store');
     $routes->get('read/(:any)', 'Laboran\Mengawas::read/$1');
+    $routes->post('pertemuan', 'Laboran\Mengawas::pertemuan');
     $routes->post('post', 'Laboran\Mengawas::post');
     $routes->put('put', 'Laboran\Mengawas::put');
     $routes->delete('delete/(:any)', 'Laboran\Mengawas::delete/$1');
@@ -158,6 +164,23 @@ $routes->group('jadwal_mengawas', static function ($routes) {
     $routes->post('post', 'Laboran\Jadwal::post');
     $routes->put('put', 'Laboran\Jadwal::put');
     $routes->delete('delete/(:any)', 'Laboran\Jadwal::delete/$1');
+});
+
+$routes->group('absen', static function ($routes) {
+    $routes->get('insert/(:num)/(:num)', 'Absen::insert/$1/$2');
+});
+
+$routes->group('absen_rooms', static function ($routes) {
+    $routes->get('(:num)', 'Laboran\Rooms::index/$1');
+    $routes->get('store/(:num)', 'Laboran\Rooms::store/$1');
+    $routes->get('by_pertemuan/(:num)', 'Laboran\Rooms::by_pertemuan/$1');
+    $routes->post('post', 'Laboran\Rooms::post');
+});
+
+$routes->group('pertemuan', static function ($routes) {
+    $routes->post('post', 'Laboran\Pertemuan::post');
+    $routes->put('put', 'Laboran\Pertemuan::put');
+    $routes->delete('delete/(:any)', 'Laboran\Pertemuan::delete/$1');
 });
 
 

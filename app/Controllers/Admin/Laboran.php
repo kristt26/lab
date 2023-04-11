@@ -24,7 +24,7 @@ class Laboran extends BaseController
     {
         $data = [
             "laboran" => $this->laboran->select("mahasiswa.*")->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id')->findAll(),
-            "daftar" => $this->daftar->select("mahasiswa.*, pendaftaran_laboran.alasan")->join('mahasiswa', 'mahasiswa.id=pendaftaran_laboran.mahasiswa_id')->where('pendaftaran_laboran.status', 'Mendaftar')->findAll()
+            "daftar" => $this->daftar->select("mahasiswa.*, pendaftaran_laboran.id as pendaftaran_laboran_id, pendaftaran_laboran.alasan")->join('mahasiswa', 'mahasiswa.id=pendaftaran_laboran.mahasiswa_id')->where('pendaftaran_laboran.status', 'Mendaftar')->findAll()
         ];
         return $this->respond($data);
     }
@@ -62,5 +62,11 @@ class Laboran extends BaseController
 
     public function delete($id = null)
     {
+        try {
+            $this->daftar->delete($id);
+            return $this->respondDeleted(true);
+        } catch (\Throwable $th) {
+            return $this->fail($th->getMessage());
+        }
     }
 }

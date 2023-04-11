@@ -4,6 +4,7 @@ namespace App\Controllers\Mahasiswa;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\I18n\Time;
 use App\Models\KontrakModel;
 use App\Models\JadwalModel;
 use App\Models\MahasiswaModel;
@@ -33,10 +34,17 @@ class Kontrak extends BaseController
     {
         $ta = $this->ta->where('status', '1')->first();
         $mhs = $this->mahasiswa->where('user_id', session()->get('uid'))->first();
-        $data['jadwal'] = $this->jadwal->select('jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, jurusan.jurusan, jurusan.initial, matakuliah.semester, kelas.kelas')
-            ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
-            ->join('kelas', 'kelas.id=jadwal.kelas_id')
-            ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id')
+        $myTime = new Time('now');
+        $tgl = $myTime->toDateString();
+        $data['jadwal'] = $this->jadwal->select("jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, 
+            jurusan.jurusan, jurusan.initial, matakuliah.semester, kelas.kelas,
+            (SELECT COUNT(pertemuan.id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan,
+            (SELECT pertemuan.id FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan_id,
+            (SELECT pertemuan.tgl FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS tanggal_pertemuan")
+            ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id', 'LEFT')
+            ->join('kelas', 'kelas.id=jadwal.kelas_id', 'LEFT')
+            ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id', 'LEFT')
+            ->join('mengawas', 'mengawas.jadwal_id=jadwal.id', 'LEFT')
             ->where('matakuliah.jurusan_id', $mhs['jurusan_id'])
             ->where('ta_id', $ta['id'])->findAll();
         $data['rooms'] = $this->kontrak->select("rooms.*")

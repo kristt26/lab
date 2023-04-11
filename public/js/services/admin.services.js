@@ -10,11 +10,13 @@ angular.module('admin.service', [])
     .factory('regisServices', regisServices)
     .factory('taServices', taServices)
     .factory('mahasiswaServices', mahasiswaServices)
+    .factory('getMacServices', getMacServices)
     // mahasiswa
     .factory('kontrakServices', kontrakServices)
     .factory('daftarLaboranServices', daftarLaboranServices)
     // Laboran
     .factory('mengawasServices', mengawasServices)
+    .factory('absenRoomsServices', absenRoomsServices)
 
     ;
 
@@ -33,6 +35,50 @@ function dashboardServices($http, $q, helperServices, AuthService) {
         $http({
             method: 'get',
             url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function getLayanan() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'get_layanan',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+}
+
+function getMacServices($http, $q, helperServices, AuthService) {
+    var controller = "http://localhost:5555/macaddress";
+    var service = {};
+    service.data = [];
+    service.instance = false;
+    return {
+        get: get,
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
@@ -168,13 +214,12 @@ function laboranServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var index = service.data.indexOf(param);
-                service.data.splice(index, 1);
                 def.resolve(res.data);
             },
             (err) => {
-                def.reject(err);
                 pesan.error(err.data.message)
+                def.reject(err);
+                $.LoadingOverlay("hide");
             }
         );
         return def.promise;
@@ -1328,6 +1373,7 @@ function mengawasServices($http, $q, helperServices, AuthService, pesan) {
         get: get,
         byId: byId,
         post: post,
+        open: open,
         put: put,
         deleted: deleted
     };
@@ -1389,6 +1435,26 @@ function mengawasServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
+    function open(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'pertemuan',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                // pesan.error(err.data.messages.error);
+                $.LoadingOverlay("hide");
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
     function put(param) {
         var def = $q.defer();
         $http({
@@ -1427,4 +1493,72 @@ function mengawasServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
+}
+
+function absenRoomsServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'absen_rooms/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+        getByPertemuan:getByPertemuan,
+        absen:absen
+    };
+
+    function get(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'store/' + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function getByPertemuan(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'by_pertemuan/' + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function absen(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'post',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                $.LoadingOverlay("hide");
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
 }

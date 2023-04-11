@@ -14,7 +14,7 @@
                                 <div class="card-body">
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah}} | {{item.initial}}</strong></h6>
                                     <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}}</h6>
-                                    <h6 style="font-size: 12px;"><i class="far fa-clock"></i>{{item.jam_mulai}} - {{item.jam_selesai}}</h6>
+                                    <h6 style="font-size: 12px;"><i class="fas fa-calendar fa-fw"></i>: {{item.hari}} | <i class="far fa-clock"></i>{{item.jam_mulai}} - {{item.jam_selesai}}</h6>
                                     <!-- <p class="card-text">Pengawas</p> -->
                                 </div>
                                 <div class="card-footer text-right">
@@ -35,18 +35,38 @@
                 <div class="card-body">
                     <div class="row">
                         <div ng-class="{'col-md-12': setView, 'col-md-3': !setView}" class="" ng-repeat="item in kontrak">
-                            <div class="card text-left">
+                            <div ng-class="{'card text-left mb-3 text-white bg-primary': item.pertemuan_id, 'card text-left mb-3': !item.pertemuan_id}">
                                 <div class="card-body">
-                                <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah }} | {{item.initial}}</strong></h6>
+                                    <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah }} | {{item.initial}}</strong></h6>
                                     <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}}</h6>
-                                    <h6 style="font-size: 12px;"><i class="far fa-clock"></i>{{item.jam_mulai}} - {{item.jam_selesai}}</h6>
+                                    <h6 style="font-size: 12px;"><i class="fas fa-calendar fa-fw"></i>: {{item.hari}} | <i class="far fa-clock"></i>: {{item.jam_mulai}} - {{item.jam_selesai}}</h6>
                                 </div>
                                 <div class="card-footer text-right">
-                                    <button class="btn btn-warning btn-sm btn-block" ng-click="hapus(item)">Batal</button>
+                                    <button ng-if="setView" class="btn btn-danger btn-sm" ng-click="hapus(item)"><i class="fas fa-trash fa-fw"></i></button>
+                                    <button class="btn btn-info btn-sm" ng-click="edit(item)" title="Modul Praktikum"><i class="fas fa-book"></i></button>
+                                    <button ng-if="showQrcode" class="btn btn-primary btn-sm" ng-click="qrcode(item)" title="QrCode untuk absen"><i class="fas fa-qrcode"></i></button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="showQrcode" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Absen Praktikum {{matakuliah.nama_matakuliah}}</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

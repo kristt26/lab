@@ -87,7 +87,10 @@ class auth extends BaseController
                     ->where('role_id', '2')
                     ->get()->getRow();
                 if($role){
-                    $result['mahasiswa'] = $this->db->table('mahasiswa')->where('user_id', $user['id'])->get()->getRow();
+                    $result['mahasiswa'] = $this->db->table('mahasiswa')->select('mahasiswa.*, jurusan.jurusan, kelas.kelas')
+                        ->join('jurusan', 'jurusan.id=mahasiswa.jurusan_id')
+                        ->join('kelas', 'kelas.id=mahasiswa.kelas_id')    
+                        ->where('user_id', $user['id'])->get()->getRow();
                     $result['jadwal'] = $kontrak->select("rooms.*, jadwal.hari, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.shift, jadwal.ruang, matakuliah.nama_matakuliah, matakuliah.semester, kelas.kelas")
                         ->join('jadwal', 'jadwal.id=rooms.jadwal_id', 'LEFT')
                         ->join('kelas', 'kelas.id=jadwal.kelas_id', 'LEFT')

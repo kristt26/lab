@@ -39,7 +39,9 @@ class Jadwal extends BaseController
     public function store()
     {
         $ta = $this->ta->where('status', '1')->first();
-        $data['jadwal'] = $this->jadwal->select('mengawas.id as mengawas_id, jurusan.jurusan, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas')
+        $data['jadwal'] = $this->jadwal->select("mengawas.id as mengawas_id, jurusan.jurusan, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas
+        (SELECT COUNT(*) FROM rooms where rooms.jadwal_id=jadwal.id ) AS jmlmahasiswa,
+        (SELECT modul.modul FROM modul where matakuliah.id=modul.matakuliah_id and status='1') AS modul")
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
             ->join('kelas', 'kelas.id=jadwal.kelas_id')
             ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
