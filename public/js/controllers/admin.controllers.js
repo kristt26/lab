@@ -9,6 +9,7 @@ angular.module('adminctrl', [])
     .controller('modulController', modulController)
     .controller('taController', taController)
     .controller('mahasiswaController', mahasiswaController)
+    .controller('componenController', componenController)
 
     // Mahasiswa
     .controller('kontrakController', kontrakController)
@@ -228,6 +229,9 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
     $scope.jadwals = [];
     $scope.hari = helperServices.hari;
     $scope.dataKamar = {};
+    $scope.jurusan = {};
+    $scope.matakuliah = {};
+    $scope.kelas = {};
     $.LoadingOverlay('show');
     jadwalServices.get().then(res => {
         $scope.datas = res;
@@ -240,9 +244,16 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
         $scope.jadwals = $scope.datas.jurusan.find(x => x.id == id);
     }
 
+  
+
     $scope.save = () => {
+        console.log($scope.model);
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
             $.LoadingOverlay('show');
+            $scope.model.ta_id = $scope.datas.ta.id;
+            $scope.model.tahun_akademik = $scope.datas.ta.tahun_akademik;
+            $scope.model.jam_mulai = $scope.model.jam_mulai.getHours() + ":" + $scope.model.jam_mulai.getMinutes();
+            $scope.model.jam_selesai = $scope.model.jam_selesai.getHours() + ":" + $scope.model.jam_selesai.getMinutes();
             if ($scope.model.id) {
                 jadwalServices.put($scope.model).then(res => {
                     $scope.model = {};
@@ -250,10 +261,6 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
                     $.LoadingOverlay('hide');
                 })
             } else {
-                $scope.model.ta_id = $scope.datas.ta.id;
-                $scope.model.tahun_akademik = $scope.datas.ta.tahun_akademik;
-                $scope.model.jam_mulai = $scope.model.jam_mulai.getHours() + ":" + $scope.model.jam_mulai.getMinutes();
-                $scope.model.jam_selesai = $scope.model.jam_selesai.getHours() + ":" + $scope.model.jam_selesai.getMinutes();
                 jadwalServices.post($scope.model).then(res => {
                     var item = $scope.datas.jurusan.find(x => x.id = $scope.jurusan.id)
                     item.jadwal.push(res);
@@ -280,8 +287,17 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
     }
 
     $scope.edit = (param) => {
-        $scope.model = angular.copy(param)
-        $("#add").modal('show');
+        $scope.$applyAsync(x=>{
+            $("#add").modal('show');
+            $scope.jurusan = $scope.datas.jurusan.find(x=>x.id == param.jurusan_id);
+            $scope.matakuliah = $scope.jurusan.matakuliah.find(x=>x.id == param.matakuliah_id);
+            $scope.kelas = $scope.datas.kelas.find(x=>x.id == param.kelas_id);
+            var item = angular.copy(param);
+            item.jam_mulai = new Date("1970-01-01T" + param.jam_mulai);
+            item.jam_selesai = new Date("1970-01-01T" + param.jam_selesai);
+            $scope.model = angular.copy(item)
+            console.log();
+        })
     }
 
 }
@@ -479,6 +495,66 @@ function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder)
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
             $.LoadingOverlay('show');
             mahasiswaServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function componenController($scope, componenServices, pesan, DTOptionsBuilder) {
+    $scope.$emit("SendUp", "Mahasiswa");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    $scope.jurusans = {};
+    
+    $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('scrollX', '100%');
+    $.LoadingOverlay('show');
+    componenServices.get().then(res => {
+        $scope.datas = res;
+        $scope.hitungPersentase();
+        $.LoadingOverlay('hide');
+    })
+
+    $scope.hitungPersentase = ()=>{
+        $scope.total = 0;
+        $scope.datas.forEach(element => {
+            $scope.total += parseFloat(element.persentase);
+        });
+    }
+
+    $scope.edit = (param) => {
+        param.persentase = parseFloat(param.persentase);
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.save = (param) => {
+        pesan.dialog('Yakin ingin menyimpan?', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
+            if ($scope.model.id) {
+                componenServices.put($scope.model).then(res => {
+                    $scope.hitungPersentase();
+                    pesan.Success("Proses berhasil");
+                    $scope.model = {};
+                    $.LoadingOverlay('hide');
+                })
+            } else {
+                componenServices.post($scope.model).then(res => {
+                    $scope.hitungPersentase();
+                    pesan.Success("Proses berhasil");
+                    $scope.model = {};
+                    $.LoadingOverlay('hide');
+                })
+            }
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
+            componenServices.deleted(param).then(res => {
                 $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })
@@ -799,10 +875,10 @@ function absenRoomsController($scope, absenRoomsServices, pesan, DTOptionsBuilde
     }
 
     $scope.absenMahasiswa = (param) => {
-        absenRoomsServices.absen(param).then((res)=>{
+        absenRoomsServices.absen(param).then((res) => {
             param.absen_id = res.absen_id;
             param.by = res.by;
-            pesan.Success("NPM: "+param.npm + (param.status=='H' ? ' Hadir':param.status=='I' ? " Izin" : param.status=='S' ? " Sakit" : " Tidak Hadir"));
+            pesan.Success("NPM: " + param.npm + (param.status == 'H' ? ' Hadir' : param.status == 'I' ? " Izin" : param.status == 'S' ? " Sakit" : " Tidak Hadir"));
         })
     }
 }

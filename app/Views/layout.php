@@ -30,7 +30,7 @@
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            
+
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <img src="assets/img/logo/android-icon-36x36.png" alt="">
@@ -40,10 +40,10 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <li ng-class="{'nav-item active': title=='Home', 'nav-item': title!='Home'}">
-                    <a class="nav-link" href="<?= base_url() ?>">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
+                <a class="nav-link" href="<?= base_url() ?>">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
             <!-- Nav Item - Dashboard -->
             <?php if (session()->get("role") == "Admin") : ?>
                 <li class="nav-item">
@@ -57,8 +57,8 @@
                             <a ng-class="{'collapse-item active': title=='Jurusan', 'collapse-item': title!='Jurusan'}" href="<?= base_url('jurusan') ?>">Jurusan</a>
                             <a ng-class="{'collapse-item active': title=='Kelas', 'collapse-item': title!='Kelas'}" href="<?= base_url('kelas') ?>">Kelas</a>
                             <a ng-class="{'collapse-item active': title=='Matakuliah', 'collapse-item': title!='Matakuliah'}" href="<?= base_url('matakuliah') ?>">Matakuliah</a>
-                            <a ng-class="{'collapse-item active': title=='Jadwal', 'collapse-item': title!='Jadwal'}" href="<?= base_url('jadwal') ?>">Jadwal</a>
                             <a ng-class="{'collapse-item active': title=='Modul', 'collapse-item': title!='Modul'}" href="<?= base_url('modul') ?>">Modul</a>
+                            <a ng-class="{'collapse-item active': title=='Komponen Nilai', 'collapse-item': title!='Komponen Nilai'}" href="<?= base_url('komponen_nilai') ?>">Komponen Nilai</a>
                         </div>
                     </div>
                 </li>
@@ -71,6 +71,7 @@
                         <div class="bg-white py-2 collapse-inner rounded">
                             <a ng-class="{'collapse-item active': title=='Mahasiswa', 'collapse-item': title!='Mahasiswa'}" href="<?= base_url('mahasiswa') ?>">Mahasiswa</a>
                             <a ng-class="{'collapse-item active': title=='Laboran', 'collapse-item': title!='Laboran'}" href="<?= base_url('laboran') ?>">Laboran</a>
+                            <a ng-class="{'collapse-item active': title=='Jadwal', 'collapse-item': title!='Jadwal'}" href="<?= base_url('jadwal') ?>">Jadwal</a>
                         </div>
                     </div>
                 </li>
@@ -95,7 +96,7 @@
             <?php endif; ?>
 
             <?php if (session()->get("role") == "Laboran") : ?>
-                
+
                 <!-- <li ng-class="{'nav-item active': title=='Mengawas', 'nav-item': title!='Mengawas'}">
                     <a class="nav-link" href="<?= base_url('mengawas') ?>">
                         <i class="fas fa-shopping-cart"></i>
@@ -105,6 +106,11 @@
                     <a class="nav-link" href="<?= base_url('jadwal_mengawas') ?>">
                         <i class="fas fa-calendar"></i>
                         <span>Jadwal Mengawas</span></a>
+                </li>
+                <li ng-class="{'nav-item active': title=='Jadwal Mengawas' || title=='Absen Mahasiswa', 'nav-item': title!='Jadwal Mengawas'|| title !='Absen Mahasiswa'}">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-check"></i>
+                        <span>Setting Penilaian</span></a>
                 </li>
             <?php endif; ?>
             <hr class="sidebar-divider d-none d-md-block">

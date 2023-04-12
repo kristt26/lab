@@ -74,12 +74,12 @@ class Mengawas extends BaseController
             $cek = $this->jlm->where('DATE(tgl)', $tgl)->where('mengawas_id', $data->mengawas_id)->countAllResults();
             if($cek==0){
                 $this->jlm->where('status', '1')->where('mengawas_id', $data->mengawas_id)->update(null, ['status'=>'0']);
-                $this->jlm->insert(['mengawas_id'=>$data->mengawas_id, 'pertemuan'=>$data->jumlahPertemuan, 'tgl'=>$data->tgl]);
+                $this->jlm->insert(['mengawas_id'=>$data->mengawas_id, 'status'=>'1', 'pertemuan'=>$data->jumlahPertemuan, 'tgl'=>$data->tgl]);
                 return $this->respondCreated($data);
             }else{
                 if($data->again){
                     $this->jlm->where('status', '1')->where('mengawas_id', $data->mengawas_id)->update(null, ['status'=>'0']);
-                    $this->jlm->insert(['mengawas_id'=>$data->mengawas_id, 'pertemuan'=>$data->jumlahPertemuan, 'tgl'=>$data->tgl]);
+                    $this->jlm->insert(['mengawas_id'=>$data->mengawas_id, 'status'=>'1', 'pertemuan'=>$data->jumlahPertemuan, 'tgl'=>$data->tgl]);
                     return $this->respondCreated($data);
                 }else{
                     return $this->fail("Anda sudah Absen");

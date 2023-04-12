@@ -123,6 +123,15 @@ $routes->group('mahasiswa', ['filter' => 'admin_auth'], static function ($routes
     $routes->delete('delete/(:any)', 'Admin\Mahasiswa::delete/$1');
 });
 
+$routes->group('komponen_nilai', ['filter' => 'admin_auth'], static function ($routes) {
+    $routes->get('/', 'Admin\Komponen::index');
+    $routes->get('store', 'Admin\Komponen::store');
+    $routes->get('read/(:any)', 'Admin\Komponen::read/$1');
+    $routes->post('post', 'Admin\Komponen::post');
+    $routes->put('put', 'Admin\Komponen::put');
+    $routes->delete('delete/(:any)', 'Admin\Komponen::delete/$1');
+});
+
 
 
 // Mahasiswa
@@ -181,6 +190,15 @@ $routes->group('pertemuan', static function ($routes) {
     $routes->post('post', 'Laboran\Pertemuan::post');
     $routes->put('put', 'Laboran\Pertemuan::put');
     $routes->delete('delete/(:any)', 'Laboran\Pertemuan::delete/$1');
+});
+
+$routes->group('set_komponen', static function ($routes) {
+    $routes->get('/', 'Laboran\Komponen::index');
+    $routes->get('store', 'Laboran\Komponen::store');
+    $routes->get('read/(:any)', 'Laboran\Komponen::read/$1');
+    $routes->post('post', 'Laboran\Komponen::post');
+    $routes->put('put', 'Laboran\Komponen::put');
+    $routes->delete('delete/(:any)', 'Laboran\Komponen::delete/$1');
 });
 
 

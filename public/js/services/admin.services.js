@@ -11,6 +11,7 @@ angular.module('admin.service', [])
     .factory('taServices', taServices)
     .factory('mahasiswaServices', mahasiswaServices)
     .factory('getMacServices', getMacServices)
+    .factory('componenServices', componenServices)
     // mahasiswa
     .factory('kontrakServices', kontrakServices)
     .factory('daftarLaboranServices', daftarLaboranServices)
@@ -656,6 +657,7 @@ function jadwalServices($http, $q, helperServices, AuthService, pesan) {
                 def.resolve(res.data);
             },
             (err) => {
+                $.LoadingOverlay('hide')
                 pesan.error(err.data.messages.error);
                 def.reject(err);
             }
@@ -672,17 +674,21 @@ function jadwalServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.jurusan_id);
+                var data = service.data.jadwal.find(x => x.id == param.id);
                 if (data) {
-                    var matkul = data.matakuliah.find(x => x.id == param.id);
-                    if (matkul) {
-                        matkul.kode = param.kode;
-                        matkul.nama_matakuliah = param.nama_matakuliah;
-                    }
+                    data.kelas = param.kelas;
+                    data.kelas_id = param.kelas_id;
+                    data.hari = param.hari;
+                    data.jam_mulai = param.jam_mulai;
+                    data.jam_selesai = param.jam_selesai;
+                    data.ruang = param.ruang;
+                    data.shift = param.shift;
                 }
                 def.resolve(res.data);
             },
             (err) => {
+                $.LoadingOverlay('hide');
+                pesan.error(err.data.messages.error);
                 def.reject(err);
             }
         );
@@ -1176,6 +1182,125 @@ function mahasiswaServices($http, $q, helperServices, AuthService, pesan) {
         }).then(
             (res) => {
                 
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function deleted(param) {
+        var def = $q.defer();
+        $http({
+            method: 'delete',
+            url: controller + "/delete/" + param.id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                var index = service.data.indexOf(param);
+                service.data.splice(index, 1);
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+                pesan.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+
+}
+
+function componenServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'komponen_nilai/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+        byId: byId,
+        post: post,
+        put: put,
+        deleted: deleted
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'store',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                $.LoadingOverlay('hide');
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function byId(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read/'+id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function post(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'post',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                if(param.status=='1'){
+                    var data = service.data.find(x=>x.status=='1');
+                    if(data) data.status='0';
+                }
+                service.data.push(res.data);
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function put(param) {
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + 'put',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                var item = service.data.find((x)=>x.id == param.id);
+                if(item){
+                    item.komponen = param.komponen;
+                    item.persentase = param.persentase;
+                }
                 def.resolve(res.data);
             },
             (err) => {

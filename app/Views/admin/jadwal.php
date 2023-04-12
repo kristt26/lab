@@ -15,7 +15,7 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive" style="margin-top: 20px;">
-                        <table class="table table-bordered">
+                        <table datatable="ng" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -70,11 +70,11 @@
                         </div>
                         <div class="form-group">
                             <label>Jurusan</label>
-                            <select class="form-control" ng-options="item.jurusan for item in datas.jurusan" ng-model="jurusan" ng-change="matakuliahs = jurusan.matakuliah"></select>
+                            <select class="form-control" ng-options="item.jurusan for item in datas.jurusan" ng-model="jurusan"></select>
                         </div>
                         <div class="form-group">
                             <label>Matakuliah</label>
-                            <select class="form-control" ng-options="item.nama_matakuliah for item in matakuliahs" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
+                            <select class="form-control" ng-options="item.nama_matakuliah for item in jurusan.matakuliah" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
                         </div>
                         <div class="form-group">
                             <label>Kelas</label>
@@ -93,7 +93,7 @@
                         </div>
                         <div class="form-group">
                             <label>Shift</label>
-                            <select class="form-control" ng-model="model.ruang">
+                            <select class="form-control" ng-model="model.shift">
                                 <option value="Shift I">Shift I</option>
                                 <option value="Shift II">Shift II</option>
                             </select>

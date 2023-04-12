@@ -31,11 +31,12 @@ class Jadwal extends BaseController
         $jurusans = $this->jurusan->asObject()->findAll();
         foreach ($jurusans as $key => $jurusan) {
             $jurusan->matakuliah = $this->matakuliah->where('jurusan_id', $jurusan->id)->findAll();
-            $jurusan->jadwal = $this->jadwal->select("jadwal.*, ta.tahun_akademik, kelas.kelas, matakuliah.nama_matakuliah")
+            $jurusan->jadwal = $this->jadwal->select("jadwal.*, ta.tahun_akademik, kelas.kelas, matakuliah.nama_matakuliah, '$jurusan->id' as jurusan_id")
             ->join("ta","ta.id = jadwal.ta_id", "LEFT")
             ->join('kelas', "kelas.id = jadwal.kelas_id", "left")
             ->join('matakuliah', "matakuliah.id = jadwal.matakuliah_id")
-            ->where('ta.status', '1')->where('matakuliah.jurusan_id', $jurusan->id)->findAll();
+            ->where('ta.status', '1')->where('matakuliah.jurusan_id', $jurusan->id)
+            ->findAll();
         }
         $data = [
             "jurusan" => $jurusans,
@@ -66,7 +67,7 @@ class Jadwal extends BaseController
     {
         $data = $this->request->getJSON();
         try {
-            $this->jurusan->update($data->id, $data);
+            $this->jadwal->update($data->id, $data);
             return $this->respondUpdated(true);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());
