@@ -3,11 +3,9 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 
 class Komponen extends BaseController
 {
-    use ResponseTrait;
     protected $komponen;
     protected $ta;
 
@@ -22,7 +20,7 @@ class Komponen extends BaseController
 
     public function store()
     {
-        return $this->respond($this->komponen->select('komponen.*')->join('ta', 'ta.id=komponen.ta_id')->where('ta.status', '1')->findAll());
+        return $this->respond($this->komponen->findAll());
     }
 
     public function read($id = null)

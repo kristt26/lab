@@ -3,11 +3,9 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 
 class Laboran extends BaseController
 {
-    use ResponseTrait;
     protected $daftar;
     protected $laboran;
     protected $db;

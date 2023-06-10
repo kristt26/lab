@@ -3,11 +3,9 @@
 namespace App\Controllers\Laboran;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 
 class Rooms extends BaseController
 {
-    use ResponseTrait;
     protected $pertemuan;
     protected $rooms;
     protected $absen;

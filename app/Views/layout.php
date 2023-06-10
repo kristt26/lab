@@ -20,6 +20,7 @@
     <link href="<?= base_url() ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?= base_url() ?>/libs/angular-datatables/dist/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?= base_url() ?>libs/angular-tooltips/dist/angular-tooltips.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
@@ -88,29 +89,24 @@
                         <i class="fa fa-filter" aria-hidden="true"></i>
                         <span>Daftar Laboran</span></a>
                 </li>
-                <!-- <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
-                    <a class="nav-link" href="<?= base_url('absen') ?>">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Absen</span></a>
-                </li> -->
+                <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
+                    <a class="nav-link" href="<?= base_url('praktikum') ?>">
+                        <i class="fas fa-list"></i>
+                        <span>Daftar Praktikum</span></a>
+                </li>
             <?php endif; ?>
 
             <?php if (session()->get("role") == "Laboran") : ?>
 
-                <!-- <li ng-class="{'nav-item active': title=='Mengawas', 'nav-item': title!='Mengawas'}">
-                    <a class="nav-link" href="<?= base_url('mengawas') ?>">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Daftar Mengawas</span></a>
-                </li> -->
                 <li ng-class="{'nav-item active': title=='Jadwal Mengawas' || title=='Absen Mahasiswa', 'nav-item': title!='Jadwal Mengawas'|| title !='Absen Mahasiswa'}">
                     <a class="nav-link" href="<?= base_url('jadwal_mengawas') ?>">
                         <i class="fas fa-calendar"></i>
                         <span>Jadwal Mengawas</span></a>
                 </li>
-                <li ng-class="{'nav-item active': title=='Jadwal Mengawas' || title=='Absen Mahasiswa', 'nav-item': title!='Jadwal Mengawas'|| title !='Absen Mahasiswa'}">
-                    <a class="nav-link" href="#">
+                <li ng-class="{'nav-item active': title=='Komponen Penilaian', 'nav-item': title!='Komponen Penilaian'}">
+                    <a class="nav-link" href="<?= base_url('nilai') ?>">
                         <i class="fas fa-check"></i>
-                        <span>Setting Penilaian</span></a>
+                        <span>Nilai</span></a>
                 </li>
             <?php endif; ?>
             <hr class="sidebar-divider d-none d-md-block">

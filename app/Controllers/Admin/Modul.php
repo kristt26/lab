@@ -3,11 +3,9 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 
 class Modul extends BaseController
 {
-    use ResponseTrait;
     protected $modul;
     protected $matakuliah;
     protected $jurusan;

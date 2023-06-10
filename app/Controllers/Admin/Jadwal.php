@@ -3,11 +3,9 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 
 class Jadwal extends BaseController
 {
-    use ResponseTrait;
     protected $jurusan;
     protected $matakuliah;
     protected $ta;

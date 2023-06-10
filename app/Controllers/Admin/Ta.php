@@ -3,12 +3,10 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\TaModel;
 
 class Ta extends BaseController
 {
-    use ResponseTrait;
     protected $ta;
 
     public function __construct() {

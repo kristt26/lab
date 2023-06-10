@@ -7,14 +7,16 @@ use CodeIgniter\I18n\Time;
 use App\Models\KontrakModel;
 use App\Models\JadwalModel;
 use App\Models\MahasiswaModel;
+use App\Models\PertemuanModel;
 use App\Models\TaModel;
 
-class Kontrak extends BaseController
+class Praktikum extends BaseController
 {
     protected $kontrak;
     protected $jadwal;
     protected $mahasiswa;
     protected $ta;
+    protected $pertemuan;
 
     public function __construct()
     {
@@ -22,10 +24,11 @@ class Kontrak extends BaseController
         $this->jadwal = new JadwalModel();
         $this->ta = new TaModel();
         $this->mahasiswa = new MahasiswaModel();
+        $this->pertemuan = new PertemuanModel();
     }
     public function index()
     {
-        return view('mahasiswa/kontrak', ['title' => 'Kontrak']);
+        return view('mahasiswa/praktikum', ['title' => 'Praktikum']);
     }
 
     public function store()
@@ -37,7 +40,7 @@ class Kontrak extends BaseController
         $data['jadwal'] = $this->jadwal->select("jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, 
             jurusan.jurusan, jurusan.initial, matakuliah.semester, kelas.kelas,
             (SELECT modul.modul FROM modul where matakuliah.id=modul.matakuliah_id and status='1') AS modul,
-            (SELECT COUNT(pertemuan.id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id) AS pertemuan,
+            (SELECT COUNT(pertemuan.id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan,
             (SELECT pertemuan.id FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan_id,
             (SELECT pertemuan.tgl FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS tanggal_pertemuan")
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id', 'LEFT')
@@ -59,6 +62,14 @@ class Kontrak extends BaseController
     public function read($id = null)
     {
         return $this->respond($this->kontrak->find($id));
+    }
+
+    public function absenbyid($id = null)
+    {
+        $item = $this->pertemuan->select("pertemuan.*, absen.tgl, absen.by, absen.status")
+        ->join('absen', 'absen.pertemuan_id=pertemuan.id')
+        ->where('absen.rooms_id', $id)->findAll();
+        return $this->respond($item);
     }
 
     public function post()

@@ -2,13 +2,11 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\API\ResponseTrait;
 use ocs\spklib\Wplib as wp;
 use ocs\spklib\Moora as moora;
 
 class Spk extends BaseController
 {
-    use ResponseTrait;
     public function index()
     {
         $kriteria = [

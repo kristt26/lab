@@ -3,14 +3,12 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\MahasiswaModel;
 use App\Models\JurusanModel;
 use App\Models\UserModel;
 
 class Mahasiswa extends BaseController
 {
-    use ResponseTrait;
     protected $mahasiswa;
     protected $jurusan;
     protected $user;

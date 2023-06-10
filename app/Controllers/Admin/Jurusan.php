@@ -3,12 +3,10 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\JurusanModel;
 
 class Jurusan extends BaseController
 {
-    use ResponseTrait;
     protected $jurusan;
 
     public function __construct() {

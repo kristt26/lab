@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\API\ResponseTrait;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -36,6 +37,7 @@ abstract class BaseController extends Controller
      * @var array
      */
     protected $helpers = [];
+    use ResponseTrait;
 
     /**
      * Be sure to declare properties for any property fetch you initialized.

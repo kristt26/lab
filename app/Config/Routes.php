@@ -154,6 +154,15 @@ $routes->group('daftar_laboran', static function ($routes) {
     $routes->put('put', 'Mahasiswa\DaftarLaboran::put');
     $routes->delete('delete/(:any)', 'Mahasiswa\DaftarLaboran::delete/$1');
 });
+$routes->group('praktikum', static function ($routes) {
+    $routes->get('/', 'Mahasiswa\Praktikum::index');
+    $routes->get('store', 'Mahasiswa\Praktikum::store');
+    $routes->get('read/(:any)', 'Mahasiswa\Praktikum::read/$1');
+    $routes->get('absenbyid/(:any)', 'Mahasiswa\Praktikum::absenbyid/$1');
+    $routes->post('post', 'Mahasiswa\Praktikum::post');
+    $routes->put('put', 'Mahasiswa\Praktikum::put');
+    $routes->delete('delete/(:any)', 'Mahasiswa\Praktikum::delete/$1');
+});
 
 // Laboran
 
@@ -192,13 +201,14 @@ $routes->group('pertemuan', static function ($routes) {
     $routes->delete('delete/(:any)', 'Laboran\Pertemuan::delete/$1');
 });
 
-$routes->group('set_komponen', static function ($routes) {
-    $routes->get('/', 'Laboran\Komponen::index');
-    $routes->get('store', 'Laboran\Komponen::store');
-    $routes->get('read/(:any)', 'Laboran\Komponen::read/$1');
-    $routes->post('post', 'Laboran\Komponen::post');
-    $routes->put('put', 'Laboran\Komponen::put');
-    $routes->delete('delete/(:any)', 'Laboran\Komponen::delete/$1');
+$routes->group('nilai', static function ($routes) {
+    $routes->get('/', 'Laboran\Nilai::index');
+    $routes->get('store', 'Laboran\Nilai::store');
+    $routes->get('read/(:any)', 'Laboran\Nilai::read/$1');
+    $routes->get('set/(:any)', 'Laboran\Nilai::set/$1');
+    $routes->post('post', 'Laboran\Nilai::post');
+    $routes->put('put', 'Laboran\Nilai::put');
+    $routes->delete('delete/(:any)', 'Laboran\Nilai::delete/$1');
 });
 
 

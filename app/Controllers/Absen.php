@@ -4,11 +4,9 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\I18n\Time;
-use CodeIgniter\API\ResponseTrait;
 
 class Absen extends BaseController
 {
-    use ResponseTrait;
     public function insert($id=null, $pertemuan_id = null)
     {
         $absen = new \App\Models\AbsenModel();

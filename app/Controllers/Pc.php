@@ -3,11 +3,9 @@
 namespace App\Controllers;
 
 use CodeIgniter\Database\Exceptions\DatabaseException;
-use CodeIgniter\API\ResponseTrait;
 
 class Pc extends BaseController
 {
-    use ResponseTrait;
     public function index()
     {
         return view('get_mac');

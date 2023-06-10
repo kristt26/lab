@@ -3,13 +3,11 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\MatkulModel;
 use App\Models\JurusanModel;
 
 class Matakuliah extends BaseController
 {
-    use ResponseTrait;
     protected $matakuliah;
     protected $jurusan;
 

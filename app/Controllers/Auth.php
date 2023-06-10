@@ -3,11 +3,9 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 
 class auth extends BaseController
 {
-    use ResponseTrait;
     protected $user;
     protected $kelas;
     protected $db;

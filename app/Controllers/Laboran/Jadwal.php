@@ -3,7 +3,6 @@
 namespace App\Controllers\Laboran;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\KontrakModel;
 use App\Models\JadwalModel;
 use App\Models\MahasiswaModel;
@@ -13,7 +12,6 @@ use App\Models\LaboranModel;
 
 class Jadwal extends BaseController
 {
-    use ResponseTrait;
     protected $kontrak;
     protected $jadwal;
     protected $mahasiswa;

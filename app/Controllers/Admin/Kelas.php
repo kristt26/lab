@@ -3,12 +3,10 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\KelasModel;
 
 class Kelas extends BaseController
 {
-    use ResponseTrait;
     protected $kelas;
 
     public function __construct()

@@ -3,7 +3,6 @@
 namespace App\Controllers\Mahasiswa;
 
 use App\Controllers\BaseController;
-use CodeIgniter\API\ResponseTrait;
 use App\Models\MahasiswaModel;
 use App\Models\TaModel;
 use App\Models\DaftarLaboranModel;
@@ -11,7 +10,6 @@ use App\Models\LaboranModel;
 
 class DaftarLaboran extends BaseController
 {
-    use ResponseTrait;
     protected $mahasiswa;
     protected $ta;
     protected $pendaftaranLaboran;
