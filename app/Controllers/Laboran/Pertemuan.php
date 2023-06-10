@@ -9,6 +9,7 @@ use App\Models\MahasiswaModel;
 use App\Models\TaModel;
 use App\Models\MengawasModel;
 use App\Models\LaboranModel;
+use App\Models\TugasModel;
 
 class Pertemuan extends BaseController
 {

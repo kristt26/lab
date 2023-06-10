@@ -1,7 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 <div ng-controller="setKomponenController">
-    
     <div class="row">
         <div class="col-md-4 mb-3">
             <div class="card">
@@ -26,7 +25,7 @@
                                     <div class="form-group col-md-4 col-6" style="margin-bottom: 0rem;" ng-repeat="item in dataKomponen.komponen">
                                         <label for="inputEmail4">{{item.komponen}}</label>
                                         <div class="input-group input-group-sm mb-3">
-                                            <input type="number" ng-class="{'form-control bg-danger text-white': item.bobot == 0 && total>=100, 'form-control': !item.bobot || ((item.bobot == 0 || item.bobot>0) && total<=100)}" id="bobot{{$index}}" ng-model = "item.bobot" ng-change="calculate()" aria-label="Small" aria-describedby="inputGroup-sizing-sm" required>
+                                            <input type="number" ng-class="{'form-control bg-danger text-white': item.bobot == 0 && total>=100, 'form-control': !item.bobot || ((item.bobot == 0 || item.bobot>0) && total<=100)}" id="bobot{{$index}}" ng-model="item.bobot" ng-change="calculate()" aria-label="Small" aria-describedby="inputGroup-sizing-sm" required>
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="inputGroup-sizing-sm">%</span>
                                             </div>
@@ -35,7 +34,7 @@
                                     <div class="form-group col-md-12">
                                         <label for="inputEmail4"><strong>Total</strong></label>
                                         <div class="input-group input-group-sm mb-3">
-                                            <input type="number" ng-class="{'form-control bg-warning text-dark': total<100, 'form-control bg-danger text-dark': total>100, 'form-control bg-info text-white': total==100}" readonly id="total" ng-model = "total" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                                            <input type="number" ng-class="{'form-control bg-warning text-dark': total<100, 'form-control bg-danger text-dark': total>100, 'form-control bg-info text-white': total==100}" readonly id="total" ng-model="total" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="inputGroup-sizing-sm">%</span>
                                             </div>

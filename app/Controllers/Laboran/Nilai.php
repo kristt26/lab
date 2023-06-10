@@ -46,7 +46,7 @@ class Nilai extends BaseController
         $this->detailTugas = new \App\Models\DetailTugasModel();
         $data = [];
         $Pertemuan = $this->pertemuan->asObject()->select('pertemuan.*')->join('mengawas', 'mengawas.id=pertemuan.mengawas_id', 'LEFT')
-        ->where("jadwal_id", $id)->findAll();
+            ->where("jadwal_id", $id)->findAll();
         $data['komponen'] = $this->detail->where('jadwal_id', $id)->countAllResults() > 0 ?
             $this->komponen->asObject()->select("komponen.*, detail_komponen.id as detail_id, detail_komponen.bobot")
             ->join("detail_komponen", "detail_komponen.komponen_id = komponen.id", "LEFT")
@@ -56,20 +56,20 @@ class Nilai extends BaseController
             ->where("jadwal_id", "$id")->findAll();
         foreach ($data['mahasiswa'] as $keyMhs => $mahasiswa) {
             $mahasiswa->nilai = [];
-            if(isset($data['komponen'][0]->bobot)){
+            if ($this->nilai->join("detail_komponen", "detail_komponen.id=nilai.detail_komponen_id", "LEFT")->where("jadwal_id", $id)->countAllResults()>0) {
                 $nilai = $this->nilai->asObject()->where("rooms_id", $mahasiswa->id)->findAll();
                 foreach ($data['komponen'] as $keyKom => $komponen) {
                     foreach ($nilai as $key => $value) {
-                        if($komponen->detail_id==$value->detail_komponen_id){
+                        if ($komponen->detail_id == $value->detail_komponen_id) {
                             $item = [
                                 "komponen" => $komponen->komponen,
                                 "nilai" => $value->nilai
                             ];
+                            $mahasiswa->nilai[] = $item;
                         }
                     }
-                    $mahasiswa->nilai[] = $item;
                 }
-            }else{
+            } else {
                 foreach ($data['komponen'] as $keyKom => $komponen) {
                     $item = [
                         "komponen" => $komponen->komponen,
@@ -89,7 +89,7 @@ class Nilai extends BaseController
         $this->detailTugas = new \App\Models\DetailTugasModel();
         $data = [];
         $Pertemuan = $this->pertemuan->asObject()->select('pertemuan.*')->join('mengawas', 'mengawas.id=pertemuan.mengawas_id', 'LEFT')
-        ->where("jadwal_id", $id)->findAll();
+            ->where("jadwal_id", $id)->findAll();
         $data['komponen'] = $this->detail->where('jadwal_id', $id)->countAllResults() > 0 ?
             $this->komponen->asObject()->select("komponen.*, detail_komponen.id as detail_id, detail_komponen.bobot")
             ->join("detail_komponen", "detail_komponen.komponen_id = komponen.id", "LEFT")
@@ -138,7 +138,7 @@ class Nilai extends BaseController
                     ];
                     $this->nilai->insert($item);
                     $mahasiswa->nilai[] = $item;
-                } else if ($komponen->komponen == "UAS"){
+                } else if ($komponen->komponen == "UAS") {
                     $uas = new \App\Models\UasModel();
                     $dataUas = $uas->asObject()->where('rooms_id', $mahasiswa->id)->first();
                     $item = [

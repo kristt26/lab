@@ -1063,17 +1063,20 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
     }
 
     $scope.setNilai = (param)=>{
-        nilaiServices.set(param.jadwal_id).then(res=>{
-            $scope.dataKomponen = res;
-            $scope.dataKomponen.komponen.forEach(element => {
-                if(element.detail_id){
-                    element.bobot = parseFloat(element.bobot);
-                    $scope.total += element.bobot;
-                } 
-                element.jadwal_id = param.jadwal_id;
-            });
-            console.log($scope.dataKomponen);
-            $.LoadingOverlay('hide');
+        pesan.dialog("Yakin ingin set nilai?", "Ya", "Tidak").then(x=>{
+            $.LoadingOverlay('show');
+            nilaiServices.set(param.jadwal_id).then(res=>{
+                $scope.dataKomponen = res;
+                $scope.dataKomponen.komponen.forEach(element => {
+                    if(element.detail_id){
+                        element.bobot = parseFloat(element.bobot);
+                        $scope.total += element.bobot;
+                    } 
+                    element.jadwal_id = param.jadwal_id;
+                });
+                $.LoadingOverlay('hide');
+            })
+
         })
     }
 
