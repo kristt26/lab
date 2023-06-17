@@ -37,12 +37,12 @@ function helperServices($location) {
         return Array(+digits.join("") + 1).join("M") + roman;
     }
     service.encript = (item) => {
-        return btoa(item + '*pendataanJemaat');
+        return btoa(item + '@Sistem Laboratorium');
     }
     service.decript = (item) => {
         var string = atob(item);
-        var pecah = string.split('*');
-        return pecah[0];
+        var pecah = string.split('@');
+        return pecah;
     }
     service.urlParams = (item) => {
         var url = new URLSearchParams(window.location.search);

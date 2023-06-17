@@ -1,6 +1,7 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 <div class="row">
+    
     <!-- <div class="col-4">
         <div class="d-flex flex-row mb-3">
             <div class="card">

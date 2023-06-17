@@ -203,13 +203,24 @@ $routes->group('pertemuan', static function ($routes) {
 
 $routes->group('nilai', static function ($routes) {
     $routes->get('/', 'Laboran\Nilai::index');
+    $routes->get('getTugas/(:num)', 'Laboran\Nilai::get_tugas/$1');
+    $routes->get('getUas/(:num)', 'Laboran\Nilai::get_uas/$1');
     $routes->get('store', 'Laboran\Nilai::store');
     $routes->get('read/(:any)', 'Laboran\Nilai::read/$1');
     $routes->get('set/(:any)', 'Laboran\Nilai::set/$1');
     $routes->post('post', 'Laboran\Nilai::post');
+    $routes->post('tambahTugas', 'Laboran\Nilai::tambahTugas');
+    $routes->post('postNilai/(:num)', 'Laboran\Nilai::postNilai/$1');
+    $routes->post('postUas/(:num)', 'Laboran\Nilai::postUas/$1');
     $routes->put('put', 'Laboran\Nilai::put');
     $routes->delete('delete/(:any)', 'Laboran\Nilai::delete/$1');
 });
+
+$routes->group('set_nilai', static function ($routes) {
+    $routes->get('(:any)', 'Laboran\Nilai::setView/$1');
+});
+
+
 
 
 

@@ -50,9 +50,13 @@
         </div>
         <div class="col-md-12" ng-show="matakuliah">
             <div class="card">
-                <div class="card-header d-flex justify-content-between">
+                <div class="card-header">
                     <h4>Data Mahasiswa</h4>
-                    <button class="btn btn-primary btn-sm" ng-click="setNilai(matakuliah)">Set Nilai</button>
+                    <div class=" d-flex justify-content-end">
+                        <button class="btn btn-info btn-sm mr-2" ng-click="inputTugas(matakuliah)">Tugas</button>
+                        <button class="btn btn-primary btn-sm mr-2" ng-click="inputUas(matakuliah)">UAS</button>
+                        <button class="btn btn-secondary btn-sm" ng-click="setNilai(matakuliah)">Set Nilai</button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -64,7 +68,9 @@
                                         <th>NPM</th>
                                         <th>Nama</th>
                                         <th ng-repeat="item in dataKomponen.komponen">{{item.komponen}}({{item.bobot}}%)</th>
-                                        <th>Aksi</th>
+                                        <th>Total Nilai</th>
+                                        <th>Nilai Huruf</th>
+                                        <!-- <th>Aksi</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -72,11 +78,15 @@
                                         <td>{{$index+1}}</td>
                                         <td>{{item.npm}}</td>
                                         <td>{{item.nama_mahasiswa}}</td>
-                                        <td ng-repeat="nilai in item.nilai">{{nilai.nilai}}</td>
-                                        <td>
+                                        <td ng-repeat="nilai in item.nilai">
+                                            {{nilai.nilai}}
+                                        </td>
+                                        <td>{{item.total}}</td>
+                                        <td>{{item.huruf}}</td>
+                                        <!-- <td>
                                             <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
                                             <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>

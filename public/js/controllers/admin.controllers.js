@@ -21,6 +21,7 @@ angular.module('adminctrl', [])
     .controller('jadwalMengawasController', jadwalMengawasController)
     .controller('absenRoomsController', absenRoomsController)
     .controller('setKomponenController', setKomponenController)
+    .controller('setNilaiController', setNilaiController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -1087,5 +1088,72 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
             })
         })
     }
-    
+
+    $scope.inputTugas = (param)=>{
+        console.log(param);
+        document.location.href= helperServices.url + "set_nilai/" + helperServices.encript("tugas@"+ param.jadwal_id);
+    }
+
+    $scope.inputUas = (param)=>{
+        console.log(param);
+        document.location.href= helperServices.url + "set_nilai/" + helperServices.encript("uas@"+ param.jadwal_id);
+    }
+}
+
+function setNilaiController($scope, nilaiServices, pesan, DTOptionsBuilder, helperServices) {
+    $scope.model = {};
+    $scope.ta = {};
+    $scope.dataKomponen;
+    $scope.setView = false;
+    $scope.total = 0;
+    $.LoadingOverlay("show");
+    var url = helperServices.decript(helperServices.lastPath);
+    if(url[0]=="uas"){
+        $scope.$emit("SendUp", "Input UAS");
+        nilaiServices.getUas(parseInt(url[1])).then((res)=>{
+            $scope.datas = res;
+            $.LoadingOverlay('hide');
+            console.log(res);
+        });
+    }else{
+        $scope.$emit("SendUp", "Input Tuags");
+        nilaiServices.getTugas(parseInt(url[1])).then((res)=>{
+            $scope.datas = res;
+            $.LoadingOverlay('hide');
+            console.log(res);
+        });
+    }
+
+    $scope.tambahJumlah = ()=>{
+        pesan.dialog("Tugas yang ditambahkan tidak dapat di hapus \nYakin ingin menambah?").then(x=>{
+            $.LoadingOverlay("show");
+            nilaiServices.postTugas(parseInt(url[1])).then(res=>{
+                $scope.datas.tugas.push(res);
+                $scope.datas.mahasiswa.forEach(element => {
+                    var item = angular.copy(res);
+                    item.rooms_id=element.id;
+                    element.tugas.push(angular.copy(item));
+                });
+                pesan.Success("Success");
+                $.LoadingOverlay("hide");
+            })
+        })
+    }
+  
+    $scope.save = (param)=>{
+        nilaiServices.postNilai(param, parseInt(url[1])).then(res=>{
+            if(!param.id) param.id = res.id
+            pesan.Success("Berhasil");
+            console.log(param);
+        })
+    }
+
+    $scope.saveUas = (param)=>{
+        nilaiServices.postUas(param, parseInt(url[1])).then(res=>{
+            if(!param.id) param.id = res.id
+            pesan.Success("Berhasil");
+            console.log(param);
+        })
+    }
+
 }

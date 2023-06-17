@@ -1825,6 +1825,11 @@ function nilaiServices($http, $q, helperServices, AuthService, pesan) {
     return {
         get: get,
         byId: byId,
+        getTugas: getTugas,
+        getUas: getUas,
+        postTugas: postTugas,
+        postNilai: postNilai,
+        postUas: postUas,
         set: set,
         post: post,
         put: put,
@@ -1869,6 +1874,42 @@ function nilaiServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
+    function getTugas(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'getTugas/'+id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+    
+    function getUas(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'getUas/'+id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
     function set(id) {
         var def = $q.defer();
         $http({
@@ -1900,6 +1941,66 @@ function nilaiServices($http, $q, helperServices, AuthService, pesan) {
                     var data = service.data.find(x=>x.status=='1');
                     if(data) data.status='0';
                 }
+                service.data.push(res.data);
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function postTugas(param) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'tambahTugas',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data.push(res.data);
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function postNilai(param, id) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'postNilai/' + id,
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data.push(res.data);
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function postUas(param, id) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'postUas/' + id,
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
                 service.data.push(res.data);
                 def.resolve(res.data);
             },
