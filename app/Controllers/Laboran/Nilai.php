@@ -6,6 +6,9 @@ use App\Controllers\BaseController;
 use CodeIgniter\Database\Query;
 use PHPUnit\Util\Json;
 use CodeIgniter\Database\Exceptions\DatabaseException;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\RichText\RichText;
 
 class Nilai extends BaseController
 {
@@ -106,38 +109,6 @@ class Nilai extends BaseController
                 }
             }
             $mahasiswa->huruf = penilaian($mahasiswa->total);
-
-
-
-
-
-
-
-
-
-
-            // $nilai = $this->nilai->asObject()->where("rooms_id", $mahasiswa->id)->findAll();
-            // if (count($nilai) > 0) {
-            //     foreach ($data['komponen'] as $keyKom => $komponen) {
-            //         foreach ($nilai as $key => $value) {
-            //             if ($komponen->detail_id == $value->detail_komponen_id) {
-            //                 $item = [
-            //                     "komponen" => $komponen->komponen,
-            //                     "nilai" => $value->nilai
-            //                 ];
-            //                 $mahasiswa->nilai[] = $item;
-            //             }
-            //         }
-            //     }
-            // } else {
-            //     foreach ($data['komponen'] as $keyKom => $komponen) {
-            //         $item = [
-            //             "komponen" => $komponen->komponen,
-            //             "nilai" => 0
-            //         ];
-            //         $mahasiswa->nilai[] = $item;
-            //     }
-            // }
         }
         return $this->respond($data);
     }
