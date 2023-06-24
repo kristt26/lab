@@ -146,7 +146,7 @@ $routes->group('registration', ['filter'=> 'mahasiswa_auth'], static function ($
     $routes->delete('delete/(:any)', 'Mahasiswa\Kontrak::delete/$1');
 });
 
-$routes->group('daftar_laboran', static function ($routes) {
+$routes->group('daftar_laboran', ['filter'=> 'mahasiswa_auth'], static function ($routes) {
     $routes->get('/', 'Mahasiswa\DaftarLaboran::index');
     $routes->get('store', 'Mahasiswa\DaftarLaboran::store');
     $routes->get('read/(:any)', 'Mahasiswa\DaftarLaboran::read/$1');
@@ -154,7 +154,7 @@ $routes->group('daftar_laboran', static function ($routes) {
     $routes->put('put', 'Mahasiswa\DaftarLaboran::put');
     $routes->delete('delete/(:any)', 'Mahasiswa\DaftarLaboran::delete/$1');
 });
-$routes->group('praktikum', static function ($routes) {
+$routes->group('praktikum', ['filter'=> 'mahasiswa_auth'], static function ($routes) {
     $routes->get('/', 'Mahasiswa\Praktikum::index');
     $routes->get('store', 'Mahasiswa\Praktikum::store');
     $routes->get('read/(:any)', 'Mahasiswa\Praktikum::read/$1');
@@ -166,7 +166,7 @@ $routes->group('praktikum', static function ($routes) {
 
 // Laboran
 
-$routes->group('mengawas', static function ($routes) {
+$routes->group('mengawas', ['filter' => 'laboran_auth'], static function ($routes) {
     $routes->get('/', 'Laboran\Mengawas::index');
     $routes->get('store', 'Laboran\Mengawas::store');
     $routes->get('read/(:any)', 'Laboran\Mengawas::read/$1');
@@ -175,7 +175,7 @@ $routes->group('mengawas', static function ($routes) {
     $routes->put('put', 'Laboran\Mengawas::put');
     $routes->delete('delete/(:any)', 'Laboran\Mengawas::delete/$1');
 });
-$routes->group('jadwal_mengawas', static function ($routes) {
+$routes->group('jadwal_mengawas', ['filter' => 'laboran_auth'], static function ($routes) {
     $routes->get('/', 'Laboran\Jadwal::index');
     $routes->get('store', 'Laboran\Jadwal::store');
     $routes->get('read/(:any)', 'Laboran\Jadwal::read/$1');
@@ -188,20 +188,20 @@ $routes->group('absen', static function ($routes) {
     $routes->get('insert/(:num)/(:num)', 'Absen::insert/$1/$2');
 });
 
-$routes->group('absen_rooms', static function ($routes) {
+$routes->group('absen_rooms', ['filter' => 'laboran_auth'], static function ($routes) {
     $routes->get('(:num)', 'Laboran\Rooms::index/$1');
     $routes->get('store/(:num)', 'Laboran\Rooms::store/$1');
     $routes->get('by_pertemuan/(:num)/(:num)', 'Laboran\Rooms::by_pertemuan/$1/$2');
     $routes->post('post', 'Laboran\Rooms::post');
 });
 
-$routes->group('pertemuan', static function ($routes) {
+$routes->group('pertemuan', ['filter' => 'laboran_auth'], static function ($routes) {
     $routes->post('post', 'Laboran\Pertemuan::post');
     $routes->put('put', 'Laboran\Pertemuan::put');
     $routes->delete('delete/(:any)', 'Laboran\Pertemuan::delete/$1');
 });
 
-$routes->group('nilai', static function ($routes) {
+$routes->group('nilai', ['filter' => 'laboran_auth'], static function ($routes) {
     $routes->get('/', 'Laboran\Nilai::index');
     $routes->get('getTugas/(:num)', 'Laboran\Nilai::get_tugas/$1');
     $routes->get('getUas/(:num)', 'Laboran\Nilai::get_uas/$1');
@@ -216,7 +216,7 @@ $routes->group('nilai', static function ($routes) {
     $routes->delete('delete/(:any)', 'Laboran\Nilai::delete/$1');
 });
 
-$routes->group('set_nilai', static function ($routes) {
+$routes->group('set_nilai', ['filter' => 'laboran_auth'], static function ($routes) {
     $routes->get('(:any)', 'Laboran\Nilai::setView/$1');
 });
 

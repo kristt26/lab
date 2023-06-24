@@ -50,9 +50,9 @@
         </div>
         <div class="col-md-12" ng-show="matakuliah">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h4>Data Mahasiswa</h4>
-                    <div class=" d-flex justify-content-end">
+                    <div class="d-flex justify-content-end" ng-if="showButton">
                         <button class="btn btn-info btn-sm mr-2" ng-click="inputTugas(matakuliah)">Tugas</button>
                         <button class="btn btn-primary btn-sm mr-2" ng-click="inputUas(matakuliah)">UAS</button>
                         <button class="btn btn-secondary btn-sm" ng-click="setNilai(matakuliah)">Set Nilai</button>
@@ -74,7 +74,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in dataKomponen.mahasiswa">
+                                    <tr ng-repeat="item in dataKomponen.mahasiswa" ng-class="{'text-danger': item.huruf=='D' || item.huruf=='E', 'text-info': item.huruf=='A' || item.huruf=='B' || item.huruf=='C'}">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.npm}}</td>
                                         <td>{{item.nama_mahasiswa}}</td>

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\I18n\Time;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 
 class Absen extends BaseController
 {
@@ -23,7 +24,7 @@ class Absen extends BaseController
         try {
             $cek = $absen->where('rooms_id', $id)->where('DATE(tgl)', $tgl)->where('pertemuan_id', $pertemuan_id)->countAllResults();
             if($cek == 0){
-                $conn->transBegin();
+                $conn->transException(true)->transStart();
                 $absen->insert(['rooms_id'=>$id, 'status'=>'H', 'tgl'=>$myTime, 'pertemuan_id'=>$pertemuan_id]);
                 $dtAbsen = $absen->where('rooms_id', $id)->findAll();
                 $h = 0;
@@ -33,10 +34,8 @@ class Absen extends BaseController
                     else if($value['status']=="I") $h+=0.25;
                 }
                 $nilai->where("detail_komponen_id='$dtKom->id' AND rooms_id = '$id'")->update(null, ['nilai'=>($h/$jmPertamuan*100)*($dtKom->bobot/100)]);
-                if($conn->transStatus()){
-                    $conn->transCommit();
-                    return $this->respond(true);
-                }else throw new \Exception("Gagal Absen", 1);
+                $conn->transComplete();
+                return $this->respond(true);
                 
             }else{
                 return $this->fail("Anda sudah absen hari ini");

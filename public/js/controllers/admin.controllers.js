@@ -10,12 +10,10 @@ angular.module('adminctrl', [])
     .controller('taController', taController)
     .controller('mahasiswaController', mahasiswaController)
     .controller('componenController', componenController)
-
     // Mahasiswa
     .controller('kontrakController', kontrakController)
     .controller('daftarLaboranController', daftarLaboranController)
     .controller('praktikumController', praktikumController)
-
     // Laboran
     .controller('mengawasController', mengawasController)
     .controller('jadwalMengawasController', jadwalMengawasController)
@@ -41,7 +39,6 @@ function laboranController($scope, laboranServices, pesan) {
     $.LoadingOverlay('show');
     laboranServices.get().then((res) => {
         $scope.datas = res;
-        console.log(res);
         $.LoadingOverlay('hide');
     })
 
@@ -239,7 +236,6 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
     jadwalServices.get().then(res => {
         $scope.datas = res;
         $scope.jadwals = $scope.datas.jurusan[0];
-        // console.log(res);
         $.LoadingOverlay('hide');
     })
 
@@ -250,7 +246,6 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
   
 
     $scope.save = () => {
-        console.log($scope.model);
         pesan.dialog('Yakin ingin menyimpan', 'YA', 'Tidak').then(x => {
             $.LoadingOverlay('show');
             $scope.model.ta_id = $scope.datas.ta.id;
@@ -299,7 +294,6 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
             item.jam_mulai = new Date("1970-01-01T" + param.jam_mulai);
             item.jam_selesai = new Date("1970-01-01T" + param.jam_selesai);
             $scope.model = angular.copy(item)
-            console.log();
         })
     }
 
@@ -331,11 +325,9 @@ function modulController($scope, modulServices, pesan, jurusanServices, matakuli
 
     $scope.showModul = (param) => {
         $.LoadingOverlay('show');
-        console.log(param);
         $scope.model.matakuliah_id = param.id;
         modulServices.byMatakuliahId(param.id).then((res) => {
             $scope.moduls = res
-            console.log(res);
             $.LoadingOverlay('hide');
         })
     }
@@ -457,14 +449,12 @@ function mahasiswaController($scope, mahasiswaServices, pesan, DTOptionsBuilder)
             element.dataPengajuan = element.mahasiswa.filter(x => x.status == '0')
         });
         $scope.jurusans = $scope.datas.jurusan[0];
-        console.log($scope.jurusans);
         $.LoadingOverlay('hide');
     })
 
 
     $scope.clear = () => {
         $scope.jurusans = null;
-        console.log($scope.jurusans);
     }
 
     $scope.pesan = (param) => {
@@ -584,7 +574,6 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, get
         $scope.ta = $scope.datas.ta;
         if ((new Date($scope.ta.tgl_mulai) <= new Date()) && (new Date($scope.ta.tgl_selesai) >= new Date())) $scope.setView = true;
         else $scope.setView = false;
-        console.log(new Date);
         $scope.jadwals = angular.copy($scope.datas.jadwal);
         $scope.rooms = $scope.datas.rooms;
         $scope.rooms.forEach(element => {
@@ -598,13 +587,11 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, get
         getMacServices.get().then((res) => {
             $scope.showQrcode = true;
         })
-        console.log(res);
         $.LoadingOverlay("hide");
     })
 
     $scope.qrcode = (param) => {
         if (param.pertemuan_id) {
-            console.log(param);
             var item = angular.copy(param);
             delete item.jurusan_id;
             delete item.kelas_id;
@@ -689,7 +676,6 @@ function daftarLaboranController($scope, daftarLaboranServices, pesan, DTOptions
     $.LoadingOverlay('show');
     daftarLaboranServices.get().then((res) => {
         $scope.datas = res;
-        console.log(res);
         $.LoadingOverlay('hide');
     })
     $scope.save = () => {
@@ -733,7 +719,6 @@ function praktikumController($scope, praktikumServices, pesan, DTOptionsBuilder,
         $scope.ta = $scope.datas.ta;
         if ((new Date($scope.ta.tgl_mulai) <= new Date()) && (new Date($scope.ta.tgl_selesai) >= new Date())) $scope.setView = true;
         else $scope.setView = false;
-        console.log(new Date);
         $scope.jadwals = angular.copy($scope.datas.jadwal);
         $scope.rooms = $scope.datas.rooms;
         $scope.rooms.forEach(element => {
@@ -747,13 +732,11 @@ function praktikumController($scope, praktikumServices, pesan, DTOptionsBuilder,
         getMacServices.get().then((res) => {
             $scope.showQrcode = true;
         })
-        console.log(res);
         $.LoadingOverlay("hide");
     })
 
     $scope.qrcode = (param) => {
         if (param.pertemuan_id) {
-            console.log(param);
             var item = angular.copy(param);
             delete item.jurusan_id;
             delete item.kelas_id;
@@ -833,7 +816,6 @@ function praktikumController($scope, praktikumServices, pesan, DTOptionsBuilder,
         $.LoadingOverlay('show')
         praktikumServices.getAbsen(item.rooms_id).then((res)=>{
             $scope.dataAbsen = res;
-            console.log(res);
             for (let index = 0; index < 10; index++) {
                 if($scope.dataAbsen.length > index){
                     if($scope.dataAbsen[index].tgl){
@@ -870,7 +852,6 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
         $scope.ta = $scope.datas.ta;
         if ((new Date($scope.ta.tgl_mulai) <= new Date()) && (new Date($scope.ta.tgl_selesai) >= new Date())) $scope.setView = true;
         else $scope.setView = false;
-        console.log(new Date);
         $scope.jadwals = angular.copy($scope.datas.jadwal);
         $scope.mengawas = $scope.datas.mengawas;
         $scope.mengawas.forEach(element => {
@@ -879,7 +860,6 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
             var index = $scope.jadwals.indexOf(item);
             $scope.jadwals.splice(index, 1);
         });
-        console.log(res);
         $.LoadingOverlay("hide");
     })
 
@@ -969,13 +949,11 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
             var index = $scope.jadwals.indexOf(item);
             $scope.jadwals.splice(index, 1);
         });
-        console.log(res);
         $.LoadingOverlay("hide");
     })
 
     $scope.showModul = (param) => {
         $("modul").modal('show');
-        console.log(param);
     }
 
     $scope.openPertemuan = (param) => {
@@ -1006,7 +984,6 @@ function absenRoomsController($scope, absenRoomsServices, pesan, DTOptionsBuilde
     $.LoadingOverlay("show");
     absenRoomsServices.get(helperServices.lastPath).then(res => {
         $scope.pertemuans = res;
-        console.log(res);
         $.LoadingOverlay("hide");
     })
     $scope.showMahasiswa = (param) => {
@@ -1033,11 +1010,11 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
     $scope.dataKomponen;
     $scope.setView = false;
     $scope.total = 0;
+    $scope.showButton = false;
     $.LoadingOverlay("show");
     nilaiServices.get().then((res)=>{
         $scope.datas = res;
         $.LoadingOverlay('hide');
-        console.log(res);
     });
     $scope.getData = (param)=>{
         $.LoadingOverlay('show');
@@ -1051,7 +1028,7 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
                 } 
                 element.jadwal_id = param.jadwal_id;
             });
-            console.log($scope.dataKomponen);
+            if($scope.total>0) $scope.showButton = true;
             $.LoadingOverlay('hide');
         })
     }
@@ -1071,7 +1048,7 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
                 $scope.dataKomponen.komponen.forEach(element => {
                     if(element.detail_id){
                         element.bobot = parseFloat(element.bobot);
-                        $scope.total += element.bobot;
+                        // $scope.total += element.bobot;
                     } 
                     element.jadwal_id = param.jadwal_id;
                 });
@@ -1085,17 +1062,16 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
         pesan.dialog("Yakin ingin menyimpan komponen", "Ya", "Tidak").then(x=>{
             nilaiServices.post($scope.dataKomponen.komponen).then(res=>{
                 pesan.Success("Berhasil");
+                $scope.showButton = true;
             })
         })
     }
 
     $scope.inputTugas = (param)=>{
-        console.log(param);
         document.location.href= helperServices.url + "set_nilai/" + helperServices.encript("tugas@"+ param.jadwal_id);
     }
 
     $scope.inputUas = (param)=>{
-        console.log(param);
         document.location.href= helperServices.url + "set_nilai/" + helperServices.encript("uas@"+ param.jadwal_id);
     }
 }
@@ -1113,14 +1089,12 @@ function setNilaiController($scope, nilaiServices, pesan, DTOptionsBuilder, help
         nilaiServices.getUas(parseInt(url[1])).then((res)=>{
             $scope.datas = res;
             $.LoadingOverlay('hide');
-            console.log(res);
         });
     }else{
         $scope.$emit("SendUp", "Input Tuags");
         nilaiServices.getTugas(parseInt(url[1])).then((res)=>{
             $scope.datas = res;
             $.LoadingOverlay('hide');
-            console.log(res);
         });
     }
 
@@ -1144,7 +1118,6 @@ function setNilaiController($scope, nilaiServices, pesan, DTOptionsBuilder, help
         nilaiServices.postNilai(param, parseInt(url[1])).then(res=>{
             if(!param.id) param.id = res.id
             pesan.Success("Berhasil");
-            console.log(param);
         })
     }
 
@@ -1152,7 +1125,6 @@ function setNilaiController($scope, nilaiServices, pesan, DTOptionsBuilder, help
         nilaiServices.postUas(param, parseInt(url[1])).then(res=>{
             if(!param.id) param.id = res.id
             pesan.Success("Berhasil");
-            console.log(param);
         })
     }
 
