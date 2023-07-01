@@ -22,6 +22,7 @@ class Nilai extends BaseController
     protected $pertemuan;
     protected $absen;
     protected $nilai;
+    protected $jadwal;
     protected $con;
 
     public function __construct()
@@ -34,6 +35,7 @@ class Nilai extends BaseController
         $this->pertemuan = new \App\Models\PertemuanModel();
         $this->absen = new \App\Models\AbsenModel();
         $this->nilai = new \App\Models\NilaiModel();
+        $this->jadwal = new \App\Models\JadwalModel();
         $this->con = \Config\Database::connect();
         helper("find_helper");
     }
@@ -82,17 +84,17 @@ class Nilai extends BaseController
                 $cKom = false;
                 foreach ($dataNilai as $key => $value) {
                     if ($komponen->detail_id == $value['detail_komponen_id'] && $value['rooms_id'] == $mahasiswa->id) {
-                        if($komponen->komponen == "UAS"){
+                        if ($komponen->komponen == "UAS") {
                             $item = [
                                 "komponen" => $komponen->komponen,
-                                "nilai" => $value['nilai'] * ($komponen->bobot/100)
+                                "nilai" => floatval(number_format($value['nilai'] * ($komponen->bobot / 100), 2, ".", " "))
                             ];
                             $mahasiswa->nilai[] = $item;
-                            $mahasiswa->total += ($value['nilai'] * ($komponen->bobot/100));
-                        }else{
+                            $mahasiswa->total += $value['nilai'] * ($komponen->bobot / 100);
+                        } else {
                             $item = [
                                 "komponen" => $komponen->komponen,
-                                "nilai" => $value['nilai']
+                                "nilai" => floatval(number_format($value['nilai'], 2, ".", ""))
                             ];
                             $mahasiswa->total += $value['nilai'];
                             $mahasiswa->nilai[] = $item;
@@ -108,6 +110,7 @@ class Nilai extends BaseController
                     $mahasiswa->nilai[] = $item;
                 }
             }
+            $mahasiswa->total = floatval(number_format($mahasiswa->total, 2, ".", " "));
             $mahasiswa->huruf = penilaian($mahasiswa->total);
         }
         return $this->respond($data);
@@ -373,14 +376,14 @@ class Nilai extends BaseController
         foreach ($dtMhs as $keyMhs => $mhs) {
             $cek = false;
             foreach ($dtNilai as $keyNilai => $nilai) {
-                if($nilai->rooms_id == $mhs->id){
+                if ($nilai->rooms_id == $mhs->id) {
                     $mhs->nilai = $nilai;
                     $mhs->nilai->nilai = (int) $mhs->nilai->nilai;
                     $cek = true;
                 }
             }
-            if(!$cek){
-                $mhs->nilai = ['detail_komponen_id'=>$detail->id, 'rooms_id'=>$mhs->id, 'nilai'=>0];
+            if (!$cek) {
+                $mhs->nilai = ['detail_komponen_id' => $detail->id, 'rooms_id' => $mhs->id, 'nilai' => 0];
             }
         }
         return $this->respond($dtMhs);
@@ -431,13 +434,147 @@ class Nilai extends BaseController
     public function postUas($id)
     {
         $data = $this->request->getJSON();
-        if(isset($data->id)){
+        if (isset($data->id)) {
             $this->nilai->update($data->id, $data);
             return $this->respond($data);
-        }else{
+        } else {
             $this->nilai->insert($data);
             $data->id = $this->nilai->getInsertID();
             return $this->respond($data);
         }
+    }
+
+    function toExcel($set, $id)
+    {
+        $data = $this->dataPrint($id);
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->setActiveSheetIndex(0);
+        $setItem = $this->request->getGet("item");
+        $styleArray = ['borders' => ['allBorders' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,],]];
+        $sheet->setCellValue('A1', 'LABORATORIUM UNIVERITAS SEPULUH NOPEMBER JAYAPURA');
+        $sheet->setCellValue('A2', 'DAFTAR NILAI PRAKTIUM');
+        $sheet->setCellValue('A3', 'JURUSAN');
+        $sheet->setCellValue('C3', ': ' . strtoupper($data['jadwal']['jurusan']));
+        $sheet->setCellValue('A4', 'MATAKULIAH');
+        $sheet->setCellValue('C4', ': ' . strtoupper($data['jadwal']['nama_matakuliah']));
+        $sheet->setCellValue('A5', 'KELAS');
+        $sheet->setCellValue('C5', ': ' . strtoupper($data['jadwal']['kelas']));
+        $spreadsheet->getActiveSheet()->mergeCells("A1:H1");
+        $spreadsheet->getActiveSheet()->mergeCells("A2:H2");
+        $sheet->setCellValue('A6', 'NO')
+            ->setCellValue('B6', 'NPM')
+            ->setCellValue('C6', 'NAMA')
+            ->setCellValue('D6', 'NILAI')
+            ->setCellValue('D7', 'KEHADIRAN')
+            ->setCellValue('E7', 'TUGAS')
+            ->setCellValue('F7', 'UAS')
+            ->setCellValue('G6', 'TOTAL NILAI')
+            ->setCellValue('H6', 'NILAI HURUF');
+        $spreadsheet->getActiveSheet()->mergeCells("A6:A7");
+        $spreadsheet->getActiveSheet()->mergeCells("B6:B7");
+        $spreadsheet->getActiveSheet()->mergeCells("C6:C7");
+        $spreadsheet->getActiveSheet()->mergeCells("D6:F6");
+        $spreadsheet->getActiveSheet()->mergeCells("G6:G7");
+        $spreadsheet->getActiveSheet()->mergeCells("H6:H7");
+        $spreadsheet->getActiveSheet()->getStyle("A6:H7")->getFont()->setBold(true)->setSize(12);
+        $spreadsheet->getActiveSheet()->getStyle("D6")->getAlignment()->setHorizontal('center');
+        $spreadsheet->getActiveSheet()->getStyle("G6")->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->getStyle("H6")->getAlignment()->setWrapText(true);
+
+
+        $spreadsheet->getActiveSheet()->getStyle("A1")->getFont()->setBold(true)->setSize(16);
+        $spreadsheet->getActiveSheet()->getStyle("A2")->getFont()->setBold(true)->setSize(16);
+        $spreadsheet->getActiveSheet()->getStyle("A1")->getAlignment()->setHorizontal('center');
+        $spreadsheet->getActiveSheet()->getStyle("A2")->getAlignment()->setHorizontal('center');
+        $spreadsheet->getActiveSheet()->getColumnDimension("A")->setWidth(34, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("B")->setWidth(89, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("C")->setWidth(251, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("D")->setWidth(95, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("E")->setWidth(95, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("F")->setWidth(95, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("G")->setWidth(78, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("H")->setWidth(75, 'px');
+        foreach ($data['mahasiswa'] as $key => $value) {
+            $sheet->setCellValue('A' . $key + 9, $key + 1)
+                ->setCellValue('B' . $key + 9, $value->npm)
+                ->setCellValue('C' . $key + 9, strtoupper($value->nama_mahasiswa))
+                ->setCellValue('G' . $key + 9, $value->total)
+                ->setCellValue('H' . $key + 9, $value->huruf);
+            foreach ($value->nilai as $keyNilai => $nilai) {
+                if($keyNilai==0) $sheet->setCellValue('D' . $key + 9, $nilai['nilai']);
+                else if($keyNilai==1) $sheet->setCellValue('E' . $key + 9, $nilai['nilai']);
+                else if($keyNilai==2) $sheet->setCellValue('F' . $key + 9, $nilai['nilai']);
+            }
+        }
+        $spreadsheet->getActiveSheet()->getStyle("A6:H" . count($data['mahasiswa']) + 8)->applyFromArray($styleArray);
+        $writer = new Xlsx($spreadsheet);
+        $filename = date('Y-m-d-His') . '-nilai-'.$data['jadwal']['nama_matakuliah'];
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
+
+    public function dataPrint($id = null)
+    {
+        $conn = \Config\Database::connect();
+        $this->tugas = new \App\Models\TugasModel();
+        $this->detailTugas = new \App\Models\DetailTugasModel();
+        $data = [];
+        // $Pertemuan = $this->pertemuan->asObject()->select('pertemuan.*')->join('mengawas', 'mengawas.id=pertemuan.mengawas_id', 'LEFT')
+        //     ->where("jadwal_id", $id)->findAll();
+        $dataNilai = $this->nilai->select('nilai.*')
+            ->join('detail_komponen', 'detail_komponen.id = nilai.detail_komponen_id', 'LEFT')->where('jadwal_id', $id)->findAll();
+        $data['komponen'] = $this->detail->where('jadwal_id', $id)->countAllResults() > 0 ?
+            $this->komponen->asObject()->select("komponen.*, detail_komponen.id as detail_id, detail_komponen.bobot")
+            ->join("detail_komponen", "detail_komponen.komponen_id = komponen.id", "LEFT")
+            ->where("jadwal_id = '$id'")->findAll() : $this->komponen->asObject()->findAll();
+        $data['mahasiswa'] = $this->rooms->asObject()->select("rooms.*, mahasiswa.nama_mahasiswa, mahasiswa.npm")
+            ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id')
+            ->where("jadwal_id", "$id")->findAll();
+            $data['jadwal']= $this->jadwal
+            ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id', 'LEFT')
+            ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id', 'LEFT')
+            ->join('kelas', 'kelas.id=jadwal.kelas_id', 'LEFT')
+            ->where('jadwal.id', $id)->first();
+        foreach ($data['mahasiswa'] as $keyMhs => $mahasiswa) {
+            $mahasiswa->nilai = [];
+            $mahasiswa->total = 0;
+            // $nilai = false;
+            foreach ($data['komponen'] as $keyKom => $komponen) {
+                $cKom = false;
+                foreach ($dataNilai as $key => $value) {
+                    if ($komponen->detail_id == $value['detail_komponen_id'] && $value['rooms_id'] == $mahasiswa->id) {
+                        if ($komponen->komponen == "UAS") {
+                            $item = [
+                                "komponen" => $komponen->komponen,
+                                "nilai" => floatval(number_format($value['nilai'] * ($komponen->bobot / 100), 2, ".", " "))
+                            ];
+                            $mahasiswa->nilai[] = $item;
+                            $mahasiswa->total += $value['nilai'] * ($komponen->bobot / 100);
+                        } else {
+                            $item = [
+                                "komponen" => $komponen->komponen,
+                                "nilai" => floatval(number_format($value['nilai'], 2, ".", ""))
+                            ];
+                            $mahasiswa->total += $value['nilai'];
+                            $mahasiswa->nilai[] = $item;
+                        }
+                        $cKom = true;
+                    }
+                }
+                if ($cKom == false) {
+                    $item = [
+                        "komponen" => $komponen->komponen,
+                        "nilai" => 0
+                    ];
+                    $mahasiswa->nilai[] = $item;
+                }
+            }
+            $mahasiswa->total = floatval(number_format($mahasiswa->total, 2, ".", " "));
+            $mahasiswa->huruf = penilaian($mahasiswa->total);
+        }
+        return $data;
     }
 }

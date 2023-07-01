@@ -55,29 +55,33 @@
                     <div class="d-flex justify-content-end" ng-if="showButton">
                         <button class="btn btn-info btn-sm mr-2" ng-click="inputTugas(matakuliah)">Tugas</button>
                         <button class="btn btn-primary btn-sm mr-2" ng-click="inputUas(matakuliah)">UAS</button>
-                        <button class="btn btn-secondary btn-sm" ng-click="setNilai(matakuliah)">Set Nilai</button>
+                        <a href="<?= base_url('nilai')?>/excel/nilai/{{matakuliah.jadwal_id}}" target="_blank" class="btn btn-secondary btn-sm mr-2" ng-click="toExcel('nilai', matakuliah)">To Excel</a>
+                        <button class="btn btn-warning btn-sm" ng-click="setNilai(matakuliah)">Set Nilai</button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="table-responsive">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>NPM</th>
-                                        <th>Nama</th>
-                                        <th ng-repeat="item in dataKomponen.komponen">{{item.komponen}}({{item.bobot}}%)</th>
-                                        <th>Total Nilai</th>
-                                        <th>Nilai Huruf</th>
+                                        <th rowspan="2">NO</th>
+                                        <th rowspan="2">NPM</th>
+                                        <th rowspan="2">NAMA</th>
+                                        <th class="text-center" colspan="{{dataKomponen.komponen.length}}">NILAI</th>
+                                        <th rowspan="2" class="text-center">TOTAL<br>NILAI</th>
+                                        <th rowspan="2" class="text-center">NILAI<br>HURUF</th>
                                         <!-- <th>Aksi</th> -->
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" ng-repeat="item in dataKomponen.komponen">{{item.komponen | uppercase}}<br>({{item.bobot}}%)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="item in dataKomponen.mahasiswa" ng-class="{'text-danger': item.huruf=='D' || item.huruf=='E', 'text-info': item.huruf=='A' || item.huruf=='B' || item.huruf=='C'}">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.npm}}</td>
-                                        <td>{{item.nama_mahasiswa}}</td>
+                                        <td>{{item.nama_mahasiswa | uppercase}}</td>
                                         <td ng-repeat="nilai in item.nilai">
                                             {{nilai.nilai}}
                                         </td>

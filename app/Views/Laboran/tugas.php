@@ -16,13 +16,13 @@
                         <table class="table table-sm table-bordered">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" class="text-center align-middle" width="5%">No</th>
-                                    <th rowspan="2" class="text-center align-middle" width="15%">NPM</th>
-                                    <th rowspan="2" class="text-center align-middle">Nama</th>
+                                    <th rowspan="2" class="text-center align-middle" width="2%">No</th>
+                                    <th rowspan="2" class="text-center align-middle" width="10%">NPM</th>
+                                    <th rowspan="2" class="text-center align-middle" width="20%">Nama</th>
                                     <th ng-if="datas.mahasiswa[0].tugas.length>0" colspan="{{datas.tugas.length+1}}" class="text-center">Tugas</th>
                                 </tr>
                                 <tr>
-                                    <th ng-if="datas.mahasiswa[0].tugas.length>0" ng-repeat="item in datas.tugas" width="5%" class="text-center">{{item.ke}}</th>
+                                    <th ng-if="datas.mahasiswa[0].tugas.length>0" ng-repeat="item in datas.tugas" class="text-center">{{item.ke}}</th>
                                 </tr>
                             </thead>
                             <tbody>

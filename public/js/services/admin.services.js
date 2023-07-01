@@ -1833,7 +1833,8 @@ function nilaiServices($http, $q, helperServices, AuthService, pesan) {
         set: set,
         post: post,
         put: put,
-        deleted: deleted
+        deleted: deleted,
+        excel:excel
     };
 
     function get() {
@@ -2055,4 +2056,27 @@ function nilaiServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
+    function excel(param, set) {
+        var def = $q.defer();
+        $http({
+            method: 'post',
+            url: controller + 'excel/' + set,
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                if(param.status=='1'){
+                    var data = service.data.find(x=>x.status=='1');
+                    if(data) data.status='0';
+                }
+                service.data.push(res.data);
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
 }

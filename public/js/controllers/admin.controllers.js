@@ -1029,6 +1029,7 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
                 element.jadwal_id = param.jadwal_id;
             });
             if($scope.total>0) $scope.showButton = true;
+            console.log(res);
             $.LoadingOverlay('hide');
         })
     }
@@ -1073,6 +1074,14 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
 
     $scope.inputUas = (param)=>{
         document.location.href= helperServices.url + "set_nilai/" + helperServices.encript("uas@"+ param.jadwal_id);
+    }
+
+    $scope.toExcel = (set, Matkul)=>{
+        var item = Matkul;
+        item.mahasiswa = $scope.dataKomponen.mahasiswa;
+        nilaiServices.excel(item, set).then(res=>{
+            
+        })
     }
 }
 

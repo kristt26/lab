@@ -30,6 +30,7 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+$routes->get('export', 'Cetak::index');
 $routes->get('spk', 'Spk::index');
 $routes->get('getmac', 'Pc::index');
 
@@ -214,6 +215,7 @@ $routes->group('nilai', ['filter' => 'laboran_auth'], static function ($routes) 
     $routes->post('postUas/(:num)', 'Laboran\Nilai::postUas/$1');
     $routes->put('put', 'Laboran\Nilai::put');
     $routes->delete('delete/(:any)', 'Laboran\Nilai::delete/$1');
+    $routes->get('excel/(:any)/(:any)', 'Laboran\Nilai::toExcel/$1/$2');
 });
 
 $routes->group('set_nilai', ['filter' => 'laboran_auth'], static function ($routes) {
