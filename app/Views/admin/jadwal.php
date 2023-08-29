@@ -23,6 +23,7 @@
                                     <th>Kelas</th>
                                     <th>Matakuliah</th>
                                     <th>Hari</th>
+                                    <th>Dosen</th>
                                     <th>Ruangan</th>
                                     <th>Jam Mulai</th>
                                     <th>Jam Selesai</th>
@@ -36,6 +37,7 @@
                                     <td>{{item.kelas}}</td>
                                     <td>{{item.nama_matakuliah}}</td>
                                     <td>{{item.hari}}</td>
+                                    <td>{{item.nama_dosen}}</td>
                                     <td>{{item.ruang}}</td>
                                     <td>{{item.jam_mulai}}</td>
                                     <td>{{item.jam_selesai}}</td>
@@ -66,34 +68,38 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Tahun Ajaran</label>
-                            <input type="text" class="form-control" ng-model="datas.ta.tahun_akademik" required aria-describedby="helpId" placeholder="Tahun Akademik" readonly>
+                            <input type="text" class="form-control form-control-sm" ng-model="datas.ta.tahun_akademik" required aria-describedby="helpId" placeholder="Tahun Akademik" readonly>
                         </div>
                         <div class="form-group">
                             <label>Jurusan</label>
-                            <select class="form-control" ng-options="item.jurusan for item in datas.jurusan" ng-model="jurusan"></select>
+                            <select class="form-control form-control-sm" ng-options="item.jurusan for item in datas.jurusan" ng-model="jurusan"></select>
                         </div>
                         <div class="form-group">
                             <label>Matakuliah</label>
-                            <select class="form-control" ng-options="item.nama_matakuliah for item in jurusan.matakuliah" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
+                            <select class="form-control form-control-sm" ng-options="item.nama_matakuliah for item in jurusan.matakuliah" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
                         </div>
                         <div class="form-group">
                             <label>Kelas</label>
-                            <select class="form-control" ng-options="item.kelas for item in datas.kelas" ng-model="kelas" ng-change="model.kelas_id = kelas.id; model.kelas = kelas.kelas"></select>
+                            <select class="form-control form-control-sm" ng-options="item.kelas for item in datas.kelas" ng-model="kelas" ng-change="model.kelas_id = kelas.id; model.kelas = kelas.kelas"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Dosen Pengampu</label>
+                            <select class="form-control form-control-sm select2" ng-options="item.nama_dosen for item in datas.dosen | orderBy:'nama_dosen'" ng-model="dosen" ng-change="model.dosen_id = dosen.id; model.nama_dosen = dosen.nama_dosen"></select>
                         </div>
                         <div class="form-group">
                             <label>Hari</label>
-                            <select class="form-control" ng-options="item for item in hari" ng-model="model.hari"></select>
+                            <select class="form-control form-control-sm" ng-options="item for item in hari" ng-model="model.hari"></select>
                         </div>
                         <div class="form-group">
                             <label>Ruangan</label>
-                            <select class="form-control" ng-model="model.ruang">
+                            <select class="form-control form-control-sm" ng-model="model.ruang">
                                 <option value="Software I">Software I</option>
                                 <option value="Software II">Software II</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Shift</label>
-                            <select class="form-control" ng-model="model.shift">
+                            <select class="form-control form-control-sm" ng-model="model.shift">
                                 <option value="Shift I">Shift I</option>
                                 <option value="Shift II">Shift II</option>
                             </select>
@@ -102,9 +108,9 @@
                             <label for="">Jam Praktikum</label>
                             <div class="form-inline d-flex justify-content-between">
                                 <!-- <div class="form-group"> -->
-                                <input type="time" ng-model="model.jam_mulai" class="form-control mr-4" placeholder="" aria-describedby="helpId">
+                                <input type="time" ng-model="model.jam_mulai" class="form-control form-control-sm mr-4" placeholder="" aria-describedby="helpId">
                                 <span>s/d</span>
-                                <input type="time" ng-model="model.jam_selesai" class="form-control ml-4" placeholder="" aria-describedby="helpId">
+                                <input type="time" ng-model="model.jam_selesai" class="form-control form-control-sm ml-4" placeholder="" aria-describedby="helpId">
                                 <!-- </div> -->
                             </div>
                         </div>

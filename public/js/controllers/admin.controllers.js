@@ -20,6 +20,7 @@ angular.module('adminctrl', [])
     .controller('absenRoomsController', absenRoomsController)
     .controller('setKomponenController', setKomponenController)
     .controller('setNilaiController', setNilaiController)
+    .controller('laporanController', laporanController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -290,6 +291,7 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
             $scope.jurusan = $scope.datas.jurusan.find(x=>x.id == param.jurusan_id);
             $scope.matakuliah = $scope.jurusan.matakuliah.find(x=>x.id == param.matakuliah_id);
             $scope.kelas = $scope.datas.kelas.find(x=>x.id == param.kelas_id);
+            $scope.dosen = $scope.datas.dosen.find(x=>x.id == param.dosen_id);
             var item = angular.copy(param);
             item.jam_mulai = new Date("1970-01-01T" + param.jam_mulai);
             item.jam_selesai = new Date("1970-01-01T" + param.jam_selesai);
@@ -1137,4 +1139,8 @@ function setNilaiController($scope, nilaiServices, pesan, DTOptionsBuilder, help
         })
     }
 
+}
+
+function laporanController($scope, nilaiServices, pesan, DTOptionsBuilder, helperServices) {
+    $scope.$emit("SendUp", "Laporan");
 }

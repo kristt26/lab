@@ -53,6 +53,8 @@ function indexController($scope, helperServices, dashboardServices) {
             $scope.root = "Master Data"
         }else if(data == 'Mahasiswa' || data=='Laboran' || data=='Jadwal'){
             $scope.root = "Pendataan"
+        }else if(data == 'Berita Acara'){
+            $scope.root = "Laporan"
         }
         $.LoadingOverlay("hide");
     });

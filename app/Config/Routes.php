@@ -124,6 +124,15 @@ $routes->group('mahasiswa', ['filter' => 'admin_auth'], static function ($routes
     $routes->delete('delete/(:any)', 'Admin\Mahasiswa::delete/$1');
 });
 
+$routes->group('dosen', ['filter' => 'admin_auth'], static function ($routes) {
+    $routes->get('/', 'Admin\Dosen::index');
+    $routes->get('store', 'Admin\Dosen::store');
+    $routes->get('read/(:any)', 'Admin\Dosen::read/$1');
+    // $routes->get('post', 'Admin\Dosen::post');
+    $routes->put('put', 'Admin\Dosen::put');
+    $routes->delete('delete/(:any)', 'Admin\Dosen::delete/$1');
+});
+
 $routes->group('komponen_nilai', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Komponen::index');
     $routes->get('store', 'Admin\Komponen::store');
@@ -131,6 +140,11 @@ $routes->group('komponen_nilai', ['filter' => 'admin_auth'], static function ($r
     $routes->post('post', 'Admin\Komponen::post');
     $routes->put('put', 'Admin\Komponen::put');
     $routes->delete('delete/(:any)', 'Admin\Komponen::delete/$1');
+});
+
+$routes->group('laporan', ['filter' => 'admin_auth'], static function ($routes) {
+    $routes->get('ba', 'Admin\Laporan::ba');
+    $routes->get('cetakba', 'Admin\Laporan::cetak_ba');
 });
 
 

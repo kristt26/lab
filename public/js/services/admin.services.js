@@ -676,15 +676,20 @@ function jadwalServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.jadwal.find(x => x.id == param.id);
-                if (data) {
-                    data.kelas = param.kelas;
-                    data.kelas_id = param.kelas_id;
-                    data.hari = param.hari;
-                    data.jam_mulai = param.jam_mulai;
-                    data.jam_selesai = param.jam_selesai;
-                    data.ruang = param.ruang;
-                    data.shift = param.shift;
+                var jurusan = service.data.jurusan.find(x => x.id == param.jurusan_id);
+                if (jurusan) {
+                    var data = jurusan.jadwal.find(x=>x.id == param.id);
+                    if(data){
+                        data.kelas = param.kelas;
+                        data.kelas_id = param.kelas_id;
+                        data.hari = param.hari;
+                        data.jam_mulai = param.jam_mulai;
+                        data.jam_selesai = param.jam_selesai;
+                        data.ruang = param.ruang;
+                        data.shift = param.shift;
+                        data.dosen_id = param.dosen_id;
+                        data.nama_dosen = param.nama_dosen;
+                    }
                 }
                 def.resolve(res.data);
             },

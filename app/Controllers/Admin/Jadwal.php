@@ -11,6 +11,7 @@ class Jadwal extends BaseController
     protected $ta;
     protected $kelas;
     protected $jadwal;
+    protected $dosen;
 
     public function __construct() {
         $this->jurusan = new \App\Models\JurusanModel();
@@ -18,6 +19,7 @@ class Jadwal extends BaseController
         $this->ta = new \App\Models\TaModel();
         $this->kelas = new \App\Models\KelasModel();
         $this->jadwal = new \App\Models\JadwalModel();
+        $this->dosen = new \App\Models\DosenModel();
     }
     public function index()
     {
@@ -29,16 +31,18 @@ class Jadwal extends BaseController
         $jurusans = $this->jurusan->asObject()->findAll();
         foreach ($jurusans as $key => $jurusan) {
             $jurusan->matakuliah = $this->matakuliah->where('jurusan_id', $jurusan->id)->findAll();
-            $jurusan->jadwal = $this->jadwal->select("jadwal.*, ta.tahun_akademik, kelas.kelas, matakuliah.nama_matakuliah, '$jurusan->id' as jurusan_id")
+            $jurusan->jadwal = $this->jadwal->select("jadwal.*, ta.tahun_akademik, kelas.kelas, matakuliah.nama_matakuliah, dosen.nama_dosen , '$jurusan->id' as jurusan_id")
             ->join("ta","ta.id = jadwal.ta_id", "LEFT")
             ->join('kelas', "kelas.id = jadwal.kelas_id", "left")
-            ->join('matakuliah', "matakuliah.id = jadwal.matakuliah_id")
+            ->join('matakuliah', "matakuliah.id = jadwal.matakuliah_id", "LEFT")
+            ->join('dosen', "dosen.id = jadwal.dosen_id", "LEFT")
             ->where('ta.status', '1')->where('matakuliah.jurusan_id', $jurusan->id)
             ->findAll();
         }
         $data = [
             "jurusan" => $jurusans,
             "kelas" => $this->kelas->findAll(),
+            "dosen" => $this->dosen->findAll(),
             "ta" => $this->ta->where('status', '1')->first()
         ];
         return $this->respond($data);

@@ -44,6 +44,17 @@
                         </div>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a ng-class="{'nav-link' : root=='Berita Acara', 'nav-link collapsed' : root!='Berita Acara'}" href="#" data-toggle="collapse" data-target="#ba" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-file"></i>
+                        <span>Laporan</span>
+                    </a>
+                    <div id="ba" ng-class="{'collapse show' : root=='Laporan', 'collapse' : root!='Laporan'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a ng-class="{'collapse-item active': title=='Berita Acara', 'collapse-item': title!='Berita Acara'}" href="<?= base_url('laporan/ba') ?>">Berita Acara</a>
+                        </div>
+                    </div>
+                </li>
             <?php endif; ?>
 
             <?php if (session()->get("role") == "Mahasiswa") : ?>
