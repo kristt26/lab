@@ -589,6 +589,11 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, get
         getMacServices.get().then((res) => {
             $scope.showQrcode = true;
         })
+        $scope.jadwals.forEach(element => {
+            element.jumlah = parseFloat(element.jumlah);
+            element.kapasitas = parseFloat(element.kapasitas);
+        });
+        console.log(res);
         $.LoadingOverlay("hide");
     })
 
@@ -612,7 +617,7 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, get
 
     $scope.pilih = (item) => {
         $.LoadingOverlay("show");
-        kontrakServices.post({ jadwal_id: item.id }).then((res) => {
+        kontrakServices.post({ jadwal_id: item.id, kapasitas: item.kapasitas }).then((res) => {
             $scope.rooms.push(angular.copy(res));
             var temp = $scope.jadwals.find((x) => x.id == item.id);
             $scope.kontrak.push(angular.copy(temp));

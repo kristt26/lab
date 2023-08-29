@@ -20,10 +20,11 @@
                                 <th>Kode</th>
                                 <th>Nama Matakuliah</th>
                                 <th>Semester</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in matakuliah">
+                            <tr ng-repeat="item in matakuliah | orderBy: 'semester'">
                                 <td>{{$index+1}}</td>
                                 <td>{{item.kode}}</td>
                                 <td>{{item.nama_matakuliah}}</td>

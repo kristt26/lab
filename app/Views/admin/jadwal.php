@@ -22,11 +22,12 @@
                                     <th>Tahun Ajaran</th>
                                     <th>Kelas</th>
                                     <th>Matakuliah</th>
+                                    <th>Shift</th>
                                     <th>Hari</th>
                                     <th>Dosen</th>
                                     <th>Ruangan</th>
-                                    <th>Jam Mulai</th>
-                                    <th>Jam Selesai</th>
+                                    <th>Jam Praktikum</th>
+                                    <th>Kapasitas</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -36,11 +37,12 @@
                                     <td>{{item.tahun_akademik}}</td>
                                     <td>{{item.kelas}}</td>
                                     <td>{{item.nama_matakuliah}}</td>
+                                    <td>{{item.shift}}</td>
                                     <td>{{item.hari}}</td>
                                     <td>{{item.nama_dosen}}</td>
                                     <td>{{item.ruang}}</td>
-                                    <td>{{item.jam_mulai}}</td>
-                                    <td>{{item.jam_selesai}}</td>
+                                    <td>{{item.jam_mulai}} s/d {{item.jam_selesai}}</td>
+                                    <td>{{item.kapasitas}}</td>
                                     <td>
                                         <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
                                         <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
@@ -56,7 +58,7 @@
     </div>
     <!-- Modal -->
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Tambah Jadwal</h5>
@@ -70,48 +72,78 @@
                             <label>Tahun Ajaran</label>
                             <input type="text" class="form-control form-control-sm" ng-model="datas.ta.tahun_akademik" required aria-describedby="helpId" placeholder="Tahun Akademik" readonly>
                         </div>
-                        <div class="form-group">
-                            <label>Jurusan</label>
-                            <select class="form-control form-control-sm" ng-options="item.jurusan for item in datas.jurusan" ng-model="jurusan"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Matakuliah</label>
-                            <select class="form-control form-control-sm" ng-options="item.nama_matakuliah for item in jurusan.matakuliah" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Kelas</label>
-                            <select class="form-control form-control-sm" ng-options="item.kelas for item in datas.kelas" ng-model="kelas" ng-change="model.kelas_id = kelas.id; model.kelas = kelas.kelas"></select>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Jurusan</label>
+                                    <select class="form-control form-control-sm" ng-options="item.jurusan for item in datas.jurusan" ng-model="jurusan"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Matakuliah</label>
+                                    <select class="form-control form-control-sm" ng-options="item.nama_matakuliah for item in jurusan.matakuliah" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Kelas</label>
+                                    <select class="form-control form-control-sm" ng-options="item.kelas for item in datas.kelas" ng-model="kelas" ng-change="model.kelas_id = kelas.id; model.kelas = kelas.kelas"></select>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Dosen Pengampu</label>
                             <select class="form-control form-control-sm select2" ng-options="item.nama_dosen for item in datas.dosen | orderBy:'nama_dosen'" ng-model="dosen" ng-change="model.dosen_id = dosen.id; model.nama_dosen = dosen.nama_dosen"></select>
                         </div>
-                        <div class="form-group">
-                            <label>Hari</label>
-                            <select class="form-control form-control-sm" ng-options="item for item in hari" ng-model="model.hari"></select>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Hari</label>
+                                    <select class="form-control form-control-sm" ng-options="item for item in hari" ng-model="model.hari"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Ruangan</label>
+                                    <select class="form-control form-control-sm" ng-model="model.ruang">
+                                        <option value="Software I">Software I</option>
+                                        <option value="Software II">Software II</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Shift</label>
+                                    <select class="form-control form-control-sm" ng-model="model.shift">
+                                        <option value="Shift I">Shift I</option>
+                                        <option value="Shift II">Shift II</option>
+                                        <option value="Shift III">Shift III</option>
+                                        <option value="Shift IV">Shift IV</option>
+                                        <option value="Shift V">Shift V</option>
+                                        <option value="Shift VI">Shift VI</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Ruangan</label>
-                            <select class="form-control form-control-sm" ng-model="model.ruang">
-                                <option value="Software I">Software I</option>
-                                <option value="Software II">Software II</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Shift</label>
-                            <select class="form-control form-control-sm" ng-model="model.shift">
-                                <option value="Shift I">Shift I</option>
-                                <option value="Shift II">Shift II</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Jam Praktikum</label>
-                            <div class="form-inline d-flex justify-content-between">
-                                <!-- <div class="form-group"> -->
-                                <input type="time" ng-model="model.jam_mulai" class="form-control form-control-sm mr-4" placeholder="" aria-describedby="helpId">
-                                <span>s/d</span>
-                                <input type="time" ng-model="model.jam_selesai" class="form-control form-control-sm ml-4" placeholder="" aria-describedby="helpId">
-                                <!-- </div> -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Jam Praktikum</label>
+                                    <div class="form-inline d-flex justify-content-between">
+                                        <!-- <div class="form-group"> -->
+                                        <input type="time" ng-model="model.jam_mulai" class="form-control form-control-sm mr-4" placeholder="" aria-describedby="helpId">
+                                        <span>s/d</span>
+                                        <input type="time" ng-model="model.jam_selesai" class="form-control form-control-sm ml-4" placeholder="" aria-describedby="helpId">
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Kapasitas</label>
+                                    <input type="text" class="form-control form-control-sm" ng-model="model.kapasitas" required aria-describedby="helpId" placeholder="Kosongkan jika tidak ada batasan">
+                                </div>
                             </div>
                         </div>
                     </div>

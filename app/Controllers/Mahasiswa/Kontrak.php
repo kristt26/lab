@@ -37,7 +37,7 @@ class Kontrak extends BaseController
         $data['jadwal'] = $this->jadwal->select("jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, 
             jurusan.jurusan, jurusan.initial, matakuliah.semester, kelas.kelas,
             (SELECT modul.modul FROM modul where matakuliah.id=modul.matakuliah_id and status='1') AS modul,
-            (SELECT COUNT(pertemuan.id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id) AS pertemuan,
+            (SELECT COUNT(rooms.id) FROM rooms where jadwal.id=rooms.jadwal_id) AS jumlah,
             (SELECT pertemuan.id FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan_id,
             (SELECT pertemuan.tgl FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS tanggal_pertemuan")
             ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id', 'LEFT')
@@ -67,9 +67,11 @@ class Kontrak extends BaseController
         $mhs = $this->mahasiswa->where('user_id', session()->get('uid'))->first();
         try {
             $data->mahasiswa_id = $mhs['id'];
-            $this->kontrak->insert($data);
-            $data->id = $this->kontrak->getInsertID();
-            return $this->respondCreated($data);
+            if($data->kapasitas !== 0 && $this->kontrak->where('jadwal_id', $data->jadwal_id)->countAllResults()<$data->kapasitas){
+                $this->kontrak->insert($data);
+                $data->id = $this->kontrak->getInsertID();
+                return $this->respondCreated($data);
+            }else throw new \Exception("Kelas telah penuh\nSilahkan pilih kelas lain", 1);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());
         }

@@ -9,16 +9,17 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4 mb-3" ng-repeat="item in jadwals">
+                        <div class="col-md-4 mb-3" ng-repeat="item in jadwals | orderBy: 'shift'">
                             <div class="card text-left">
                                 <div class="card-body">
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah}} | {{item.initial}}</strong></h6>
-                                    <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}} | {{item.shift}}</h6>
+                                    <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}} | {{item.shift}} | Kapasitas {{item.kapasitas}}</h6>
                                     <h6 style="font-size: 12px;"><i class="fas fa-calendar fa-fw"></i>: {{item.hari}} | <i class="far fa-clock"></i>{{item.jam_mulai}} - {{item.jam_selesai}}</h6>
                                     <!-- <p class="card-text">Pengawas</p> -->
                                 </div>
                                 <div class="card-footer text-right">
-                                    <button class="btn btn-success btn-sm btn-block" ng-click="pilih(item)">Pilih</button>
+                                    <button ng-show="item.kapasitas == 0 || item.kapasitas>item.jumlah" class="btn btn-success btn-sm btn-block" ng-click="pilih(item)">Pilih</button>
+                                    <button ng-show="item.kapasitas !== 0 && item.kapasitas<=item.jumlah" class="btn btn-warning btn-sm btn-block text-dark " disabled>Kelas Penuh</button>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +39,7 @@
                             <div ng-class="{'card text-left mb-3 text-white bg-primary': item.pertemuan_id, 'card text-left mb-3': !item.pertemuan_id}">
                                 <div class="card-body">
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah }} | {{item.initial}}</strong></h6>
-                                    <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}} | {{item.shift}}</h6>
+                                    <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}} | {{item.shift}} | Kapasitas {{item.kapasitas}}</h6>
                                     <h6 style="font-size: 12px;"><i class="fas fa-calendar fa-fw"></i>: {{item.hari}} | <i class="far fa-clock"></i>: {{item.jam_mulai}} - {{item.jam_selesai}}</h6>
                                 </div>
                                 <div class="card-footer text-right">
