@@ -38,6 +38,7 @@
                     </a>
                     <div id="pendataan" ng-class="{'collapse show' : root=='Pendataan', 'collapse' : root!='Pendataan'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
+                            <a ng-class="{'collapse-item active': title=='Dosen', 'collapse-item': title!='Dosen'}" href="<?= base_url('dosen') ?>">Dosen</a>
                             <a ng-class="{'collapse-item active': title=='Mahasiswa', 'collapse-item': title!='Mahasiswa'}" href="<?= base_url('mahasiswa') ?>">Mahasiswa</a>
                             <a ng-class="{'collapse-item active': title=='Laboran', 'collapse-item': title!='Laboran'}" href="<?= base_url('laboran') ?>">Laboran</a>
                             <a ng-class="{'collapse-item active': title=='Jadwal', 'collapse-item': title!='Jadwal'}" href="<?= base_url('jadwal') ?>">Jadwal</a>
@@ -75,7 +76,7 @@
                 </li>
             <?php endif; ?>
 
-            <?php if (session()->get("role") == "Laboran") : ?>
+            <?php if (session()->get("role") == "Laboran" || session()->get("role") == "Dosen") : ?>
 
                 <li ng-class="{'nav-item active': title=='Jadwal Mengawas' || title=='Absen Mahasiswa', 'nav-item': title!='Jadwal Mengawas'|| title !='Absen Mahasiswa'}">
                     <a class="nav-link" href="<?= base_url('jadwal_mengawas') ?>">

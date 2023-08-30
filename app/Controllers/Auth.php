@@ -48,9 +48,12 @@ class auth extends BaseController
                     ->where('user_id', $user['id'])->get()->getResultArray();
                 $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user['id'])->get()->getRow();
                 if (count($role) <= 1) {
+                    if($role[0]['role']=='Dosen'){
+                        $dosen = $this->db->table('dosen')->where('user_id', $user['id'])->get()->getRow();
+                    }
                     $sessi = [
                         'uid' => $user['id'],
-                        'nama' => $role[0]['role'] == 'Admin'?'Administrator':$mahasiswa->nama_mahasiswa,
+                        'nama' => $role[0]['role'] == 'Admin'?'Administrator':($role[0]['role'] == 'Dosen'? $dosen->nama_dosen : $mahasiswa->nama_mahasiswa),
                         'role' => $role[0]['role'],
                         'is_login' => true
                     ];

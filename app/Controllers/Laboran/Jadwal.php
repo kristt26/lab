@@ -28,7 +28,7 @@ class Jadwal extends BaseController
         $this->mengawas = new MengawasModel();
         $this->laboran = new LaboranModel();
     }
-    
+
     public function index()
     {
         return view('laboran/jadwal', ['title' => 'Jadwal Mengawas']);
@@ -53,6 +53,7 @@ class Jadwal extends BaseController
             ->where('user_id', session()->get('uid'))
             ->where('ta_id', $ta['id'])
             ->findAll();
+
         $data['ta'] = $ta;
         return $this->respond($data);
     }

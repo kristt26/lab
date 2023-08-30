@@ -51,7 +51,7 @@ function indexController($scope, helperServices, dashboardServices) {
         $scope.title = data;
         if (data == 'Jurusan' || data == 'Matakuliah' || data == 'Modul' || data == 'Kelas' || data == 'Tahun Akademik' || data=='Komponen Nilai') {
             $scope.root = "Master Data"
-        }else if(data == 'Mahasiswa' || data=='Laboran' || data=='Jadwal'){
+        }else if(data=='Dosen' || data == 'Mahasiswa' || data=='Laboran' || data=='Jadwal'){
             $scope.root = "Pendataan"
         }else if(data == 'Berita Acara'){
             $scope.root = "Laporan"

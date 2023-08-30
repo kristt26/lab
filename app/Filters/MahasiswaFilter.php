@@ -27,7 +27,7 @@ class MahasiswaFilter implements FilterInterface
     {
         if (is_null(session()->get('is_login'))) return redirect()->to(base_url('auth'));
         else {
-            if (session()->get('role') !== 'Mahasiswa') return redirect()->to(base_url('home'));
+            if (session()->get('role') !== 'Mahasiswa') return redirect()->to(base_url());
         }
     }
 

@@ -14,5 +14,5 @@ class DosenModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nidn', 'nama_dosen'];
+    protected $allowedFields    = ['nidn', 'nama_dosen', 'user_id'];
 }

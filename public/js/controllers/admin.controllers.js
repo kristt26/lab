@@ -10,6 +10,7 @@ angular.module('adminctrl', [])
     .controller('taController', taController)
     .controller('mahasiswaController', mahasiswaController)
     .controller('componenController', componenController)
+    .controller('dosenController', dosenController)
     // Mahasiswa
     .controller('kontrakController', kontrakController)
     .controller('daftarLaboranController', daftarLaboranController)
@@ -550,6 +551,68 @@ function componenController($scope, componenServices, pesan, DTOptionsBuilder) {
         pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
             $.LoadingOverlay('show');
             componenServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+}
+
+function dosenController($scope, dosenServices, pesan, DTOptionsBuilder) {
+    $scope.$emit("SendUp", "Dosen");
+    $scope.datas = {};
+    $scope.model = {};
+    $scope.dataKamar = {};
+    $scope.jurusans = {};
+    
+    $scope.dtOptions = DTOptionsBuilder.newOptions().withOption('scrollX', '100%');
+    $.LoadingOverlay('show');
+    dosenServices.get().then(res => {
+        $scope.datas = res;
+        $.LoadingOverlay('hide');
+    })
+
+    $scope.edit = (param) => {
+        param.persentase = parseFloat(param.persentase);
+        $scope.model = angular.copy(param)
+        $("#add").modal('show');
+    }
+
+    $scope.reset = (param) => {
+        pesan.dialog('Yakin ingin mereset password?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
+            dosenServices.reset(param).then(res => {
+                $.LoadingOverlay('hide');
+                pesan.Success('Berhasil menghapus');
+            })
+        })
+    }
+
+    $scope.save = (param) => {
+        pesan.dialog('Yakin ingin menyimpan?', 'YA', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
+            if ($scope.model.id) {
+                dosenServices.put($scope.model).then(res => {
+                    $scope.hitungPersentase();
+                    pesan.Success("Proses berhasil");
+                    $scope.model = {};
+                    $.LoadingOverlay('hide');
+                })
+            } else {
+                dosenServices.post($scope.model).then(res => {
+                    $scope.hitungPersentase();
+                    pesan.Success("Proses berhasil");
+                    $scope.model = {};
+                    $.LoadingOverlay('hide');
+                })
+            }
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin menghapus?', 'Ya', 'Tidak').then(x => {
+            $.LoadingOverlay('show');
+            dosenServices.deleted(param).then(res => {
                 $.LoadingOverlay('hide');
                 pesan.Success('Berhasil menghapus');
             })

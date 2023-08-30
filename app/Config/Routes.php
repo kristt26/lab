@@ -130,6 +130,7 @@ $routes->group('dosen', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('read/(:any)', 'Admin\Dosen::read/$1');
     // $routes->get('post', 'Admin\Dosen::post');
     $routes->put('put', 'Admin\Dosen::put');
+    $routes->put('reset', 'Admin\Dosen::reset');
     $routes->delete('delete/(:any)', 'Admin\Dosen::delete/$1');
 });
 
