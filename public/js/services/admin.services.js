@@ -17,6 +17,7 @@ angular.module('admin.service', [])
     .factory('kontrakServices', kontrakServices)
     .factory('daftarLaboranServices', daftarLaboranServices)
     .factory('praktikumServices', praktikumServices)
+    .factory('profileServices', profileServices)
     // Laboran
     .factory('mengawasServices', mengawasServices)
     .factory('absenRoomsServices', absenRoomsServices)
@@ -1116,6 +1117,7 @@ function mahasiswaServices($http, $q, helperServices, AuthService, pesan) {
         byId: byId,
         post: post,
         put: put,
+        reset: reset,
         deleted: deleted
     };
 
@@ -1138,11 +1140,11 @@ function mahasiswaServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
-    function byId(id) {
+    function byId(id, status) {
         var def = $q.defer();
         $http({
             method: 'get',
-            url: controller + 'read/'+id,
+            url: controller + 'read/'+id+'/'+status,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
@@ -1190,6 +1192,24 @@ function mahasiswaServices($http, $q, helperServices, AuthService, pesan) {
         }).then(
             (res) => {
                 
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function reset(param) {
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + 'reset',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
                 def.resolve(res.data);
             },
             (err) => {
@@ -1732,6 +1752,117 @@ function praktikumServices($http, $q, helperServices, AuthService, pesan) {
             (err) => {
                 def.reject(err);
                 $.LoadingOverlay("hide");
+                pesan.error(err.data.message)
+            }
+        );
+        return def.promise;
+    }
+
+}
+
+function profileServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'profile/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+        read: read,
+        put: put,
+        reset: reset,
+        deleted: deleted
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'store',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                $.LoadingOverlay('hide');
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function read() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                $.LoadingOverlay('hide');
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function put(param) {
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + 'put',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function reset(param) {
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + 'reset',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.messages.error)
+                def.reject(err);
+                $.LoadingOverlay('hide');
+            }
+        );
+        return def.promise;
+    }
+    
+    function deleted(param) {
+        var def = $q.defer();
+        $http({
+            method: 'delete',
+            url: controller + "/delete/" + param.user_id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                var index = service.data.indexOf(param);
+                service.data.splice(index, 1);
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
                 pesan.error(err.data.message)
             }
         );

@@ -14,50 +14,7 @@
                     <div class="d-flex justify-content-between">
                         <div class="form-group">
                             <label for="">Program Studi</label>
-                            <select class="form-control" ng-model="jurusans" ng-options="item.jurusan for item in datas.jurusan">
-                            </select>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="col-md-12" ng-show="jurusans">
-                        <div class="table-responsive">
-                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-striped" style="width: 99%;">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>NPM</th>
-                                        <th>Nama</th>
-                                        <th>Kelas</th>
-                                        <th>Email</th>
-                                        <th>Kontak</th>
-                                        <th>Status</th>
-                                        <!-- <th>Action</th> -->
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="item in jurusans.dataMahasiswa">
-                                        <td>{{$index+1}}</td>
-                                        <td>{{item.npm}}</td>
-                                        <td>{{item.nama_mahasiswa}}</td>
-                                        <td>{{item.kelas}}</td>
-                                        <td>{{item.email}}</td>
-                                        <td>{{item.kontak}}</td>
-                                        <td>{{item.status=='0' ? 'Tidak Aktif':'Aktif'}}</td>
-                                        <!-- <td>
-                                            <button class="btn btn-warning btn-sm" ng-click="edit(item)" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
-                                        </td> -->
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="nav-ppengajuan" role="tabpanel" aria-labelledby="nav-pengajuan-tab">
-                    <div class="d-flex justify-content-between">
-                        <div class="form-group">
-                            <label for="">Program Studi</label>
-                            <select class="form-control" ng-model="jurusans" ng-options="item.jurusan for item in datas.jurusan">
+                            <select class="form-control" ng-model="jurusans" ng-options="item.jurusan for item in datas.jurusan" ng-change="getMahasiswa(jurusans.id, '1')">
                             </select>
                         </div>
                     </div>
@@ -78,7 +35,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in jurusans.dataPengajuan">
+                                    <tr ng-repeat="item in dataMahasiswa | orderBy: 'npm'">
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.npm}}</td>
+                                        <td>{{item.nama_mahasiswa}}</td>
+                                        <td>{{item.kelas}}</td>
+                                        <td>{{item.email}}</td>
+                                        <td>{{item.kontak}}</td>
+                                        <td>{{item.status=='0' ? 'Tidak Aktif':'Aktif'}}</td>
+                                        <td>
+                                            <button class="btn btn-warning btn-sm" ng-click="edit(item)" data-toggle="tooltip" data-placement="top" title="Ubah data"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-danger btn-sm" ng-click="delete(item)" data-toggle="tooltip" data-placement="top" title="Hapus data"><i class="fas fa-trash"></i></button>
+                                            <button class="btn btn-info btn-sm" ng-click="reset(item)"data-toggle="tooltip" data-placement="top" title="Reset Password"><i class="fas fa-retweet"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-ppengajuan" role="tabpanel" aria-labelledby="nav-pengajuan-tab">
+                    <div class="d-flex justify-content-between">
+                        <div class="form-group">
+                            <label for="">Program Studi</label>
+                            <select class="form-control" ng-model="jurusans" ng-options="item.jurusan for item in datas.jurusan" ng-change="getMahasiswa(jurusans.id, '0')">
+                            </select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12" ng-show="jurusans">
+                        <div class="table-responsive">
+                            <table datatable="ng" dt-options="dtOptions" class="table table-bordered table-striped" style="width: 99%;">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>NPM</th>
+                                        <th>Nama</th>
+                                        <th>Kelas</th>
+                                        <th>Email</th>
+                                        <th>Kontak</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in dataMahasiswa">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.npm}}</td>
                                         <td>{{item.nama_mahasiswa}}</td>

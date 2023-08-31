@@ -57,12 +57,14 @@ class auth extends BaseController
                         'role' => $role[0]['role'],
                         'is_login' => true
                     ];
+                    if($role[0]['role']=='Mahasiswa') $sessi['change'] = $user['change'];
                     session()->set($sessi);
                     return $this->respond($role);
                 } else if(count($role)>1) {
                     $sessi = [
                         'uid' => $user['id'],
                         'nama' => $mahasiswa->nama_mahasiswa,
+                        'change' => $user['change'],
                     ];
                     session()->set($sessi);
                     return $this->respond($role);

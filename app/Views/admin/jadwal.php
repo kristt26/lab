@@ -81,8 +81,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Matakuliah</label>
-                                    <select class="form-control form-control-sm" ng-options="item.nama_matakuliah for item in jurusan.matakuliah" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
+                                    <label>Semester</label>
+                                    <select class="form-control form-control-sm" ng-model="smt">
+                                        <option value="1">Semester 1</option>
+                                        <option value="2">Semester 2</option>
+                                        <option value="3">Semester 3</option>
+                                        <option value="4">Semester 4</option>
+                                        <option value="5">Semester 5</option>
+                                        <option value="6">Semester 6</option>
+                                        <option value="7">Semester 7</option>
+                                        <option value="8">Semester 8</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -92,9 +101,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Dosen Pengampu</label>
-                            <select class="form-control form-control-sm select2" ng-options="item.nama_dosen for item in datas.dosen | orderBy:'nama_dosen'" ng-model="dosen" ng-change="model.dosen_id = dosen.id; model.nama_dosen = dosen.nama_dosen"></select>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Matakuliah</label>
+                                    <select class="form-control form-control-sm" ng-options="item.nama_matakuliah for item in jurusan.matakuliah | filter:{semester:smt}" ng-model="matakuliah" ng-change="model.matakuliah_id = matakuliah.id; model.nama_matakuliah = matakuliah.nama_matakuliah"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label>Dosen Pengampu</label>
+                                    <select class="form-control form-control-sm"ng-options="item.nama_dosen for item in datas.dosen | orderBy:'nama_dosen'" ng-model="dosen" ng-change="model.dosen_id = dosen.id; model.nama_dosen = dosen.nama_dosen"></select>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">

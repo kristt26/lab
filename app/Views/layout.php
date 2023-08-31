@@ -30,7 +30,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <?=  view("menu");?>
+        <?= view("menu"); ?>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -74,7 +74,7 @@
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="<?= base_url('profile')?>">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -202,6 +202,11 @@
     <!-- Page level custom scripts -->
     <!-- <script src="<?= base_url() ?>assets/js/demo/chart-area-demo.js"></script>
     <script src="<?= base_url() ?>assets/js/demo/chart-pie-demo.js"></script> -->
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
 
 </body>
 

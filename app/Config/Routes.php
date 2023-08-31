@@ -118,9 +118,10 @@ $routes->group('jadwal', ['filter' => 'admin_auth'], static function ($routes) {
 $routes->group('mahasiswa', ['filter' => 'admin_auth'], static function ($routes) {
     $routes->get('/', 'Admin\Mahasiswa::index');
     $routes->get('store', 'Admin\Mahasiswa::store');
-    $routes->get('read/(:any)', 'Admin\Mahasiswa::read/$1');
+    $routes->get('read/(:any)/(:any)', 'Admin\Mahasiswa::read/$1/$2');
     $routes->post('post', 'Admin\Mahasiswa::post');
     $routes->put('put', 'Admin\Mahasiswa::put');
+    $routes->put('reset', 'Admin\Mahasiswa::reset');
     $routes->delete('delete/(:any)', 'Admin\Mahasiswa::delete/$1');
 });
 
@@ -152,6 +153,16 @@ $routes->group('laporan', ['filter' => 'admin_auth'], static function ($routes) 
 
 // Mahasiswa
 
+
+$routes->group('profile', ['filter'=> 'mahasiswa_auth'], static function ($routes) {
+    $routes->get('/', 'Mahasiswa\Profile::index');
+    $routes->get('store', 'Mahasiswa\Profile::store');
+    $routes->get('read', 'Mahasiswa\Profile::read');
+    $routes->post('post', 'Mahasiswa\Profile::post');
+    $routes->put('put', 'Mahasiswa\Profile::put');
+    $routes->put('reset', 'Mahasiswa\Profile::reset');
+    $routes->delete('delete/(:any)', 'Mahasiswa\Profile::delete/$1');
+});
 
 $routes->group('registration', ['filter'=> 'mahasiswa_auth'], static function ($routes) {
     $routes->get('/', 'Mahasiswa\Kontrak::index');

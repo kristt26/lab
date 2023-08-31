@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4 mb-3" ng-repeat="item in jadwals | orderBy: 'shift'">
+                        <div class="col-md-4 mb-3" ng-repeat="item in jadwals | orderBy: 'semester'">
                             <div class="card text-left">
                                 <div class="card-body">
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah}} | {{item.initial}}</strong></h6>
