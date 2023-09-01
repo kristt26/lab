@@ -5,13 +5,19 @@
       Ubah password terlebih dahulu
     </div>
 <?php endif;?>
+<?php if(!session()->get('photo')):?>
+    <div class="alert alert-danger" role="alert">
+      Silahkan upload Foto anda
+    </div>
+<?php endif;?>
 <div class="row gutters-sm" ng-controller="profileController">
     <div class="col-lg-4 pb-5">
         <!-- Account Sidebar-->
         <div class="author-card pb-2">
             <div class="author-card-cover" style="background-image: url(https://bootdey.com/img/Content/flores-amarillas-wallpaper.jpeg);"></div>
             <div class="author-card-profile">
-                <div class="author-card-avatar"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="Daniel Adams">
+                <div class="author-card-avatar" ng-click="openFile()">
+                    <img ng-src="{{photo}}" alt="Daniel Adams">
                 </div>
                 <div class="author-card-details">
                     <h4 class="author-card-name">{{datas.nama_mahasiswa}}</h4>
@@ -19,6 +25,10 @@
                     <span class="author-card-position">{{datas.jurusan}}</span>
                 </div>
             </div>
+            <div style="padding-left: 38px;">
+                <button class="btn btn-info btn-sm" ng-click="openFile()">Upload Photo</button>
+            </div>
+            <input type="file" id='my_file' style="display: none;" accept="image/*" ng-model="foto" ng-change="uploadFoto(foto)" base-sixty-four-input/>
         </div>
         <!-- <div class="wizard">
             <nav class="list-group list-group-flush">
@@ -161,16 +171,6 @@
 </div>
 
 
-<!-- Modal -->
-
-<script>
-    $('#exampleModal').on('show.bs.modal', event => {
-        var button = $(event.relatedTarget);
-        var modal = $(this);
-        // Use above variables to manipulate the DOM
-
-    });
-</script>
 <style>
     .widget-author {
         margin-bottom: 58px;

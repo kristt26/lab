@@ -1769,7 +1769,7 @@ function profileServices($http, $q, helperServices, AuthService, pesan) {
         read: read,
         put: put,
         reset: reset,
-        deleted: deleted
+        upload: upload
     };
 
     function get() {
@@ -1848,22 +1848,20 @@ function profileServices($http, $q, helperServices, AuthService, pesan) {
         );
         return def.promise;
     }
-    
-    function deleted(param) {
+
+    function upload(param) {
         var def = $q.defer();
         $http({
-            method: 'delete',
-            url: controller + "/delete/" + param.user_id,
+            method: 'put',
+            url: controller + 'upload',
+            data: param,
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var index = service.data.indexOf(param);
-                service.data.splice(index, 1);
                 def.resolve(res.data);
             },
             (err) => {
                 def.reject(err);
-                pesan.error(err.data.message)
             }
         );
         return def.promise;

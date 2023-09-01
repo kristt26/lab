@@ -48,24 +48,30 @@ class auth extends BaseController
                     ->where('user_id', $user['id'])->get()->getResultArray();
                 $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user['id'])->get()->getRow();
                 if (count($role) <= 1) {
-                    if($role[0]['role']=='Dosen'){
+                    if ($role[0]['role'] == 'Dosen') {
                         $dosen = $this->db->table('dosen')->where('user_id', $user['id'])->get()->getRow();
                     }
                     $sessi = [
                         'uid' => $user['id'],
-                        'nama' => $role[0]['role'] == 'Admin'?'Administrator':($role[0]['role'] == 'Dosen'? $dosen->nama_dosen : $mahasiswa->nama_mahasiswa),
+                        'nama' => $role[0]['role'] == 'Admin' ? 'Administrator' : ($role[0]['role'] == 'Dosen' ? $dosen->nama_dosen : $mahasiswa->nama_mahasiswa),
                         'role' => $role[0]['role'],
                         'is_login' => true
                     ];
-                    if($role[0]['role']=='Mahasiswa') $sessi['change'] = $user['change'];
+                    if ($role[0]['role'] == 'Mahasiswa') {
+                        $sessi['change'] = $user['change'];
+                        if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
+                        else $sessi['photo'] = true;
+                    }
                     session()->set($sessi);
                     return $this->respond($role);
-                } else if(count($role)>1) {
+                } else if (count($role) > 1) {
                     $sessi = [
                         'uid' => $user['id'],
                         'nama' => $mahasiswa->nama_mahasiswa,
                         'change' => $user['change'],
                     ];
+                    if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
+                    else $sessi['photo'] = true;
                     session()->set($sessi);
                     return $this->respond($role);
                 }
@@ -89,10 +95,10 @@ class auth extends BaseController
                     ->where('user_id', $user['id'])
                     ->where('role_id', '2')
                     ->get()->getRow();
-                if($role){
+                if ($role) {
                     $result['mahasiswa'] = $this->db->table('mahasiswa')->select('mahasiswa.*, jurusan.jurusan, kelas.kelas')
                         ->join('jurusan', 'jurusan.id=mahasiswa.jurusan_id')
-                        ->join('kelas', 'kelas.id=mahasiswa.kelas_id')    
+                        ->join('kelas', 'kelas.id=mahasiswa.kelas_id')
                         ->where('user_id', $user['id'])->get()->getRow();
                     $result['jadwal'] = $kontrak->select("rooms.*, jadwal.hari, jadwal.jam_mulai, jadwal.jam_selesai, jadwal.shift, jadwal.ruang, matakuliah.nama_matakuliah, matakuliah.semester, kelas.kelas")
                         ->join('jadwal', 'jadwal.id=rooms.jadwal_id', 'LEFT')
@@ -102,7 +108,7 @@ class auth extends BaseController
                         ->where('mahasiswa_id', $result['mahasiswa']->id)
                         ->findAll();
                     return $this->respond($result);
-                }else{
+                } else {
                     return $this->fail('User tidak ditemukan');
                 }
             } else {

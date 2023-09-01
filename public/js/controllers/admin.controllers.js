@@ -939,19 +939,21 @@ function profileController($scope, profileServices, pesan, helperServices) {
     $scope.jurusans = [];
     $scope.password = {};
 
-    profileServices.get().then(res=>{
+    profileServices.get().then(res => {
         $scope.datas = res;
+        if ($scope.datas.photo) $scope.photo = helperServices.url + "assets/berkas/" + $scope.datas.photo;
+        else $scope.photo = "https://bootdey.com/img/Content/avatar/avatar1.png";
         $scope.model = angular.copy($scope.datas);
         console.log(res);
     })
-    
+
     $scope.edit = (param) => {
         $.LoadingOverlay('show');
-        profileServices.read().then(res=>{
+        profileServices.read().then(res => {
             $scope.jurusans = res.jurusans;
-            $scope.jurusan = $scope.jurusans.find(x=>x.id == $scope.model.jurusan_id);
+            $scope.jurusan = $scope.jurusans.find(x => x.id == $scope.model.jurusan_id);
             $scope.kelass = res.kelass;
-            $scope.kelas = $scope.kelass.find(x=>x.id == $scope.model.kelas_id);
+            $scope.kelas = $scope.kelass.find(x => x.id == $scope.model.kelas_id);
             $scope.ubah = true;
             $.LoadingOverlay('hide');
         })
@@ -982,6 +984,22 @@ function profileController($scope, profileServices, pesan, helperServices) {
                     document.location.href = helperServices.url + "auth";
                 }, 500);
             })
+        })
+    }
+
+    $scope.openFile = () => {
+        $("input[id='my_file']").click();
+    }
+
+    $scope.uploadFoto = (param) => {
+        $.LoadingOverlay('show');
+        console.log(param);
+        profileServices.upload(param).then(res => {
+            pesan.Success("Proses berhasil");
+            setTimeout(() => {
+                document.location.href = helperServices.url + "auth";
+            }, 500);
+            $.LoadingOverlay('hide');
         })
     }
 

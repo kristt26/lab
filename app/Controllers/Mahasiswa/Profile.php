@@ -3,6 +3,7 @@
 namespace App\Controllers\Mahasiswa;
 
 use App\Controllers\BaseController;
+use App\Libraries\Decode;
 use App\Models\JurusanModel;
 use App\Models\KelasModel;
 use App\Models\MahasiswaModel;
@@ -68,5 +69,30 @@ class Profile extends BaseController
             $conn->transRollback();
             return $this->fail($th->getMessage());
         }
+    }
+
+    function uploadFoto() {
+        $foto = $this->request->getJSON();
+        $dec = new Decode();
+        $mhs = new MahasiswaModel();
+        $data = $mhs->where('user_id', session()->get('uid'))->first();
+        try {
+            if(!is_null($data['photo'])){
+                $url = 'assets/berkas/'.$data['photo']; 
+                unlink($url);
+                $fileName = $dec->decodebase64($foto->base64);
+                $mhs->where('user_id', session()->get('uid'))->update(null, ['photo'=>$fileName]);
+                session()->destroy();
+                return $this->respond($fileName);
+            }else{
+                $fileName = $dec->decodebase64($foto->base64);
+                $mhs->where('user_id', session()->get('uid'))->update(null, ['photo'=>$fileName]);
+                session()->destroy();
+                return $this->respond($fileName);
+            }
+        } catch (\Throwable $th) {
+            return $this->fail($th->getMessage());
+        }
+
     }
 }

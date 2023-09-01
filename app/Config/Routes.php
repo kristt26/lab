@@ -161,7 +161,7 @@ $routes->group('profile', ['filter'=> 'mahasiswa_auth'], static function ($route
     $routes->post('post', 'Mahasiswa\Profile::post');
     $routes->put('put', 'Mahasiswa\Profile::put');
     $routes->put('reset', 'Mahasiswa\Profile::reset');
-    $routes->delete('delete/(:any)', 'Mahasiswa\Profile::delete/$1');
+    $routes->put('upload', 'Mahasiswa\Profile::uploadFoto');
 });
 
 $routes->group('registration', ['filter'=> 'mahasiswa_auth'], static function ($routes) {

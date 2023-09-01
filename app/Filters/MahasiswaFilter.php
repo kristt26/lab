@@ -25,9 +25,16 @@ class MahasiswaFilter implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
+        $uri = current_url(true);
+        $a = $uri->getSegment(2);
         if (is_null(session()->get('is_login'))) return redirect()->to(base_url('auth'));
         else {
             if (session()->get('role') !== 'Mahasiswa') return redirect()->to(base_url());
+            else{
+                if($a!=="profile" && (!session()->get('photo') || !session()->get('change'))){
+                    return redirect()->to(base_url('profile'));
+                } 
+            }
         }
     }
 
