@@ -706,7 +706,7 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, get
 
     $scope.pilih = (item) => {
         $.LoadingOverlay("show");
-        kontrakServices.post({ jadwal_id: item.id, kapasitas: item.kapasitas }).then((res) => {
+        kontrakServices.post({ jadwal_id: item.id, kapasitas: item.kapasitas, matakuliah_id: item.matakuliah_id }).then((res) => {
             $scope.rooms.push(angular.copy(res));
             var temp = $scope.jadwals.find((x) => x.id == item.id);
             $scope.kontrak.push(angular.copy(temp));

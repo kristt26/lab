@@ -44,8 +44,8 @@
                                         <td>{{item.kontak}}</td>
                                         <td>{{item.status=='0' ? 'Tidak Aktif':'Aktif'}}</td>
                                         <td>
-                                            <button class="btn btn-warning btn-sm" ng-click="edit(item)" data-toggle="tooltip" data-placement="top" title="Ubah data"><i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-danger btn-sm" ng-click="delete(item)" data-toggle="tooltip" data-placement="top" title="Hapus data"><i class="fas fa-trash"></i></button>
+                                            <!-- <button class="btn btn-warning btn-sm" ng-click="edit(item)" data-toggle="tooltip" data-placement="top" title="Ubah data"><i class="fas fa-edit"></i></button> -->
+                                            <!-- <button class="btn btn-danger btn-sm" ng-click="delete(item)" data-toggle="tooltip" data-placement="top" title="Hapus data"><i class="fas fa-trash"></i></button> -->
                                             <button class="btn btn-info btn-sm" ng-click="reset(item)"data-toggle="tooltip" data-placement="top" title="Reset Password"><i class="fas fa-retweet"></i></button>
                                         </td>
                                     </tr>
@@ -107,7 +107,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Jadwal</h5>
+                    <h5 class="modal-title">Edit Data Mahasiswa</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

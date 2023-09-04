@@ -60,7 +60,10 @@ class auth extends BaseController
                     if ($role[0]['role'] == 'Mahasiswa') {
                         $sessi['change'] = $user['change'];
                         if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
-                        else $sessi['photo'] = true;
+                        else {
+                            $sessi['photo'] = true;
+                            $sessi['foto'] = $mahasiswa->photo;
+                        }
                     }
                     session()->set($sessi);
                     return $this->respond($role);
@@ -71,7 +74,10 @@ class auth extends BaseController
                         'change' => $user['change'],
                     ];
                     if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
-                    else $sessi['photo'] = true;
+                    else {
+                        $sessi['photo'] = true;
+                        $sessi['foto'] = $mahasiswa->photo;
+                    }
                     session()->set($sessi);
                     return $this->respond($role);
                 }

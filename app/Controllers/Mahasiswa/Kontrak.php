@@ -68,9 +68,17 @@ class Kontrak extends BaseController
         try {
             $data->mahasiswa_id = $mhs['id'];
             if($data->kapasitas !== 0 && $this->kontrak->where('jadwal_id', $data->jadwal_id)->countAllResults()<$data->kapasitas){
-                $this->kontrak->insert($data);
-                $data->id = $this->kontrak->getInsertID();
-                return $this->respondCreated($data);
+                $cek = $this->kontrak
+                ->join('jadwal', 'jadwal.id=rooms.jadwal_id', 'LEFT')
+                ->where('matakuliah_id', $data->matakuliah_id)
+                ->where('mahasiswa_id', $data->mahasiswa_id)
+                ->countAllResults();
+                if($cek==0){
+                    $this->kontrak->insert($data);
+                    $data->id = $this->kontrak->getInsertID();
+                    return $this->respondCreated($data);
+                }else throw new \Exception("Anda hanya bisa memilih 1 shift matakuliah", 1);
+                
             }else throw new \Exception("Kelas telah penuh\nSilahkan pilih kelas lain", 1);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());

@@ -7,8 +7,8 @@
                 <div class="card-header d-flex justify-content-between">
                     <h5>Jadwal Perkuliahan</h5>
                     <div class="form-group row">
-                        <label for="inputPassword" class="col-sm-3 col-form-label">Filter</label>
-                        <div class="col-sm-9">
+                        <!-- <label for="inputPassword" class="col-sm-3 col-form-label">Filter</label> -->
+                        <div class="col-sm-12">
                             <input type="text" class="form-control" placeholder="Enter this...." ng-model="filter">
                         </div>
                     </div>
@@ -20,7 +20,7 @@
                             <div class="card text-left">
                                 <div class="card-body">
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah}} | {{item.initial}}</strong></h6>
-                                    <h6 style="font-size: 13px;"></i>Kls: {{item.kelas}} | Semester: {{item.semester}} | <i class="fas fa-user fa-fw"></i>: {{item.jmlmahasiswa}}</h6>
+                                    <h6 style="font-size: 13px;"></i>KLS: {{item.kelas}} | SMT: {{item.semester}} | {{item.shift}} | <i class="fas fa-user fa-fw"></i>: {{item.jmlmahasiswa}}</h6>
                                     <h6 style="font-size: 12px;"><i class="fas fa-calendar fa-fw"></i>: {{item.hari}} | <i class="far fa-clock"></i>{{item.jam_mulai}} - {{item.jam_selesai}}</h6>
                                     <!-- <p class="card-text">Pengawas</p> -->
                                 </div>
@@ -46,7 +46,7 @@
                             <div class="card text-left">
                                 <div class="card-body">
                                     <h6 style="font-size: 16px;" class="card-title"><strong>{{item.nama_matakuliah}} | {{item.initial}}</strong></h6>
-                                    <h6 style="font-size: 13px;"></i>Kls: {{item.kelas}} | Semester: {{item.semester}} | <i class="fas fa-user fa-fw"></i>: {{item.jmlmahasiswa}}</h6>
+                                    <h6 style="font-size: 13px;"></i>KLS: {{item.kelas}} | SMT: {{item.semester}} | {{item.shift}} | <i class="fas fa-user fa-fw"></i>: {{item.jmlmahasiswa}}</h6>
                                     <h6 style="font-size: 12px;"><i class="fas fa-calendar fa-fw"></i>: {{item.hari}} | <i class="far fa-clock"></i>{{item.jam_mulai}} - {{item.jam_selesai}}</h6>
                                 </div>
                                 <div class="card-footer text-right">

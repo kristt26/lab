@@ -4,12 +4,18 @@
     <div class="row">
         <div class="col-md-8 mb-4" ng-if="setView">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between">
                     <h5>Daftar Matakuliah</h5>
+                    <div class="form-group row">
+                        <!-- <label for="inputPassword" class="col-sm-3 col-form-label">Filter</label> -->
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" placeholder="Enter this...." ng-model="filterr">
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4 mb-3" ng-repeat="item in jadwals | orderBy: 'semester'">
+                        <div class="col-md-4 mb-3" ng-repeat="item in jadwals | orderBy: 'semester' | filter: filterr">
                             <div class="card text-left">
                                 <div class="card-body">
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah}} | {{item.initial}}</strong></h6>
