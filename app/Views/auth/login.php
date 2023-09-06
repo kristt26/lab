@@ -3,7 +3,7 @@
 <div ng-controller="loginController">
     <form class="user" ng-submit="login()">
         <div class="form-group">
-            <input type="text" class="form-control form-control-user" ng-model="model.username" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+            <input type="text" class="form-control form-control-user" ng-model="model.username" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="NPM/NIDN">
         </div>
         <div class="form-group">
             <input type="password" class="form-control form-control-user" ng-model="model.password" id="exampleInputPassword" placeholder="Password">

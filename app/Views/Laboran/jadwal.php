@@ -24,7 +24,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in kontrak">
+                                <tr ng-repeat="item in kontrak" ng-click="showMahasiswa(item)">
                                     <td>{{$index+1}}</td>
                                     <td>{{item.nama_matakuliah}}</td>
                                     <td>{{item.kelas}}</td>
@@ -50,6 +50,42 @@
         </div>
     </div>
 
+    <div class="modal fade" id="showMahasiswa" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Daftar Mahasiswa Praktikum {{model.nama_matakuliah}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Kelas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in mahasiswas">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{item.nama_mahasiswa}}</td>
+                                    <td>{{item.kelas}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="modul" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

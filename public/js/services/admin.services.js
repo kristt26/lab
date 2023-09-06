@@ -1876,6 +1876,7 @@ function mengawasServices($http, $q, helperServices, AuthService, pesan) {
     return {
         get: get,
         byId: byId,
+        getMahasiswa: getMahasiswa,
         post: post,
         open: open,
         put: put,
@@ -1906,6 +1907,24 @@ function mengawasServices($http, $q, helperServices, AuthService, pesan) {
         $http({
             method: 'get',
             url: controller + 'read/'+id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function getMahasiswa(param) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read_mahasiswa/'+param.id,
             headers: AuthService.getHeader()
         }).then(
             (res) => {

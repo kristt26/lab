@@ -103,6 +103,16 @@ class Mengawas extends BaseController
         return $this->respond($this->kontrak->find($id));
     }
 
+    public function read_mahasiswa($id = null)
+    {
+        return $this->respond($this->kontrak
+        ->select('mahasiswa.*, kelas.kelas')
+        ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id', 'left')
+        ->join('kelas', 'kelas.id=mahasiswa.kelas_id', 'left')
+        ->where('jadwal_id', $id)
+        ->findAll());
+    }
+
     public function post()
     {
         $data = $this->request->getJSON();

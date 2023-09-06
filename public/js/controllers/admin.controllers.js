@@ -1144,6 +1144,17 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
             })
         })
     }
+
+    $scope.showMahasiswa = (param)=>{
+        $.LoadingOverlay("show");
+        $scope.model = param;
+        mengawasServices.getMahasiswa(param).then(res=>{
+            console.log(res);
+            $scope.mahasiswas = res;
+            $("#showMahasiswa").modal('show');
+            $.LoadingOverlay("hide");
+        })
+    }
 }
 
 function absenRoomsController($scope, absenRoomsServices, pesan, DTOptionsBuilder, helperServices) {

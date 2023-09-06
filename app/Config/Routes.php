@@ -197,6 +197,7 @@ $routes->group('mengawas', ['filter' => 'laboran_auth'], static function ($route
     $routes->get('/', 'Laboran\Mengawas::index');
     $routes->get('store', 'Laboran\Mengawas::store');
     $routes->get('read/(:any)', 'Laboran\Mengawas::read/$1');
+    $routes->get('read_mahasiswa/(:any)', 'Laboran\Mengawas::read_mahasiswa/$1');
     $routes->post('pertemuan', 'Laboran\Mengawas::pertemuan');
     $routes->post('post', 'Laboran\Mengawas::post');
     $routes->put('put', 'Laboran\Mengawas::put');
