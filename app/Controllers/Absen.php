@@ -33,7 +33,7 @@ class Absen extends BaseController
                     else if($value['status']=="S") $h+=0.5;
                     else if($value['status']=="I") $h+=0.25;
                 }
-                $nilai->where("detail_komponen_id='$dtKom->id' AND rooms_id = '$id'")->update(null, ['nilai'=>($h/$jmPertamuan*100)*($dtKom->bobot/100)]);
+                if(!is_null($dtKom))$nilai->where("detail_komponen_id='$dtKom->id' AND rooms_id = '$id'")->update(null, ['nilai'=>($h/$jmPertamuan*100)*($dtKom->bobot/100)]);
                 $conn->transComplete();
                 return $this->respond(true);
                 
