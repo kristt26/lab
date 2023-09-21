@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <label for="">Matakuliah</label>
-                    <select name="jemaat" id="jemaat" ui-select2 class="form-control form-control-sm select2" data-placeholder="--Pilih Marakuliah--" ng-options="item as (item.kode+' - '+item.nama_matakuliah+' | Kelas '+item.kelas) for item in datas" ng-model="matakuliah" ng-change="getData(matakuliah)" required>
+                    <select name="jemaat" id="jemaat" ui-select2 class="form-control form-control-sm select2" data-placeholder="--Pilih Marakuliah--" ng-options="item as (item.kode+' - '+item.nama_matakuliah+' | Kelas '+item.kelas + ' | Shift ' + item.shift) for item in datas" ng-model="matakuliah" ng-change="getData(matakuliah)" required>
                         <option value=""></option>
                     </select>
                 </div>

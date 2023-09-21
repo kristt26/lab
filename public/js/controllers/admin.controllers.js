@@ -656,15 +656,15 @@ function kontrakController($scope, kontrakServices, pesan, DTOptionsBuilder, get
     $scope.rooms = [];
     $scope.kontrak = [];
     $scope.ta = {};
-    $scope.setView = false;
+    $scope.setView = true;
     $scope.showQrcode = false;
     var qrcode = new QRCode("qrcode");
     $.LoadingOverlay("show");
     kontrakServices.get().then(res => {
         $scope.datas = res;
         $scope.ta = $scope.datas.ta;
-        if ((new Date($scope.ta.tgl_mulai) <= new Date()) && (new Date($scope.ta.tgl_selesai) >= new Date())) $scope.setView = true;
-        else $scope.setView = false;
+        // if ((new Date($scope.ta.tgl_mulai) >= new Date()) && (new Date($scope.ta.tgl_selesai) <= new Date())) $scope.setView = true;
+        // else $scope.setView = false;
         $scope.jadwals = angular.copy($scope.datas.jadwal);
         $scope.rooms = $scope.datas.rooms;
         $scope.rooms.forEach(element => {
@@ -1015,13 +1015,13 @@ function mengawasController($scope, mengawasServices, pesan, DTOptionsBuilder) {
     $scope.mengawas = [];
     $scope.kontrak = [];
     $scope.ta = {};
-    $scope.setView = false;
+    $scope.setView = true;
     $.LoadingOverlay("show");
     mengawasServices.get().then(res => {
         $scope.datas = res;
         $scope.ta = $scope.datas.ta;
-        if ((new Date($scope.ta.tgl_mulai) <= new Date()) && (new Date($scope.ta.tgl_selesai) >= new Date())) $scope.setView = true;
-        else $scope.setView = false;
+        // if ((new Date($scope.ta.tgl_mulai) <= new Date()) && (new Date($scope.ta.tgl_selesai) >= new Date())) $scope.setView = true;
+        // else $scope.setView = false;
         $scope.jadwals = angular.copy($scope.datas.jadwal);
         $scope.mengawas = $scope.datas.mengawas;
         $scope.mengawas.forEach(element => {

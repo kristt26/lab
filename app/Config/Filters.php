@@ -23,7 +23,8 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'admin_auth' => \App\Filters\AdminFilter::class,
         'mahasiswa_auth' => \App\Filters\MahasiswaFilter::class,
-        'laboran_auth' => \App\Filters\LaboranFilter::class
+        'laboran_auth' => \App\Filters\LaboranFilter::class,
+        'maintenancemode' => \CodeigniterExt\MaintenanceMode\Filters\MaintenanceMode::class
     ];
 
     /**
@@ -32,7 +33,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
-            // 'honeypot',
+            'maintenancemode',
             // 'csrf',
             // 'invalidchars',
         ],

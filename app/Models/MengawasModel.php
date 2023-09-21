@@ -28,6 +28,7 @@ class MengawasModel extends Model
             `jurusan`.`jurusan`,
             `jurusan`.`initial`,
             `kelas`.`kelas`,
+            `jadwal`.`shift`,
             `mengawas`.`jadwal_id`
             FROM
                 `mengawas`

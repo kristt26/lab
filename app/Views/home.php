@@ -1,62 +1,49 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('content') ?>
 <div class="row">
-    
-    <!-- <div class="col-4">
-        <div class="d-flex flex-row mb-3">
-            <div class="card">
-                <div class="d-flex justify-content-around">
-                    <span>Pengenalan Java</span>
-                    <span>Software I</span>
-                    <span>09.00 - 11.00</span>
-                </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h4><?= session()->get('role')=='Admin' ? 'Praktikum hari ini' : (session()->get('role')=='Mahasiswa' ? 'Praktikum anda hari ini' : (session()->get('role')=='Laboran' ? 'Praktikum yang anda awasi hari ini' : "Matakulaih yang ada ampu" )) ?></h4>
+                <a href="https://play.google.com/store/apps/details?id=com.ocph23.absenlabstimikmobile" class="btn btn-info" target="_blank">Download App for Android</a>
             </div>
-        </div>
-        <div class="row mb-3">
-            <div class="card">
-                <div class="d-flex justify-content-around">
-                    <span>Managemen Basis Data</span>
-                    <span>Software II</span>
-                    <span>09.00 - 11.00</span>
-                </div>
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="card">
-                <div class="d-flex justify-content-around">
-                    <span>Pemrograman Web I</span>
-                    <span>Software I</span>
-                    <span>12.00 - 14.00</span>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Matakuliah</th>
+                                <th>Kelas</th>
+                                <th>Shift</th>
+                                <th>Prodi</th>
+                                <th>Ruangan</th>
+                                <th>Jam</th>
+                                <th>Dosen</th>
+                                <th>Laboran</th>
+                                <th>Jlm. Mahasiswa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($data as $key => $value) : ?>
+                                <tr>
+                                    <td><?= $key+1?></td>
+                                    <td><?= strtoupper($value['nama_matakuliah'])?></td>
+                                    <td><?= strtoupper($value['kelas'])?></td>
+                                    <td><?= $value['shift']?></td>
+                                    <td><?= $value['jurusan']?></td>
+                                    <td><?= $value['ruang']?></td>
+                                    <td><?= $value['jam_mulai']. ' s/d '.$value['jam_selesai']?></td>
+                                    <td><?= strtoupper($value['nama_dosen'])?></td>
+                                    <td><?= strtoupper($value['nama_mahasiswa'])?></td>
+                                    <td><?= $value['jumlah']?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-8">
-        <div class="row">
-            <div class="col">
-                <div class="card mr-3">
-                    <h5>Pengenalan Java</h5>
-                    <span>Algoritma dan Pemrogram</span>
-                    <div class="text-right">
-                        <button class="btn btn-info"><i class="fas fa-arrow-down mr-3"></i></button>
-                    </div>
-                </div>
-                <div class="card mr-3">
-                    <h5>Pengenalan XAMPP</h5>
-                    <span>Managemen Basis Data</span>
-                    <div class="text-right">
-                        <button class="btn btn-info"><i class="fas fa-arrow-down mr-3"></i></button>
-                    </div>
-                </div>
-                <div class="card mr-3">
-                    <h5>Pemrograman Web I</h5>
-                    <span>Pengenalan HTML</span>
-                    <div class="text-right">
-                        <button class="btn btn-info"><i class="fas fa-arrow-down mr-3"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
 <?= $this->endSection() ?>

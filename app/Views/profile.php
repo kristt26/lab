@@ -25,10 +25,13 @@
                     <span class="author-card-position">{{datas.jurusan}}</span>
                 </div>
             </div>
-            <div style="padding-left: 38px;">
-                <button class="btn btn-info btn-sm" ng-click="openFile()">Upload Photo</button>
-            </div>
-            <input type="file" id='my_file' style="display: none;" accept="image/*" ng-model="foto" ng-change="uploadFoto(foto)" base-sixty-four-input/>
+            <form name="form">
+                <div style="padding-left: 38px;">
+                    <button class="btn btn-info btn-sm" ng-click="openFile()">Upload Photo</button>
+                </div>
+                <input type="file" id='my_file' name="files" style="display: none;" accept="image/*" ng-model="foto" ng-change="uploadFoto(foto)" maxsize="50" base-sixty-four-input/>
+                <span ng-show="form.files.$error.maxsize">Files must not exceed 1000 KB</span>
+            </form>
         </div>
         <!-- <div class="wizard">
             <nav class="list-group list-group-flush">

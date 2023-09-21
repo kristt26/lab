@@ -79,7 +79,7 @@ class Profile extends BaseController
         try {
             if(!is_null($data['photo'])){
                 $url = 'assets/berkas/'.$data['photo']; 
-                unlink($url);
+                // unlink($url);
                 $fileName = $dec->decodebase64($foto->base64);
                 $mhs->where('user_id', session()->get('uid'))->update(null, ['photo'=>$fileName]);
                 session()->destroy();

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b2237c068d4b2bb432754b9e1e6fbc06",
+    "content-hash": "c42424edde7e68c101986be2e584bfad",
     "packages": [
         {
             "name": "codeigniter4/framework",
@@ -79,6 +79,44 @@
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
             "time": "2023-06-17T23:13:38+00:00"
+        },
+        {
+            "name": "codeigniterext/maintenancemode",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/arashsaffari/maintenancemode.git",
+                "reference": "7749d3052a975c461d523f6dca5039d144e300b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/arashsaffari/maintenancemode/zipball/7749d3052a975c461d523f6dca5039d144e300b3",
+                "reference": "7749d3052a975c461d523f6dca5039d144e300b3",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CodeigniterExt\\MaintenanceMode\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arash Saffari",
+                    "email": "arash@saffari.com"
+                }
+            ],
+            "description": "Maintenance Mode module for CodeIgniter 4",
+            "support": {
+                "issues": "https://github.com/arashsaffari/maintenancemode/issues",
+                "source": "https://github.com/arashsaffari/maintenancemode/tree/0.0.2"
+            },
+            "time": "2022-12-24T02:42:45+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -2756,7 +2794,10 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "codeigniterext/maintenancemode": 20,
+        "phpoffice/phpspreadsheet": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
