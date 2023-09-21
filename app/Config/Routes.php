@@ -33,6 +33,8 @@ $routes->get('/', 'Home::index');
 $routes->get('export', 'Cetak::index');
 $routes->get('spk', 'Spk::index');
 $routes->get('getmac', 'Pc::index');
+$routes->get('version', 'Pc::version');
+$routes->get('set_version/(:any)', 'Pc::set_version/$1');
 
 $routes->group('getmac', static function ($routes) {
     $routes->get('/', 'Pc::index');

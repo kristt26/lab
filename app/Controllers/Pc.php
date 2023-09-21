@@ -25,4 +25,23 @@ class Pc extends BaseController
         }
         return view('get_mac');
     }
+
+    public function version()
+    {
+        $conn = \Config\Database::connect();
+        $version = $conn->query("SELECT version FROM version order by version DESC Limit 1")->getRow();
+        return $this->respond($version);
+    }
+    public function set_version($version)
+    {
+        $conn = \Config\Database::connect();
+        try {
+            $version = $conn->query("INSERT INTO version value('$version')");
+            return $this->respondCreated(true);
+        } catch (\Throwable $th) {
+            return $this->fail($th->getMessage());
+        }
+    }
+
+
 }
