@@ -39,6 +39,7 @@ class Praktikum extends BaseController
         $tgl = $myTime->toDateString();
         $data['jadwal'] = $this->jadwal->select("jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, 
             jurusan.jurusan, jurusan.initial, matakuliah.semester, kelas.kelas,
+            mahasiswa.nama_mahasiswa as laboran,
             (SELECT modul.modul FROM modul where matakuliah.id=modul.matakuliah_id and status='1') AS modul,
             (SELECT COUNT(pertemuan.id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan,
             (SELECT pertemuan.id FROM pertemuan where mengawas.id=pertemuan.mengawas_id AND DATE(pertemuan.tgl)='$tgl' AND pertemuan.status='1') AS pertemuan_id,
@@ -47,6 +48,8 @@ class Praktikum extends BaseController
             ->join('kelas', 'kelas.id=jadwal.kelas_id', 'LEFT')
             ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id', 'LEFT')
             ->join('mengawas', 'mengawas.jadwal_id=jadwal.id', 'LEFT')
+            ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
+            ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
             ->where('matakuliah.jurusan_id', $mhs['jurusan_id'])
             ->where('ta_id', $ta['id'])->findAll();
         $data['rooms'] = $this->kontrak->select("rooms.*")

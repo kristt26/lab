@@ -15,6 +15,7 @@
                                     <h6 style="font-size: 15px;" class="card-title"><strong>{{item.nama_matakuliah }} | {{item.initial}}</strong></h6>
                                     <h6 style="font-size: 12px;"></i>Kls: {{item.kelas}} | Semester {{item.semester}} | {{item.shift}}</h6>
                                     <h6 style="font-size: 12px;"><i class="fas fa-calendar fa-fw"></i>: {{item.hari}} | <i class="far fa-clock"></i>: {{item.jam_mulai}} - {{item.jam_selesai}}</h6>
+                                    <h6 style="font-size: 12px;"><i class="fas fa-user fa-fw"></i>: {{item.laboran}}</h6>
                                 </div>
                                 <div class="card-footer text-right">
                                     <a ng-if="item.modul" href="<?= base_url() ?>assets/berkas/{{item.modul}}" target="_blank" class="btn btn-info btn-sm" title="Download Modul"><i class="fas fa-book"></i></a>
