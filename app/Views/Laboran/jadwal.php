@@ -15,6 +15,7 @@
                                     <th>#</th>
                                     <th>Matakuliah</th>
                                     <th>Kelas</th>
+                                    <th>Prodi</th>
                                     <th>Hari</th>
                                     <th>Ruangan</th>
                                     <th>Jam</th>
@@ -24,10 +25,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in kontrak" ng-click="showMahasiswa(item)">
+                                <tr ng-repeat="item in kontrak">
                                     <td>{{$index+1}}</td>
-                                    <td>{{item.nama_matakuliah}}</td>
+                                    <td ng-click="showMahasiswa(item)"><a href="">{{item.nama_matakuliah}}</a></td>
                                     <td>{{item.kelas}}</td>
+                                    <td>{{item.jurusan}}</td>
                                     <td>{{item.hari}}</td>
                                     <td>{{item.ruang}}</td>
                                     <td>{{item.jam_mulai}} s/d {{item.jam_selesai}}</td>

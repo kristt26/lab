@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\DosenModel;
 use App\Models\JadwalModel;
 use App\Models\KontrakModel;
 use App\Models\LaboranModel;
@@ -14,6 +15,7 @@ class Home extends BaseController
     protected $jadwal;
     protected $rooms;
     protected $mhs;
+    protected $dsn;
     protected $laboran;
     public function index()
     {
@@ -21,6 +23,7 @@ class Home extends BaseController
         $this->jadwal = new JadwalModel();
         $this->ta = new TaModel();
         $this->mhs = new MahasiswaModel();
+        $this->dsn = new DosenModel();
         $this->rooms = new KontrakModel();
         $this->laboran = new LaboranModel();
         $ta = $this->ta->where('status', '1')->first();
@@ -61,7 +64,7 @@ class Home extends BaseController
                 ->where('hari', hari_ini())
                 ->where('rooms.mahasiswa_id', $mhs['id'])
                 ->orderBy('jam_mulai')->findAll();
-        } else {
+        } else if(session()->get('role')=='Laboran') {
             $mhs = $this->mhs->where('user_id', session()->get('uid'))->first();
             $data = $this->laboran
                 ->select("jadwal.*, matakuliah.nama_matakuliah, matakuliah.semester, 
@@ -78,6 +81,24 @@ class Home extends BaseController
                 ->where('ta_id', $ta['id'])
                 ->where('hari', hari_ini())
                 ->where('laboran.mahasiswa_id', $mhs['id'])
+                ->orderBy('jam_mulai')->findAll();
+        } else{
+            $dsn = $this->dsn->where('user_id', session()->get('uid'))->first();
+            $data = $this->jadwal
+                ->select("jadwal.*, matakuliah.nama_matakuliah, matakuliah.semester, 
+                mahasiswa.nama_mahasiswa, kelas.kelas, dosen.nama_dosen,
+                (SELECT COUNT(rooms.id) FROM rooms where jadwal.id=rooms.jadwal_id) AS jumlah,
+                right(jurusan.jurusan,4) as jurusan")
+                ->join('dosen', 'dosen.id=jadwal.dosen_id', 'left')
+                ->join('kelas', 'kelas.id=jadwal.kelas_id', 'left')
+                ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'left')
+                ->join('laboran', 'laboran.id=mengawas.laboran_id', 'left')
+                ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'left')
+                ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id', 'left')
+                ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id', 'left')
+                ->where('ta_id', $ta['id'])
+                ->where('hari', hari_ini())
+                ->where('dosen.id', $dsn['id'])
                 ->orderBy('jam_mulai')->findAll();
         }
         return view('home', ['title' => 'Home', 'data' => $data]);

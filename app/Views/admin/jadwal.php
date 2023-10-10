@@ -128,6 +128,7 @@
                                     <select class="form-control form-control-sm" ng-model="model.ruang">
                                         <option value="Software I">Software I</option>
                                         <option value="Software II">Software II</option>
+                                        <option value="Hardware">Hardware</option>
                                     </select>
                                 </div>
                             </div>
