@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\TaModel;
 
 class auth extends BaseController
 {
@@ -40,6 +41,8 @@ class auth extends BaseController
     public function login()
     {
         $data = $this->request->getJSON();
+        $th = new TaModel();
+        $tahun = $th->where('status', '1')->first();
         $user = $this->user->where('user.username', $data->username)->first();
         if (!is_null($user)) {
             if (password_verify($data->password, $user['password'])) {
@@ -55,7 +58,8 @@ class auth extends BaseController
                         'uid' => $user['id'],
                         'nama' => $role[0]['role'] == 'Admin' ? 'Administrator' : ($role[0]['role'] == 'Dosen' ? $dosen->nama_dosen : $mahasiswa->nama_mahasiswa),
                         'role' => $role[0]['role'],
-                        'is_login' => true
+                        'is_login' => true,
+                        'ta_id' => $tahun['id']
                     ];
                     if ($role[0]['role'] == 'Mahasiswa') {
                         $sessi['change'] = $user['change'];
@@ -72,6 +76,7 @@ class auth extends BaseController
                         'uid' => $user['id'],
                         'nama' => $mahasiswa->nama_mahasiswa,
                         'change' => $user['change'],
+                        'ta_id' => $tahun['id']
                     ];
                     if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
                     else {

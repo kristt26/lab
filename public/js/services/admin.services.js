@@ -1640,6 +1640,7 @@ function praktikumServices($http, $q, helperServices, AuthService, pesan) {
         get: get,
         byId: byId,
         getAbsen: getAbsen,
+        getNilai: getNilai,
         post: post,
         put: put,
         deleted: deleted
@@ -1682,11 +1683,29 @@ function praktikumServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
-    function getAbsen(id) {
+    function getAbsen(id, rooms_id) {
         var def = $q.defer();
         $http({
             method: 'get',
-            url: controller + 'absenbyid/'+id,
+            url: controller + 'absenbyid/'+id+'/'+rooms_id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function getNilai(id, rooms_id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'nilaibyid/'+id+'/'+rooms_id,
             headers: AuthService.getHeader()
         }).then(
             (res) => {

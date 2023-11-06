@@ -64,11 +64,11 @@
                         <i class="fas fa-shopping-cart"></i>
                         <span>Registration</span></a>
                 </li> -->
-                <li ng-class="{'nav-item active': title=='Daftar Laboran', 'nav-item': title!='Daftar Laboran'}">
+                <!-- <li ng-class="{'nav-item active': title=='Daftar Laboran', 'nav-item': title!='Daftar Laboran'}">
                     <a class="nav-link" href="<?= base_url('daftar_laboran') ?>">
                         <i class="fa fa-filter" aria-hidden="true"></i>
                         <span>Daftar Laboran</span></a>
-                </li>
+                </li> -->
                 <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
                     <a class="nav-link" href="<?= base_url('praktikum') ?>">
                         <i class="fas fa-list"></i>

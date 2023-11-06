@@ -20,6 +20,7 @@ class MengawasModel extends Model
     {
         $conn = \Config\Database::connect();
         $uid = session()->get('uid');
+        $ta_id = session()->get('ta_id');
         if (session()->get('role') == 'Laboran') {
             $data = $conn->query("SELECT
             `matakuliah`.`kode`,
@@ -38,7 +39,7 @@ class MengawasModel extends Model
                 LEFT JOIN `mahasiswa` ON `laboran`.`mahasiswa_id` = `mahasiswa`.`id`
                 LEFT JOIN `jurusan` ON `jurusan`.`id` = `matakuliah`.`jurusan_id`
                 LEFT JOIN `kelas` ON `kelas`.`id` = `jadwal`.`kelas_id`
-            WHERE mahasiswa.user_id='$uid'")->getResult();
+            WHERE mahasiswa.user_id='$uid' AND ta_id='$ta_id'")->getResult();
         }else{
             $data = $conn->query("SELECT
             `matakuliah`.`kode`,
@@ -55,7 +56,7 @@ class MengawasModel extends Model
                 LEFT JOIN `jurusan` ON `jurusan`.`id` = `matakuliah`.`jurusan_id`
                 LEFT JOIN `kelas` ON `kelas`.`id` = `jadwal`.`kelas_id`
                 LEFT JOIN `dosen` ON `dosen`.`id` = `jadwal`.`dosen_id`
-            WHERE dosen.user_id='$uid'")->getResult();
+            WHERE dosen.user_id='$uid' AND jadwal.ta_id='$ta_id'")->getResult();
         }
         return $data;
     }

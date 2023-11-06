@@ -9,6 +9,8 @@ use App\Models\JadwalModel;
 use App\Models\MahasiswaModel;
 use App\Models\PertemuanModel;
 use App\Models\TaModel;
+use App\Models\TugasModel;
+use App\Models\UasModel;
 
 class Praktikum extends BaseController
 {
@@ -17,6 +19,8 @@ class Praktikum extends BaseController
     protected $mahasiswa;
     protected $ta;
     protected $pertemuan;
+    protected $tugas;
+    protected $uas;
 
     public function __construct()
     {
@@ -67,11 +71,45 @@ class Praktikum extends BaseController
         return $this->respond($this->kontrak->find($id));
     }
 
-    public function absenbyid($id = null)
+    public function absenbyid($id = null, $rooms_id = null)
     {
+        $pertemuan = $this->pertemuan->join('mengawas', 'mengawas.id=pertemuan.mengawas_id', 'LEFT')
+        ->where("mengawas.jadwal_id", $id)->countAllResults();
         $item = $this->pertemuan->select("pertemuan.*, absen.tgl, absen.by, absen.status")
         ->join('absen', 'absen.pertemuan_id=pertemuan.id')
-        ->where('absen.rooms_id', $id)->findAll();
+        ->where('absen.rooms_id', $rooms_id)->findAll();
+        $data = [];
+        for ($i=0; $i < 10; $i++) { 
+            if($i < $pertemuan){
+                $cek = false;
+                foreach ($item as $key => $value) {
+                    if((string)($i+1) == $value['pertemuan']){
+                        $cek = true;
+                        break;
+                    }
+                }
+                if($cek) $data[] = $value;
+                else{
+                    $set = ['pertemuan' => $i+1, 'tgl' => null, 'status' => "A", 'by' => 'System'];
+                    $data[] = $set;
+                }
+            }else{
+                $set = ['pertemuan' => $i+1, 'tgl' => null,'status' => null];
+                $data[] = $set;
+            }
+        }
+        return $this->respond($data);
+    }
+
+    public function nilaibyid($id = null, $rooms_id= null)
+    {
+        $this->tugas = new TugasModel();
+        $this->uas = new UasModel();
+        $item['tugas'] = $this->tugas->select("tugas.*, detail_tugas.nilai")
+        ->join('detail_tugas', 'tugas.id=detail_tugas.tugas_id')
+        ->where('tugas.jadwal_id', $id)
+        ->where('detail_tugas.rooms_id', $rooms_id)->findAll();
+        $item['uas'] = $this->uas->where("rooms_id", $rooms_id)->first();
         return $this->respond($item);
     }
 

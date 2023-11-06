@@ -908,26 +908,37 @@ function praktikumController($scope, praktikumServices, pesan, DTOptionsBuilder,
     }
 
     $scope.daftarAbsen = (item) => {
-        $scope.itemData = item;
-        $.LoadingOverlay('show')
-        praktikumServices.getAbsen(item.rooms_id).then((res) => {
-            $scope.dataAbsen = res;
-            for (let index = 0; index < 10; index++) {
-                if ($scope.dataAbsen.length > index) {
-                    if ($scope.dataAbsen[index].tgl) {
-                        $scope.dataAbsen[index].tgl = new Date($scope.dataAbsen[index].tgl);
-                    }
-                } else {
-                    item = {};
-                    item.pertemuan = index + 1;
-                    item.tgl = null;
-                    item.status = null;
-                    $scope.dataAbsen.push(item);
-                }
-            }
-            $.LoadingOverlay('hide')
-            $("#showAbsen").modal('show');
-        })
+        if(($scope.itemData && $scope.itemData.id!=item.id) || !$scope.itemData){
+            $.LoadingOverlay('show')
+            $scope.itemData = item;
+            praktikumServices.getAbsen(item.id, item.rooms_id).then((res) => {
+                $scope.dataAbsen = res;
+                var h = $scope.dataAbsen.filter(x=>x.status=='H').length;
+                var s = $scope.dataAbsen.filter(x=>x.status=='S').length;
+                var i = $scope.dataAbsen.filter(x=>x.status=='I').length;
+                s = s*0.5;
+                i = i*0.25;
+                $scope.persen = ((h+s+i)/$scope.dataAbsen.filter(x=>x.status!=null).length*100).toFixed(2);
+                $.LoadingOverlay('hide')
+                $("#showAbsen").modal('show');
+            })
+        }else $("#showAbsen").modal('show');
+    }
+
+    $scope.daftarNilai = (item) =>{
+        if(($scope.itemNilai && $scope.itemNilai.id!=item.id) || !$scope.itemNilai){
+            $.LoadingOverlay('show');
+            $scope.itemNilai = item;
+            praktikumServices.getNilai(item.id, item.rooms_id).then(res=>{
+                $scope.nilai = res;
+                $scope.sum = ($scope.nilai.tugas.reduce((accumulator, object) => {
+                    return accumulator + parseFloat(object.nilai);
+                  }, 0)/$scope.nilai.tugas.length).toFixed(2);
+                $("#showNilai").modal('show');
+                $.LoadingOverlay('hide');
+            })
+        }else $("#showNilai").modal('show');
+        
     }
 }
 

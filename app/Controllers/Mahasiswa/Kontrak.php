@@ -25,6 +25,7 @@ class Kontrak extends BaseController
     }
     public function index()
     {
+        
         return view('mahasiswa/kontrak', ['title' => 'Kontrak']);
     }
 

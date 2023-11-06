@@ -187,7 +187,8 @@ $routes->group('praktikum', ['filter'=> 'mahasiswa_auth'], static function ($rou
     $routes->get('/', 'Mahasiswa\Praktikum::index');
     $routes->get('store', 'Mahasiswa\Praktikum::store');
     $routes->get('read/(:any)', 'Mahasiswa\Praktikum::read/$1');
-    $routes->get('absenbyid/(:any)', 'Mahasiswa\Praktikum::absenbyid/$1');
+    $routes->get('absenbyid/(:any)/(:any)', 'Mahasiswa\Praktikum::absenbyid/$1/$2');
+    $routes->get('nilaibyid/(:any)/(:any)', 'Mahasiswa\Praktikum::nilaibyid/$1/$2');
     $routes->post('post', 'Mahasiswa\Praktikum::post');
     $routes->put('put', 'Mahasiswa\Praktikum::put');
     $routes->delete('delete/(:any)', 'Mahasiswa\Praktikum::delete/$1');
