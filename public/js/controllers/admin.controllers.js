@@ -1329,6 +1329,20 @@ function setNilaiController($scope, nilaiServices, pesan, DTOptionsBuilder, help
         })
     }
 
+    $scope.setOrder = true;
+    $scope.order = "-nama_mahasiswa";
+    $scope.dataOrder = (param)=>{
+        if($scope.setOrder){
+            $scope.setOrder = false;
+            $scope.order = param;
+            console.log($scope.order);
+        }else{
+            $scope.setOrder = true;
+            $scope.order = "-" + param;
+            console.log($scope.order);
+        }
+    }
+
 }
 
 function laporanController($scope, nilaiServices, pesan, DTOptionsBuilder, helperServices) {

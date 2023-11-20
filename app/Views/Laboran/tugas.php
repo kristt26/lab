@@ -17,8 +17,8 @@
                             <thead>
                                 <tr>
                                     <th rowspan="2" class="text-center align-middle" width="2%">No</th>
-                                    <th rowspan="2" class="text-center align-middle" width="10%">NPM</th>
-                                    <th rowspan="2" class="text-center align-middle" width="20%">Nama</th>
+                                    <th rowspan="2" class="text-center align-middle" width="10%" ng-click="dataOrder('npm')">NPM</th>
+                                    <th rowspan="2" class="text-center align-middle" width="20%" ng-click="dataOrder('nama_mahasiswa')">Nama</th>
                                     <th ng-if="datas.mahasiswa[0].tugas.length>0" colspan="{{datas.tugas.length+1}}" class="text-center">Tugas</th>
                                 </tr>
                                 <tr>
@@ -26,7 +26,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in datas.mahasiswa">
+                                <tr ng-repeat="item in datas.mahasiswa | orderBy: order">
                                     <td>{{$index+1}}</td>
                                     <td>{{item.npm}}</td>
                                     <td>{{item.nama_mahasiswa}}</td>
