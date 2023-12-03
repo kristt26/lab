@@ -104,16 +104,17 @@ class Laporan extends BaseController
         $sheet->setCellValue('A1', 'LABORATORIUM UNIVERITAS SEPULUH NOPEMBER JAYAPURA');
         $sheet->setCellValue('A2', 'REKAPITULASI BERITA ACARA PRAKTIKUM');
         $sheet->setCellValue('A3', 'TAHUN AJARAN '.$ta->tahun_akademik.' SEMESTER '.strtoupper($ta->semester));
-        $spreadsheet->getActiveSheet()->mergeCells("A1:F1");
-        $spreadsheet->getActiveSheet()->mergeCells("A2:F2");
-        $spreadsheet->getActiveSheet()->mergeCells("A3:F3");
+        $spreadsheet->getActiveSheet()->mergeCells("A1:G1");
+        $spreadsheet->getActiveSheet()->mergeCells("A2:G2");
+        $spreadsheet->getActiveSheet()->mergeCells("A3:G3");
         $sheet->setCellValue('A5', 'NO')
             ->setCellValue('B5', 'JURUSAN')
             ->setCellValue('C5', 'MATAKULIAH')
             ->setCellValue('D5', 'KELAS')
-            ->setCellValue('E5', 'DOSEN')
-            ->setCellValue('F5', 'TOTAL');
-        $spreadsheet->getActiveSheet()->getStyle("A5:F5")->getFont()->setBold(true)->setSize(12);
+            ->setCellValue('E5', 'SHIFT')
+            ->setCellValue('F5', 'DOSEN')
+            ->setCellValue('G5', 'TOTAL');
+        $spreadsheet->getActiveSheet()->getStyle("A5:G5")->getFont()->setBold(true)->setSize(12);
         $spreadsheet->getActiveSheet()->getStyle("A1")->getFont()->setBold(true)->setSize(16);
         $spreadsheet->getActiveSheet()->getStyle("A2")->getFont()->setBold(true)->setSize(16);
         $spreadsheet->getActiveSheet()->getStyle("A3")->getFont()->setBold(true)->setSize(16);
@@ -122,17 +123,19 @@ class Laporan extends BaseController
         $spreadsheet->getActiveSheet()->getColumnDimension("B")->setWidth(240, 'px');
         $spreadsheet->getActiveSheet()->getColumnDimension("C")->setWidth(251, 'px');
         $spreadsheet->getActiveSheet()->getColumnDimension("D")->setWidth(95, 'px');
-        $spreadsheet->getActiveSheet()->getColumnDimension("E")->setWidth(251, 'px');
-        $spreadsheet->getActiveSheet()->getColumnDimension("F")->setWidth(95, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("E")->setWidth(61, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("F")->setWidth(251, 'px');
+        $spreadsheet->getActiveSheet()->getColumnDimension("G")->setWidth(95, 'px');
         foreach ($data as $key => $value) {
             $sheet->setCellValue('A' . $key + 6, $key + 1)
                 ->setCellValue('B' . $key + 6, $value->jurusan)
                 ->setCellValue('C' . $key + 6, $value->nama_matakuliah)
                 ->setCellValue('D' . $key + 6, $value->kelas)
-                ->setCellValue('E' . $key + 6, $value->nama_dosen)
-                ->setCellValue('F' . $key + 6, $value->total);
+                ->setCellValue('E' . $key + 6, $value->shift)
+                ->setCellValue('F' . $key + 6, $value->nama_dosen)
+                ->setCellValue('G' . $key + 6, $value->total);
         }
-        $spreadsheet->getActiveSheet()->getStyle("A5:F" . count($data) + 5)->applyFromArray($styleArray);
+        $spreadsheet->getActiveSheet()->getStyle("A5:G" . count($data) + 5)->applyFromArray($styleArray);
         $writer = new Xlsx($spreadsheet);
         $filename = date('Y-m-d-His') . ' rekapitulasi';
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

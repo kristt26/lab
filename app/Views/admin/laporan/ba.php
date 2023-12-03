@@ -16,6 +16,7 @@
                                 <th>Jurusan</th>
                                 <th>Matakuliah</th>
                                 <th>Kelas</th>
+                                <th>Shift</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -28,6 +29,7 @@
                                         <td><?= $value->jurusan?></td>
                                         <td><?= $mat->nama_matakuliah?></td>
                                         <td><?= $mat->kelas?></td>
+                                        <td><?= $mat->shift?></td>
                                         <td><?= $mat->total?></td>
                                     </tr>
                                 <?php endforeach; ?>

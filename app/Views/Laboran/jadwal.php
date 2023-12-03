@@ -15,12 +15,15 @@
                                     <th>#</th>
                                     <th>Matakuliah</th>
                                     <th>Kelas</th>
+                                    <th>Shift</th>
                                     <th>Prodi</th>
                                     <th>Hari</th>
                                     <th>Ruangan</th>
                                     <th>Jam</th>
                                     <th>Total Mahasiswa</th>
-                                    <th>Laboran</th>
+                                    <?php if (session()->get('role') != 'Laboran'):?>
+                                        <th>Laboran</th>
+                                    <?php endif ?>
                                     <th>Jumlah Pertemuan</th>
                                     <th>Action</th>
                                 </tr>
@@ -30,12 +33,15 @@
                                     <td>{{$index+1}}</td>
                                     <td ng-click="showMahasiswa(item)"><a href="">{{item.nama_matakuliah}}</a></td>
                                     <td>{{item.kelas}}</td>
+                                    <td>{{item.shift}}</td>
                                     <td>{{item.jurusan}}</td>
                                     <td>{{item.hari}}</td>
                                     <td>{{item.ruang}}</td>
                                     <td>{{item.jam_mulai}} s/d {{item.jam_selesai}}</td>
                                     <td>{{item.jmlmahasiswa}}</td>
-                                    <td>{{item.nama_mahasiswa}}</td>
+                                    <?php if (session()->get('role') != 'Laboran'):?>
+                                        <td>{{item.nama_mahasiswa}}</td>
+                                    <?php endif ?>
                                     <td>{{item.jumlahPertemuan}}</td>
                                     <td width="7%">
                                         <div class="d-flex justify-content-between">

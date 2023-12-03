@@ -41,37 +41,42 @@ class Mengawas extends BaseController
     public function store()
     {
         $db = \Config\Database::connect();
-        $ta = $this->ta->where('status', '1')->first();
-        $data['jadwal'] = $this->jadwal->asObject()->select("mengawas.id as mengawas_id, jurusan.jurusan, jurusan.initial, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas, 
-        (SELECT COUNT(*) FROM rooms where rooms.jadwal_id=jadwal.id ) AS jmlmahasiswa,
-        (SELECT modul.modul FROM modul where matakuliah.id=modul.matakuliah_id and status='1') AS modul,
-        (SELECT COUNT(id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id) AS jumlahPertemuan")
-            ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
-            ->join('kelas', 'kelas.id=jadwal.kelas_id')
-            ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
-            ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id', 'LEFT')
-            ->where('ta_id', $ta['id'])->findAll();
-        if (session()->get('role') == 'Laboran') {
-            $data['mengawas'] = $this->mengawas->select("mengawas.*")
-                ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
-                ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
-                ->join('jadwal', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
-                ->where('user_id', session()->get('uid'))
-                ->where('ta_id', $ta['id'])
-                ->findAll();
-        } else {
-            $data['mengawas'] = $this->mengawas->select("mengawas.*, mahasiswa,nama_mahasiswa")
-                ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
-                ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
-                ->join('jadwal', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
+        try {
+            $ta = $this->ta->where('status', '1')->first();
+            $data['jadwal'] = $this->jadwal->asObject()->select("mengawas.id as mengawas_id, jurusan.jurusan, jurusan.initial, jadwal.*, matakuliah.kode, matakuliah.nama_matakuliah, matakuliah.jurusan_id, matakuliah.semester, kelas.kelas, 
+                (SELECT COUNT(*) FROM rooms where rooms.jadwal_id=jadwal.id ) AS jmlmahasiswa,
+                (SELECT modul.modul FROM modul where matakuliah.id=modul.matakuliah_id and status='1') AS modul,
+                (SELECT COUNT(id) FROM pertemuan where mengawas.id=pertemuan.mengawas_id) AS jumlahPertemuan,
+                mahasiswa.nama_mahasiswa")
                 ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
-                ->join('dosen', 'dosen.id=jadwal.dosen_id')
-                ->where('user_id', session()->get('uid'))
-                ->where('ta_id', $ta['id'])
-                ->findAll();
+                ->join('kelas', 'kelas.id=jadwal.kelas_id')
+                ->join('mengawas', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
+                ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
+                ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
+                ->join('jurusan', 'jurusan.id=matakuliah.jurusan_id', 'LEFT')
+                ->where('ta_id', $ta['id'])->findAll();
+            if (session()->get('role') == 'Laboran') {
+                $data['mengawas'] = $this->mengawas->select("mengawas.*")
+                    ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
+                    ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
+                    ->join('jadwal', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
+                    ->where('user_id', session()->get('uid'))
+                    ->where('ta_id', $ta['id'])
+                    ->findAll();
+            } else {
+                $data['mengawas'] = $this->mengawas->select("mengawas.*")
+                    ->join('jadwal', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
+                    ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
+                    ->join('dosen', 'dosen.id=jadwal.dosen_id')
+                    ->where('user_id', session()->get('uid'))
+                    ->where('ta_id', $ta['id'])
+                    ->findAll();
+            }
+            $data['ta'] = $ta;
+            return $this->respond($data);
+        } catch (\Throwable $th) {
+            return $this->fail($th->getMessage());
         }
-        $data['ta'] = $ta;
-        return $this->respond($data);
     }
 
     public function pertemuan()
