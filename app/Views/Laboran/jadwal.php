@@ -20,6 +20,7 @@
                                     <th>Ruangan</th>
                                     <th>Jam</th>
                                     <th>Total Mahasiswa</th>
+                                    <th>Laboran</th>
                                     <th>Jumlah Pertemuan</th>
                                     <th>Action</th>
                                 </tr>
@@ -34,6 +35,7 @@
                                     <td>{{item.ruang}}</td>
                                     <td>{{item.jam_mulai}} s/d {{item.jam_selesai}}</td>
                                     <td>{{item.jmlmahasiswa}}</td>
+                                    <td>{{item.nama_mahasiswa}}</td>
                                     <td>{{item.jumlahPertemuan}}</td>
                                     <td width="7%">
                                         <div class="d-flex justify-content-between">

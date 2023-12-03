@@ -59,8 +59,10 @@ class Mengawas extends BaseController
                 ->where('user_id', session()->get('uid'))
                 ->where('ta_id', $ta['id'])
                 ->findAll();
-        }else {
-            $data['mengawas'] = $this->mengawas->select("mengawas.*")
+        } else {
+            $data['mengawas'] = $this->mengawas->select("mengawas.*, mahasiswa,nama_mahasiswa")
+                ->join('laboran', 'laboran.id=mengawas.laboran_id', 'LEFT')
+                ->join('mahasiswa', 'mahasiswa.id=laboran.mahasiswa_id', 'LEFT')
                 ->join('jadwal', 'jadwal.id=mengawas.jadwal_id', 'LEFT')
                 ->join('matakuliah', 'matakuliah.id=jadwal.matakuliah_id')
                 ->join('dosen', 'dosen.id=jadwal.dosen_id')
@@ -106,11 +108,11 @@ class Mengawas extends BaseController
     public function read_mahasiswa($id = null)
     {
         return $this->respond($this->kontrak
-        ->select('mahasiswa.*, kelas.kelas')
-        ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id', 'left')
-        ->join('kelas', 'kelas.id=mahasiswa.kelas_id', 'left')
-        ->where('jadwal_id', $id)
-        ->findAll());
+            ->select('mahasiswa.*, kelas.kelas')
+            ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id', 'left')
+            ->join('kelas', 'kelas.id=mahasiswa.kelas_id', 'left')
+            ->where('jadwal_id', $id)
+            ->findAll());
     }
 
     public function post()
