@@ -78,7 +78,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-repeat="item in dataKomponen.mahasiswa" ng-class="{'text-danger': item.huruf=='D' || item.huruf=='E', 'text-info': item.huruf=='A' || item.huruf=='B' || item.huruf=='C'}">
+                                    <tr ng-repeat="item in dataKomponen.mahasiswa" ng-class="{'text-danger': item.huruf=='D' || item.huruf=='E', 'text-info': item.huruf=='A' || item.huruf=='B+' || item.huruf=='B' || item.huruf=='C+' || item.huruf=='C'}">
                                         <td>{{$index+1}}</td>
                                         <td>{{item.npm}}</td>
                                         <td>{{item.nama_mahasiswa | uppercase}}</td>
