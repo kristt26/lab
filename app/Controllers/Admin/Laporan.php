@@ -36,7 +36,7 @@ class Laporan extends BaseController
             `absen`
             LEFT JOIN `rooms` ON `absen`.`rooms_id` = `rooms`.`id`
             LEFT JOIN `jadwal` ON `rooms`.`jadwal_id` = `jadwal`.`id`
-        WHERE ta_id = '$ta->id'
+        WHERE ta_id = '$ta->id' AND status='H'
         ")->getResultArray();
         foreach ($jurusans as $keyJrsn => $jurusan) {
             $jurusan->matakuliah = $this->jadwal->asObject()->select("jadwal.*, matakuliah.nama_matakuliah, kelas.kelas")
@@ -71,7 +71,7 @@ class Laporan extends BaseController
             `absen`
             LEFT JOIN `rooms` ON `absen`.`rooms_id` = `rooms`.`id`
             LEFT JOIN `jadwal` ON `rooms`.`jadwal_id` = `jadwal`.`id`
-        WHERE ta_id = '$ta->id'
+        WHERE ta_id = '$ta->id' AND status='H'
         ")->getResultArray();
         $data = [];
         foreach ($jurusans as $keyJrsn => $jurusan) {

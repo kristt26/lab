@@ -2,13 +2,23 @@
 <?= $this->section('content') ?>
 <div ng-controller="setKomponenController">
     <div class="row">
-        <div class="col-md-4 mb-3">
+        <div class="col-md-12 mb-3">
             <div class="card">
                 <div class="card-body">
-                    <label for="">Matakuliah</label>
-                    <select name="jemaat" id="jemaat" ui-select2 class="form-control form-control-sm select2" data-placeholder="--Pilih Marakuliah--" ng-options="item as (item.kode+' - '+item.nama_matakuliah+' | Kelas '+item.kelas + ' | Shift ' + item.shift) for item in datas" ng-model="matakuliah" ng-change="getData(matakuliah)" required>
-                        <option value=""></option>
-                    </select>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Jurusan</label>
+                            <select name="jurusan" id="jurusan" ui-select2 class="form-control form-control-sm select2" data-placeholder="Pilih Jurusan" ng-options="item as item.jurusan for item in jurusans" ng-model="jurusan" ng-change="getMatakuliah(jurusan)" required>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Matakuliah</label>
+                            <select name="matakuliah" id="matakuliah" ui-select2 class="form-control form-control-sm select2" data-placeholder="Pilih Marakuliah" ng-options="item as (item.kode+' - '+item.nama_matakuliah+' | Kelas '+item.kelas + ' | Shift ' + item.shift) for item in datas" ng-model="matakuliah" ng-change="getData(matakuliah)" required>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

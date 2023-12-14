@@ -908,37 +908,37 @@ function praktikumController($scope, praktikumServices, pesan, DTOptionsBuilder,
     }
 
     $scope.daftarAbsen = (item) => {
-        if(($scope.itemData && $scope.itemData.id!=item.id) || !$scope.itemData){
+        if (($scope.itemData && $scope.itemData.id != item.id) || !$scope.itemData) {
             $.LoadingOverlay('show')
             $scope.itemData = item;
             praktikumServices.getAbsen(item.id, item.rooms_id).then((res) => {
                 $scope.dataAbsen = res;
-                var h = $scope.dataAbsen.filter(x=>x.status=='H').length;
-                var s = $scope.dataAbsen.filter(x=>x.status=='S').length;
-                var i = $scope.dataAbsen.filter(x=>x.status=='I').length;
-                s = s*0.5;
-                i = i*0.25;
-                $scope.persen = ((h+s+i)/$scope.dataAbsen.filter(x=>x.status!=null).length*100).toFixed(2);
+                var h = $scope.dataAbsen.filter(x => x.status == 'H').length;
+                var s = $scope.dataAbsen.filter(x => x.status == 'S').length;
+                var i = $scope.dataAbsen.filter(x => x.status == 'I').length;
+                s = s * 0.5;
+                i = i * 0.25;
+                $scope.persen = ((h + s + i) / $scope.dataAbsen.filter(x => x.status != null).length * 100).toFixed(2);
                 $.LoadingOverlay('hide')
                 $("#showAbsen").modal('show');
             })
-        }else $("#showAbsen").modal('show');
+        } else $("#showAbsen").modal('show');
     }
 
-    $scope.daftarNilai = (item) =>{
-        if(($scope.itemNilai && $scope.itemNilai.id!=item.id) || !$scope.itemNilai){
+    $scope.daftarNilai = (item) => {
+        if (($scope.itemNilai && $scope.itemNilai.id != item.id) || !$scope.itemNilai) {
             $.LoadingOverlay('show');
             $scope.itemNilai = item;
-            praktikumServices.getNilai(item.id, item.rooms_id).then(res=>{
+            praktikumServices.getNilai(item.id, item.rooms_id).then(res => {
                 $scope.nilai = res;
                 $scope.sum = ($scope.nilai.tugas.reduce((accumulator, object) => {
                     return accumulator + parseFloat(object.nilai);
-                  }, 0)/$scope.nilai.tugas.length).toFixed(2);
+                }, 0) / $scope.nilai.tugas.length).toFixed(2);
                 $("#showNilai").modal('show');
                 $.LoadingOverlay('hide');
             })
-        }else $("#showNilai").modal('show');
-        
+        } else $("#showNilai").modal('show');
+
     }
 }
 
@@ -1156,10 +1156,10 @@ function jadwalMengawasController($scope, mengawasServices, pesan, DTOptionsBuil
         })
     }
 
-    $scope.showMahasiswa = (param)=>{
+    $scope.showMahasiswa = (param) => {
         $.LoadingOverlay("show");
         $scope.model = param;
-        mengawasServices.getMahasiswa(param).then(res=>{
+        mengawasServices.getMahasiswa(param).then(res => {
             console.log(res);
             $scope.mahasiswas = res;
             $("#showMahasiswa").modal('show');
@@ -1195,7 +1195,7 @@ function absenRoomsController($scope, absenRoomsServices, pesan, DTOptionsBuilde
     }
 }
 
-function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, helperServices) {
+function setKomponenController($scope, nilaiServices, jurusanServices, pesan, DTOptionsBuilder, helperServices) {
     $scope.$emit("SendUp", "Komponen Penilaian");
     $scope.model = {};
     $scope.ta = {};
@@ -1204,10 +1204,14 @@ function setKomponenController($scope, nilaiServices, pesan, DTOptionsBuilder, h
     $scope.total = 0;
     $scope.showButton = false;
     $.LoadingOverlay("show");
-    nilaiServices.get().then((res) => {
-        $scope.datas = res;
+    jurusanServices.get().then(res => {
+        $scope.jurusans = res;
         $.LoadingOverlay('hide');
-    });
+    })
+    // nilaiServices.get().then((res) => {
+    //     $scope.datas = res;
+    //     $.LoadingOverlay('hide');
+    // });
     $scope.getData = (param) => {
         $.LoadingOverlay('show');
         nilaiServices.byId(param.jadwal_id).then((res) => {
@@ -1331,12 +1335,12 @@ function setNilaiController($scope, nilaiServices, pesan, DTOptionsBuilder, help
 
     $scope.setOrder = true;
     $scope.order = "-nama_mahasiswa";
-    $scope.dataOrder = (param)=>{
-        if($scope.setOrder){
+    $scope.dataOrder = (param) => {
+        if ($scope.setOrder) {
             $scope.setOrder = false;
             $scope.order = param;
             console.log($scope.order);
-        }else{
+        } else {
             $scope.setOrder = true;
             $scope.order = "-" + param;
             console.log($scope.order);
