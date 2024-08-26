@@ -88,6 +88,5 @@
             </div>
         </div>
     </div>
-    <iframe src="http://locahost:8080/assets/berkas/643135c11d25b.docx&embedded=true"></iframe>
 </div>
 <?= $this->endSection() ?>

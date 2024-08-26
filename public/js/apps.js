@@ -12,7 +12,8 @@ angular.module('apps', [
     'ngSanitize',
     'ui.router',
     'ui.select2',
-    'tooltips'
+    'tooltips',
+    'datatables.buttons'
 
 ])
 

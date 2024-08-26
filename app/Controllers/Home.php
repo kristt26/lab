@@ -86,7 +86,7 @@ class Home extends BaseController
             $dsn = $this->dsn->where('user_id', session()->get('uid'))->first();
             $data = $this->jadwal
                 ->select("jadwal.*, matakuliah.nama_matakuliah, matakuliah.semester, 
-                mahasiswa.nama_mahasiswa, kelas.kelas, dosen.nama_dosen,
+                mahasiswa.nama_mahasiswa, kelas.kelas, dosen.nama_dosen, jurusan.jurusan,
                 (SELECT COUNT(rooms.id) FROM rooms where jadwal.id=rooms.jadwal_id) AS jumlah,
                 right(jurusan.jurusan,4) as jurusan")
                 ->join('dosen', 'dosen.id=jadwal.dosen_id', 'left')

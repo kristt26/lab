@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\JadwalModel;
 use App\Models\JurusanModel;
+use App\Models\PertemuanModel;
 use App\Models\TaModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -14,6 +15,7 @@ class Laporan extends BaseController
     protected $jurusan;
     protected $ta;
     protected $jadwal;
+    protected $pertemuan;
     protected $conn;
 
     public function __construct()
@@ -21,6 +23,7 @@ class Laporan extends BaseController
         $this->jurusan = new JurusanModel();
         $this->ta = new TaModel();
         $this->jadwal = new JadwalModel();
+        $this->pertemuan = new PertemuanModel();
         $this->conn = \Config\Database::connect();
     }
 
@@ -39,14 +42,18 @@ class Laporan extends BaseController
         WHERE ta_id = '$ta->id' AND status='H'
         ")->getResultArray();
         foreach ($jurusans as $keyJrsn => $jurusan) {
-            $jurusan->matakuliah = $this->jadwal->asObject()->select("jadwal.*, matakuliah.nama_matakuliah, kelas.kelas")
+            $jurusan->matakuliah = $this->jadwal->asObject()->select("jadwal.*, matakuliah.nama_matakuliah, kelas.kelas, (SELECT COUNT(*) FROM rooms WHERE jadwal_id= jadwal.id) as jumlah_mahasiswa, mahasiswa.nama_mahasiswa as laboran")
                 ->join("matakuliah", "matakuliah.id=jadwal.matakuliah_id", "LEFT")
                 ->join("kelas", "kelas.id=jadwal.kelas_id", "LEFT")
+                ->join("mengawas", "mengawas.jadwal_id=jadwal.id", "LEFT")
+                ->join("laboran", "mengawas.laboran_id=laboran.id", "LEFT")
+                ->join("mahasiswa", "mahasiswa.id=laboran.mahasiswa_id", "LEFT")
                 ->where('ta_id', $ta->id)
-                ->where('jurusan_id', $jurusan->id)
+                ->where('matakuliah.jurusan_id', $jurusan->id)
                 ->findAll();
             foreach ($jurusan->matakuliah as $keyMat => $mat) {
                 $jadwal_id = $mat->id;
+                $mat->total_pertemuan = $this->pertemuan->join('mengawas', 'mengawas.id=pertemuan.mengawas_id')->where('jadwal_id', $jadwal_id)->countAllResults();
                 try {
                     $mat->total = array_count_values(array_column($absen, 'jadwal_id'))[$jadwal_id];
                     //code...

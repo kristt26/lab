@@ -15,7 +15,7 @@
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="table-responsive" style="margin-top: 20px;">
-                        <table datatable="ng" class="table table-bordered">
+                        <table datatable="ng" class="table table-bordered" dt-options="dtOptions">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -32,7 +32,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in jadwals.jadwal">
+                                <tr ng-repeat="item in jadwals.jadwal" ng-class="{'bg-secondary text-white': item.dup}">
                                     <td>{{$index+1}}</td>
                                     <td>{{item.tahun_akademik}}</td>
                                     <td>{{item.kelas}}</td>

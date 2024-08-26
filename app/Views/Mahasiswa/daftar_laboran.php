@@ -17,6 +17,5 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
 </div>
 <?= $this->endSection() ?>

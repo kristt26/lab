@@ -71,8 +71,10 @@ class Kontrak extends BaseController
             if($data->kapasitas !== 0 && $this->kontrak->where('jadwal_id', $data->jadwal_id)->countAllResults()<$data->kapasitas){
                 $cek = $this->kontrak
                 ->join('jadwal', 'jadwal.id=rooms.jadwal_id', 'LEFT')
+                ->join('ta', 'ta.id=jadwal.ta_id', 'LEFT')
                 ->where('matakuliah_id', $data->matakuliah_id)
                 ->where('mahasiswa_id', $data->mahasiswa_id)
+                ->where('ta.status', '1')
                 ->countAllResults();
                 if($cek==0){
                     $this->kontrak->insert($data);

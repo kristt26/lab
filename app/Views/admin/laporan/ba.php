@@ -17,7 +17,10 @@
                                 <th>Matakuliah</th>
                                 <th>Kelas</th>
                                 <th>Shift</th>
+                                <th>Jumlah Mahasiswa</th>
+                                <th>Total Pertamuan</th>
                                 <th>Total</th>
+                                <th>Laboran</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,7 +33,10 @@
                                         <td><?= $mat->nama_matakuliah?></td>
                                         <td><?= $mat->kelas?></td>
                                         <td><?= $mat->shift?></td>
+                                        <td><?= $mat->jumlah_mahasiswa?></td>
+                                        <td><?= $mat->total_pertemuan?></td>
                                         <td><?= $mat->total?></td>
+                                        <td><?= $mat->laboran?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>

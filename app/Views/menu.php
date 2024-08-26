@@ -46,6 +46,20 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a ng-class="{'nav-link' : root=='Keuangan', 'nav-link collapsed' : root!='Keuangan'}" href="#" data-toggle="collapse" data-target="#keuangan" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-coins"></i>
+                        <span>Keuangan</span>
+                    </a>
+                    <div id="keuangan" ng-class="{'collapse show' : root=='Keuangan', 'collapse' : root!='Keuangan'}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a ng-class="{'collapse-item active': title=='Dosen', 'collapse-item': title!='Dosen'}" href="<?= base_url('dosen') ?>">Transaksi</a>
+                            <a ng-class="{'collapse-item active': title=='Dosen', 'collapse-item': title!='Dosen'}" href="<?= base_url('dosen') ?>">Layanan</a>
+                            <a ng-class="{'collapse-item active': title=='Dosen', 'collapse-item': title!='Dosen'}" href="<?= base_url('dosen') ?>">Setting</a>
+                            <a ng-class="{'collapse-item active': title=='Mahasiswa', 'collapse-item': title!='Mahasiswa'}" href="<?= base_url('mahasiswa') ?>">Laporan</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a ng-class="{'nav-link' : root=='Berita Acara', 'nav-link collapsed' : root!='Berita Acara'}" href="#" data-toggle="collapse" data-target="#ba" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-file"></i>
                         <span>Laporan</span>
@@ -64,11 +78,11 @@
                         <i class="fas fa-shopping-cart"></i>
                         <span>Registration</span></a>
                 </li> -->
-                <!-- <li ng-class="{'nav-item active': title=='Daftar Laboran', 'nav-item': title!='Daftar Laboran'}">
+                <li ng-class="{'nav-item active': title=='Daftar Laboran', 'nav-item': title!='Daftar Laboran'}">
                     <a class="nav-link" href="<?= base_url('daftar_laboran') ?>">
                         <i class="fa fa-filter" aria-hidden="true"></i>
                         <span>Daftar Laboran</span></a>
-                </li> -->
+                </li>
                 <li ng-class="{'nav-item active': title=='Registration', 'nav-item': title!='registration'}">
                     <a class="nav-link" href="<?= base_url('praktikum') ?>">
                         <i class="fas fa-list"></i>

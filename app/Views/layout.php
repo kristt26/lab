@@ -17,10 +17,13 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="<?= base_url() ?>assets/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="<?= base_url() ?>/libs/angular-datatables/dist/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="<?= base_url() ?>libs/angular-tooltips/dist/angular-tooltips.css" />
+    <link href="/assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/libs/angular-datatables/dist/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="/libs/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/libs/angular-tooltips/dist/angular-tooltips.css" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.bootstrap.css" rel="stylesheet" />
+    <link href="/libs/datatables/btn.css" rel="stylesheet" />
 
 </head>
 
@@ -186,11 +189,14 @@
     <script src="<?= base_url() ?>libs/datatables/jquery.dataTables.min.js"></script>
     <script src="<?= base_url() ?>libs/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="<?= base_url() ?>libs/datatables/dataTables.responsive.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables-buttons/2.0.0/js/dataTables.buttons.min.js"></script>
     <script src="<?= base_url() ?>libs/datatables/btn.js"></script>
-    <script src="<?= base_url() ?>libs/datatables/print.js"></script>
+    <!-- <script src="<?= base_url() ?>libs/datatables/print.js"></script> -->
+    <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.js"></script>
     <script src="<?= base_url() ?>libs/qrcode/qrcode.min.js"></script>
     <script src="<?= base_url() ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() ?>libs/loading/dist/loadingoverlay.min.js"></script>
+    <script src="<?= base_url() ?>libs/angular-datatables/dist/plugins/buttons/angular-datatables.buttons.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="<?= base_url() ?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>

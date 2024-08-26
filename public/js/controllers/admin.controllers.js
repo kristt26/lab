@@ -224,7 +224,7 @@ function matakuliahController($scope, matakuliahServices, pesan) {
 
 }
 
-function jadwalController($scope, jadwalServices, pesan, helperServices) {
+function jadwalController($scope, jadwalServices, pesan, helperServices, DTOptionsBuilder) {
     $scope.$emit("SendUp", "Jadwal");
     $scope.datas = {};
     $scope.jurusan = {};
@@ -241,9 +241,24 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
     $scope.matakuliah = {};
     $scope.dosen = {};
     $.LoadingOverlay('show');
+    $scope.dtOptions = DTOptionsBuilder.newOptions()
+        // .withPaginationType('full_numbers')
+        // .withBootstrap()
+        .withButtons([
+            'excel', 'pdf','print']);
     jadwalServices.get().then(res => {
         $scope.datas = res;
+        $scope.datas.jurusan.forEach(element => {
+            $scope.datas.dup.forEach(dup => {
+                var item = null;
+                var item = element.jadwal.find(x => x.id == dup.id);
+                if (item) {
+                    item.dup = true;
+                }
+            });
+        });
         $scope.jadwals = $scope.datas.jurusan[0];
+        console.log($scope.datas);
         $.LoadingOverlay('hide');
     })
 
@@ -274,6 +289,11 @@ function jadwalController($scope, jadwalServices, pesan, helperServices) {
                     var item = $scope.datas.jurusan.find(x => x.id = $scope.jurusan.id)
                     item.jadwal.push(res);
                     $scope.model = {};
+                    $scope.jurusan = {};
+                    $scope.smt = undefined;
+                    $scope.kelas = {};
+                    $scope.matakuliah = {};
+                    $scope.dosen = {};
                     $("#add").modal('hide');
                     $.LoadingOverlay('hide');
                 })
