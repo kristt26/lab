@@ -102,11 +102,12 @@ _modules/*
 .idea/
 *.iml
 *.env
+.htaccess
 # Netbeans
 nbproject/
 build/
 nbbuild/
-/dist/
+# /dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
