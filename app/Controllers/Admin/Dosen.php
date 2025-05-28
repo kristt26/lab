@@ -74,7 +74,7 @@ class Dosen extends BaseController
         try {
             if($data->user_id=='0'){
                 $conn->transBegin();
-                $this->user->insert(['username'=>$data->nidn, 'password'=>password_hash('stimik1011',PASSWORD_DEFAULT)]);
+                $this->user->insert(['username'=>$data->nidn, 'password'=>password_hash('Usn@1011',PASSWORD_DEFAULT)]);
                 $data->user_id = $this->user->getInsertID();
                 $user = ['user_id'=>$data->user_id, 'role_id'=>'4'];
                 $this->role->insert($user);
@@ -84,7 +84,7 @@ class Dosen extends BaseController
                     return $this->respondUpdated(true);
                 }else throw new \Exception("Gagal simpan", 1);
             }else{
-                $this->user->update($data->user_id, ['password'=>password_hash('stimik1011',PASSWORD_DEFAULT)]);
+                $this->user->update($data->user_id, ['password'=>password_hash('Usn@1011',PASSWORD_DEFAULT)]);
                 return $this->respondUpdated(true);
             }
         } catch (\Throwable $th) {

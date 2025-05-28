@@ -32,7 +32,7 @@ class Jadwal extends BaseController
     public function store()
     {
         $jurusans = $this->jurusan->asObject()->findAll();
-        $jadwal = $this->jadwal->select("jadwal.*, ta.tahun_akademik, kelas.kelas, matakuliah.nama_matakuliah, dosen.nama_dosen , matakuliah.jurusan_id")
+        $jadwal = $this->jadwal->select("jadwal.*, ta.tahun_akademik, kelas.kelas, matakuliah.nama_matakuliah, dosen.nama_dosen , matakuliah.jurusan_id, (SELECT COUNT(*) FROM rooms WHERE jadwal_id= jadwal.id) as jumlah_mahasiswa")
             ->join("ta", "ta.id = jadwal.ta_id", "LEFT")
             ->join('kelas', "kelas.id = jadwal.kelas_id", "left")
             ->join('matakuliah', "matakuliah.id = jadwal.matakuliah_id", "LEFT")
@@ -105,7 +105,7 @@ class Jadwal extends BaseController
     public function delete($id = null)
     {
         try {
-            $this->jurusan->delete($id);
+            $this->jadwal->delete($id);
             return $this->respondDeleted(true);
         } catch (\Throwable $th) {
             return $this->fail($th->getMessage());

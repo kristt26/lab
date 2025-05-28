@@ -712,10 +712,10 @@ function jadwalServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.jurusan_id);
+                var data = service.data.jurusan.find(x => x.id == param.jurusan_id);
                 if (data) {
-                    var index = data.matakuliah.indexOf(param);
-                    data.matakuliah.splice(index, 1);
+                    var index = data.jadwal.indexOf(param);
+                    data.jadwal.splice(index, 1);
                 }
                 def.resolve(res.data);
             },

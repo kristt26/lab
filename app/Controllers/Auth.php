@@ -40,57 +40,61 @@ class auth extends BaseController
 
     public function login()
     {
-        $data = $this->request->getJSON();
-        $th = new TaModel();
-        $tahun = $th->where('status', '1')->first();
-        $user = $this->user->where('user.username', $data->username)->first();
-        if (!is_null($user)) {
-            if (password_verify($data->password, $user['password'])) {
-                $role = $this->db->table('userrole')->select('role.*')
-                    ->join('role', 'role.id = userrole.role_id')
-                    ->where('user_id', $user['id'])->get()->getResultArray();
-                $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user['id'])->get()->getRow();
-                if (count($role) <= 1) {
-                    if ($role[0]['role'] == 'Dosen') {
-                        $dosen = $this->db->table('dosen')->where('user_id', $user['id'])->get()->getRow();
-                    }
-                    $sessi = [
-                        'uid' => $user['id'],
-                        'nama' => $role[0]['role'] == 'Admin' ? 'Administrator' : ($role[0]['role'] == 'Dosen' ? $dosen->nama_dosen : $mahasiswa->nama_mahasiswa),
-                        'role' => $role[0]['role'],
-                        'is_login' => true,
-                        'ta_id' => $tahun['id']
-                    ];
-                    if ($role[0]['role'] == 'Mahasiswa') {
-                        $sessi['change'] = $user['change'];
+        try {
+            $data = $this->request->getJSON();
+            $th = new TaModel();
+            $tahun = $th->where('status', '1')->first();
+            $user = $this->user->where('user.username', $data->username)->first();
+            if (!is_null($user)) {
+                if (password_verify($data->password, $user['password'])) {
+                    $role = $this->db->table('userrole')->select('role.*')
+                        ->join('role', 'role.id = userrole.role_id')
+                        ->where('user_id', $user['id'])->get()->getResultArray();
+                    $mahasiswa = $this->db->table('mahasiswa')->where('user_id', $user['id'])->get()->getRow();
+                    if (count($role) <= 1) {
+                        if ($role[0]['role'] == 'Dosen') {
+                            $dosen = $this->db->table('dosen')->where('user_id', $user['id'])->get()->getRow();
+                        }
+                        $sessi = [
+                            'uid' => $user['id'],
+                            'nama' => $role[0]['role'] == 'Admin' ? 'Administrator' : ($role[0]['role'] == 'Dosen' ? $dosen->nama_dosen : $mahasiswa->nama_mahasiswa),
+                            'role' => $role[0]['role'],
+                            'is_login' => true,
+                            'ta_id' => $tahun['id']
+                        ];
+                        if ($role[0]['role'] == 'Mahasiswa') {
+                            $sessi['change'] = $user['change'];
+                            if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
+                            else {
+                                $sessi['photo'] = true;
+                                $sessi['foto'] = $mahasiswa->photo;
+                            }
+                        }
+                        session()->set($sessi);
+                        return $this->respond($role);
+                    } else if (count($role) > 1) {
+                        $sessi = [
+                            'uid' => $user['id'],
+                            'nama' => $mahasiswa->nama_mahasiswa,
+                            'change' => $user['change'],
+                            'ta_id' => $tahun['id']
+                        ];
                         if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
                         else {
                             $sessi['photo'] = true;
                             $sessi['foto'] = $mahasiswa->photo;
                         }
+                        session()->set($sessi);
+                        return $this->respond($role);
                     }
-                    session()->set($sessi);
-                    return $this->respond($role);
-                } else if (count($role) > 1) {
-                    $sessi = [
-                        'uid' => $user['id'],
-                        'nama' => $mahasiswa->nama_mahasiswa,
-                        'change' => $user['change'],
-                        'ta_id' => $tahun['id']
-                    ];
-                    if (is_null($mahasiswa->photo)) $sessi['photo'] = false;
-                    else {
-                        $sessi['photo'] = true;
-                        $sessi['foto'] = $mahasiswa->photo;
-                    }
-                    session()->set($sessi);
-                    return $this->respond($role);
+                } else {
+                    return $this->fail('Password tidak sesuai');
                 }
             } else {
-                return $this->fail('Password tidak sesuai');
+                return $this->fail('User tidak ditemukan');
             }
-        } else {
-            return $this->fail('User tidak ditemukan');
+        } catch (\Throwable $th) {
+            return $this->fail($th->getMessage());
         }
     }
 

@@ -19,30 +19,30 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Tahun Ajaran</th>
-                                    <th>Kelas</th>
+                                    <!-- <th>Tahun Ajaran</th> -->
                                     <th>Matakuliah</th>
+                                    <th>Kelas</th>
                                     <th>Shift</th>
-                                    <th>Hari</th>
+                                    <th>Waktu</th>
                                     <th>Dosen</th>
                                     <th>Ruangan</th>
-                                    <th>Jam Praktikum</th>
                                     <th>Kapasitas</th>
+                                    <th>Peserta</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr ng-repeat="item in jadwals.jadwal" ng-class="{'bg-secondary text-white': item.dup}">
                                     <td>{{$index+1}}</td>
-                                    <td>{{item.tahun_akademik}}</td>
-                                    <td>{{item.kelas}}</td>
+                                    <!-- <td>{{item.tahun_akademik}}</td> -->
                                     <td>{{item.nama_matakuliah}}</td>
+                                    <td>{{item.kelas}}</td>
                                     <td>{{item.shift}}</td>
-                                    <td>{{item.hari}}</td>
+                                    <td>{{item.hari}}, {{item.jam_mulai}} s/d {{item.jam_selesai}}</td>
                                     <td>{{item.nama_dosen}}</td>
                                     <td>{{item.ruang}}</td>
-                                    <td>{{item.jam_mulai}} s/d {{item.jam_selesai}}</td>
                                     <td>{{item.kapasitas}}</td>
+                                    <td>{{item.jumlah_mahasiswa}}</td>
                                     <td>
                                         <button class="btn btn-warning btn-sm" ng-click="edit(item)"><i class="fas fa-edit"></i></button>
                                         <button class="btn btn-danger btn-sm" ng-click="delete(item)"><i class="fas fa-trash"></i></button>
@@ -128,6 +128,7 @@
                                     <select class="form-control form-control-sm" ng-model="model.ruang">
                                         <option value="Software I">Software I</option>
                                         <option value="Software II">Software II</option>
+                                        <option value="Lab Desain">Lab Desain</option>
                                         <option value="Hardware">Hardware</option>
                                     </select>
                                 </div>
