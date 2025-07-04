@@ -75,7 +75,7 @@ class Nilai extends BaseController
             ->where("jadwal_id = '$id'")->findAll() : $this->komponen->asObject()->findAll();
         $data['mahasiswa'] = $this->rooms->asObject()->select("rooms.*, mahasiswa.nama_mahasiswa, mahasiswa.npm")
             ->join('mahasiswa', 'mahasiswa.id=rooms.mahasiswa_id')
-            ->where("jadwal_id", "$id")->findAll();
+            ->where("jadwal_id", "$id")->orderBy('npm', 'asc')->findAll();
         foreach ($data['mahasiswa'] as $keyMhs => $mahasiswa) {
             $mahasiswa->nilai = [];
             $mahasiswa->total = 0;
